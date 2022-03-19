@@ -1,0 +1,11 @@
+{
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  },
+  "proxies": {
+    "/users": {
+      "origin": "https://group-matcher-api.herokuapp.com"
+    }
+  }
+}
