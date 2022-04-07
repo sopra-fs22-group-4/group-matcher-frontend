@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import {
-  Button, ButtonGroup, Center, Container, Heading, HStack, IconButton, Switch, Text, Tooltip, useColorMode,
+  Button, ButtonGroup, Center, Container, Heading, HStack, IconButton, Stack, Switch, Text, Tooltip, useColorMode,
   useColorModeValue
 } from '@chakra-ui/react'
 import React from 'react'
@@ -29,6 +29,11 @@ export default function Home() {
             <Button onClick={() => navigate('/main')}>Main</Button>
             <Button onClick={() => navigate('/create')}>Create</Button>
           </ButtonGroup>
+          <Stack>
+            <Button colorScheme='teal'
+                    onClick={() => navigate('/login')}>Login
+            </Button>
+          </Stack>
           <Outlet context={context} />
         </Container>
       </Center>
