@@ -35,16 +35,17 @@ export default function Registration() {
     const handleClick = () => setShow(!show)
 
     const register = async (values: FormikValues) => {
-        await post('/register', values)
-        if (!response.ok && response.status == 409) {
-            toast({ title: 'Email already taken - are you already registered?', description: response.status, status: response.ok ? 'success' : 'error' })
+        const adminData = await post('/register', values)
+        if (!response.ok) {
+            toast({ title: adminData.message, description: response.status, status: response.ok ? 'success' : 'error' })
             return
         }
+        toast({ title: 'Registered successfully', description: response.status, status: response.ok ? 'success' : 'error' })
         navigate('/dashboard')
     }
 
 
-    const schema = object({ email: string().required().matches(/^.*((?=.*[@]){1}).*$/, "Not a valid email"),
+    const schema = object({ email: string().email("Not a valid email address"),
         password: string().required().matches(
             /^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>?]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/,
             "Password must contain at least 6 characters, one uppercase, one number and one special case character"),
