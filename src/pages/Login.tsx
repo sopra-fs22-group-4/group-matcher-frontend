@@ -1,48 +1,37 @@
 import {ArrowBackIcon, EmailIcon, Icon} from '@chakra-ui/icons'
 import {
     Button,
-    ButtonGroup,
-    Center, Container,
+    Center,
     FormControl,
-    FormErrorMessage, FormHelperText,
     FormLabel,
     Heading, HStack,
     Input,
     InputGroup,
-    InputLeftAddon, InputRightAddon,
-    SlideFade, Switch, Text,
+    InputRightAddon,
+    Text,
     useToast,
     VStack
 } from '@chakra-ui/react'
 import { Field, FieldProps, Form, Formik, FormikProps, FormikValues } from 'formik'
-import React, {useState} from 'react'
-import { FiEdit2 } from 'react-icons/fi'
+import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
-import {object, string} from 'yup'
-import User from "../models/User";
 
 export default function Login() {
-    const {get, post, response} = useFetch()
+    const {post, response} = useFetch()
     const navigate = useNavigate()
     const toast = useToast()
     const [show, setShow] = React.useState(false)
     const handleClick = () => setShow(!show)
 
     const tryLogin = async (values: FormikValues) => {
-        await post('/login', values)
-        const logged_in_user = new User(response.data)
+        const adminData = await post('/login', values)
 
-        if (!response.ok && response.status == 404) {
-            toast({ title: 'Email not found - are you registered yet?', description: response.status, status: response.ok ? 'success' : 'error' })
+        if (!response.ok) {
+            toast({ title: adminData.message, description: response.status, status: response.ok ? 'success' : 'error' })
             return
         }
-        if (!response.ok && response.status == 401) {
-            toast({ title: 'Password wrong - did you forget it?', description: response.status, status: response.ok ? 'success' : 'error' })
-            return
-        }
-        localStorage.setItem('token', logged_in_user.token)
-        localStorage.setItem('id', logged_in_user.id)
+
         toast({ title: 'Logged in', description: response.status, status: response.ok ? 'success' : 'error' })
         navigate('/dashboard')
     }

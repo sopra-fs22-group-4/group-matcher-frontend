@@ -23,15 +23,9 @@ export default function App() {
                             <Route path='create' element={<Creator />} />
                             <Route path='find/:partialName' element={<Finder />} />
                         </Route>
-                        <Route>
-                            <Route path='login' element={<Login />} />
-                        </Route>
-                        <Route>
-                            <Route path='registration' element={<Registration />}/>
-                        </Route>
-                        <Route>
+                            <Route path='/login' element={<Login />} />
+                            <Route path='/registration' element={<Registration />}/>
                             <Route path='dashboard' element={<Dashboard />} />
-                        </Route>
                     </Routes>
                 </BrowserRouter>
             </ChakraProvider>

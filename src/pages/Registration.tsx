@@ -1,16 +1,15 @@
 import {ArrowBackIcon, EmailIcon, Icon} from '@chakra-ui/icons'
 import {
     Button,
-    ButtonGroup,
-    Center, Container,
+    Center,
     FormControl,
-    FormErrorMessage, FormHelperText,
+    FormErrorMessage,
     FormLabel,
     Heading, HStack,
     Input,
     InputGroup,
-    InputLeftAddon, InputRightAddon,
-    SlideFade, Text,
+    InputRightAddon,
+    Text,
     useToast,
     VStack
 } from '@chakra-ui/react'
@@ -21,9 +20,6 @@ import {
     Formik,
     FormikProps,
     FormikValues,
-    useFormik,
-    useFormikContext,
-    yupToFormErrors
 } from 'formik'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -32,7 +28,7 @@ import * as Yup from 'yup';
 import { object, string } from 'yup'
 
 export default function Registration() {
-    const {get, post, response} = useFetch()
+    const {post, response} = useFetch()
     const navigate = useNavigate()
     const toast = useToast()
     const [show, setShow] = React.useState(false)
