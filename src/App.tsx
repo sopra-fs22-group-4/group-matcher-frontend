@@ -1,34 +1,38 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
+import '@fontsource/dm-sans/400.css'
+import '@fontsource/manrope/400.css'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Creator from './pages/Creator'
-import Finder from './pages/Finder'
+import Dashboard from './pages/Dashboard'
+import Error from './pages/Error'
 import Home from './pages/Home'
-import Main from './pages/Main'
 import Login from './pages/Login'
-import Registration from './pages/Registration'
+import Matcher from './pages/Matcher'
+import MatcherCreator from './pages/MatcherCreator'
+import Register from './pages/Register'
 import { theme } from './Theme'
-import Dashboard from "./pages/Dashboard";
 
 export default function App() {
 
-    return (
-        <React.StrictMode>
-            <ColorModeScript />
-            <ChakraProvider theme={theme}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path='/' element={<Home />}>
-                            <Route path='main' element={<Main />} />
-                            <Route path='create' element={<Creator />} />
-                            <Route path='find/:partialName' element={<Finder />} />
-                        </Route>
-                            <Route path='/login' element={<Login />} />
-                            <Route path='/registration' element={<Registration />}/>
-                            <Route path='dashboard' element={<Dashboard />} />
-                    </Routes>
-                </BrowserRouter>
-            </ChakraProvider>
-        </React.StrictMode>
-    )
+  return (
+      <React.StrictMode>
+        <ColorModeScript/>
+        <ChakraProvider theme={theme}>
+          <BrowserRouter>
+            <Routes>
+              <Route path='/' element={<Home/>}/>
+              <Route path='/login' element={<Login />}/>
+              <Route path='/register' element={<Register />}/>
+              <Route path='/dashboard' element={<Dashboard />} />
+              <Route path='/create-matcher' element={<MatcherCreator />} />
+              <Route path='/matchers/:matcherId'>
+                <Route index element={<Matcher />} />
+                <Route path='create-question' />
+              </Route>
+              <Route path='*' element={<Error/>}/>
+            </Routes>
+          </BrowserRouter>
+        </ChakraProvider>
+      </React.StrictMode>
+  )
 }
