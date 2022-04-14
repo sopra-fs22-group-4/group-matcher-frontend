@@ -4,7 +4,7 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import * as serviceWorker from './serviceWorker'
 
-ReactDOM.render(<App />, document.getElementById('root'))
+ReactDOM.render(<App/>, document.getElementById('root'))
 
 serviceWorker.unregister()
 reportWebVitals()
