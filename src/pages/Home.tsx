@@ -5,6 +5,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import TextQuestion from "./TextQuestion";
 
 
 export default function Home() {
@@ -35,6 +36,17 @@ export default function Home() {
             </Button>
           </Stack>
           <Outlet context={context} />
+          <p>
+            <Button colorScheme='blue' width={200}
+                    onClick={() => navigate('/textQuestion')}>Post Text Question
+            </Button>
+          </p>
+
+          <p>
+            <Button colorScheme='blue' width={200}
+                    onClick={() => navigate('/multipleChoiceQuestion')}>Post MCQ
+            </Button>
+          </p>
         </Container>
       </Center>
   )

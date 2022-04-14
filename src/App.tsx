@@ -9,6 +9,8 @@ import Login from './pages/Login'
 import Registration from './pages/Registration'
 import { theme } from './Theme'
 import Dashboard from "./pages/Dashboard";
+import TextQuestion from "./pages/TextQuestion";
+import MultipleChoice from "./pages/MultipleChoice";
 
 export default function App() {
 
@@ -26,6 +28,8 @@ export default function App() {
                             <Route path='/login' element={<Login />} />
                             <Route path='/registration' element={<Registration />}/>
                             <Route path='dashboard' element={<Dashboard />} />
+                            <Route path='/textQuestion' element={<TextQuestion />} />
+                            <Route path='/multipleChoiceQuestion' element={<MultipleChoice />} />
                     </Routes>
                 </BrowserRouter>
             </ChakraProvider>

@@ -10,6 +10,7 @@ export default function Dashboard() {
             <Center h='80vh'>
                 <h1>This still needs to be implemented so for now this is just an empty page</h1>
             </Center>
+
             <p>
                 <Button  leftIcon={<ArrowBackIcon/>} marginLeft={-350} colorScheme='blue' width={100}
                          onClick={() => navigate('/')}>Back
