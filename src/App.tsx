@@ -26,9 +26,9 @@ export default function App() {
               <Route path='/register' element={<Register />}/>
               <Route path='/dashboard' element={<Dashboard />} />
               <Route path='/create-matcher' element={<MatcherCreator />} />
-              <Route path='create-question' element={<QuestionCreator />} />
               <Route path='/matchers/:matcherId'>
                 <Route index element={<Matcher />} />
+                  <Route path='create-question' element={<QuestionCreator />} />
               </Route>
               <Route path='*' element={<Error/>}/>
             </Routes>
