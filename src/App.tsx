@@ -9,6 +9,7 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Matcher from './pages/Matcher'
 import MatcherCreator from './pages/MatcherCreator'
+import QuestionCreator from './pages/QuestionCreator'
 import Register from './pages/Register'
 import { theme } from './Theme'
 
@@ -27,7 +28,7 @@ export default function App() {
               <Route path='/create-matcher' element={<MatcherCreator />} />
               <Route path='/matchers/:matcherId'>
                 <Route index element={<Matcher />} />
-                <Route path='create-question' />
+                  <Route path='create-question' element={<QuestionCreator />} />
               </Route>
               <Route path='*' element={<Error/>}/>
             </Routes>
