@@ -1,4 +1,4 @@
-import { Button, Heading, useToast, VStack } from '@chakra-ui/react'
+import { ButtonGroup, Button, Heading, useToast, VStack } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -30,10 +30,10 @@ export default function QuestionCreator() {
                 <QuestionTitleField />
                 <QuestionTypeField />
                 <ChoiceBasedQuestion />
-                <p>
-                <Button colorScheme='blue' width={200} type='submit'>Post Question
-                </Button>
-              </p> 
+                <ButtonGroup>
+                    <Button colorScheme='blue' px={10} type='submit'>Post Question
+                    </Button>
+                </ButtonGroup>
               </VStack>}         
         </Formik>
       </VStack>
