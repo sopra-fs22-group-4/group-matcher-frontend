@@ -4,7 +4,7 @@ import React from 'react'
 export default function Error() {
   return (
       <Center h='100vh'>
-        <Heading color='blue.500'>Error</Heading>
+        <Heading>Error</Heading>
       </Center>
   )
 }

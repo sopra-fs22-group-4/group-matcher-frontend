@@ -1,6 +1,10 @@
 import { ChakraProvider, ColorModeScript } from '@chakra-ui/react'
 import '@fontsource/dm-sans/400.css'
-import '@fontsource/manrope/400.css'
+import '@fontsource/dm-sans/500.css'
+import '@fontsource/dm-sans/700.css'
+import 'assets/PrimeReactTheme.css'
+import 'primeicons/primeicons.css'
+import 'primereact/resources/primereact.min.css'
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
@@ -28,7 +32,7 @@ export default function App() {
               <Route path='/create-matcher' element={<MatcherCreator />} />
               <Route path='/matchers/:matcherId'>
                 <Route index element={<Matcher />} />
-                  <Route path='create-question' element={<QuestionCreator />} />
+                <Route path='create-question' element={<QuestionCreator />} />
               </Route>
               <Route path='*' element={<Error/>}/>
             </Routes>

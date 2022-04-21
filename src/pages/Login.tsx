@@ -23,7 +23,7 @@ export default function Login() {
   }
 
   return (
-      <VStack h='100vh' justify='center' spacing={12} fontFamily='heading' color='blue.700'>
+      <VStack h='100vh' justify='center' spacing={12} color='blue.700'>
         <VStack>
           <Heading>Login</Heading>
           <Text>Login to your personal account to view and manage your matchers.</Text>
@@ -43,10 +43,10 @@ export default function Login() {
                 <HStack spacing={6} justifyContent='end' w='full'>
                   <Flex gap={1}>
                     <Text>Don't have an account yet?</Text>
-                    <Button as={Link} to='/register' colorScheme='blue' variant='link' size='sm'>Register</Button>
+                    <Button as={Link} to='/register' variant='link' size='sm'>Register</Button>
                     <Text>now!</Text>
                   </Flex>
-                  <Button px={8} py={6} type='submit' colorScheme='blue' isLoading={formProps.isSubmitting}>Login</Button>
+                  <Button px={8} py={6} type='submit' isLoading={formProps.isSubmitting}>Login</Button>
                 </HStack>
               </VStack>}
         </Formik>

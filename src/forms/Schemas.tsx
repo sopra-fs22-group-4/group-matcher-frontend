@@ -1,4 +1,4 @@
-import { array, InferType, object, ref, setLocale, string } from 'yup'
+import { array, date, InferType, object, ref, setLocale, string } from 'yup'
 
 setLocale({
   string: {
@@ -11,6 +11,9 @@ setLocale({
 })
 
 export const baseSchema = object({
+  yourName: string().ensure().required(),
+  courseName: string().ensure().required(),
+  projectName: string().ensure().required(),
   email: string().ensure().email('Not a valid email address'),
   password: string().ensure().required().min(6).max(20)
       .matches(/[a-zA-Z]/, 'Enter at least one character')
@@ -21,5 +24,6 @@ export const baseSchema = object({
     type: string().ensure().required().oneOf(['text', 'single choice', 'multiple choice']),
     answers: array().of(string().ensure().required().min(1).max(20)).default(['', ''])
         .when('type', { is: 'single choice' || 'multiple choice', then: (answerSchema: InferType<any>) => answerSchema.min(2) })
-  })
+  }),
+  startDate: date(), endDate: date()
 })

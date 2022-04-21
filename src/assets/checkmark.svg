@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="filter0_d_30_604" x="27.5" y="32.5024" width="113.432" height="100.451" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+      <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+      <feOffset dy="4"/>
+      <feGaussianBlur stdDeviation="15"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0.290196 0 0 0 0 0.227451 0 0 0 0 1 0 0 0 0.3 0"/>
+      <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_30_604"/>
+      <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_30_604" result="shape"/>
+    </filter>
+  </defs>
+  <rect opacity="0.5" x="27.595" y="20.153" width="55.608" height="55.608" rx="10" fill="#9E96FF" style=""/>
+  <rect opacity="0.5" x="150.533" y="55.616" width="31.674" height="31.674" rx="10" fill="#9E96FF" style=""/>
+  <rect opacity="0.5" x="12.437" y="100.928" width="34.02" height="34.02" rx="8" fill="#DEDBFF" style=""/>
+  <rect opacity="0.5" x="135.737" y="135.398" width="39.479" height="39.479" rx="8" fill="#DEDBFF" style=""/>
+  <circle cx="102.498" cy="104.71" r="64.732" fill="#4A3AFF" style=""/>
+  <g filter="url(#filter0_d_30_604)" transform="matrix(1.078872, 0, 0, 1.078872, 11.638264, 19.772003)" style="">
+    <path d="M61.5 81.9732L74.4805 94.9537L106.932 62.5024" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" style="fill: none;"/>
+  </g>
+</svg>
