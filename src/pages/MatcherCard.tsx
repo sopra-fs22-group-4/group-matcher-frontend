@@ -1,14 +1,13 @@
 import {Box, Badge, Button, Text, useToast, HStack} from "@chakra-ui/react";
-import { useEffect, useState} from "react";
+import { useState} from "react";
 import React, {FC} from "react";
 import { useFetch } from 'use-http'
-import {useNavigate} from "react-router-dom";
 
 interface adminProps {
     id: number,
 }
 
-interface dummyInterface{
+interface dataInterface{
     title:string,
     deadline: string,
     submissions: number,
@@ -17,27 +16,12 @@ interface dummyInterface{
 
 const MatcherCard: FC<adminProps>=props=> {
 
-    const [matcherData, setMatcherData] = useState<dummyInterface[]>([])
-    const navigate = useNavigate();
-    const { get, response } = useFetch();
-    const toast = useToast();
+    const [matcherData, setMatcherData] = useState<dataInterface[]>([])
 
     const adminId = props.id;
 
-
-    useEffect(() => {
-        const fetchMatcherData = async () => {
-            const matcherData = await get("/matcher/"+adminId)
-            response.ok ? navigate('/dashboard') : toast({
-                status: 'error',
-                description: response.status,
-            })
-
-            setMatcherData(matcherData);
-        }
-
-        fetchMatcherData();
-    }, [])
+    const responseData = useFetch('/matcher/'+adminId, {}, []).data
+    setMatcherData(responseData);
 
     return (
         <HStack>
