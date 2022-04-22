@@ -2,37 +2,33 @@ import { Icon } from '@chakra-ui/icons'
 import {
   Button, Divider, Heading, HStack, SimpleGrid, Stack, TabList, TabPanel, TabPanels, Tabs, Text, useToast, VStack
 } from '@chakra-ui/react'
+import { ReactComponent as BackgroundIllustration } from 'assets/bg.svg'
+import { ReactComponent as CheckmarkIllustration } from 'assets/checkmark.svg'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import { NameField } from 'forms/AuthFields'
+import { CircleTab, TabNavButtons, TabProgress } from 'forms/FormProgress'
+import { DateField, ParticipantsField } from 'forms/MatcherSettings'
+import { baseSchema } from 'forms/Schemas'
 import React from 'react'
 import { AiOutlineAudit, AiOutlineFundProjectionScreen } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
-import { ReactComponent as BackgroundIllustration } from 'assets/bg.svg'
-import { ReactComponent as CheckmarkIllustration } from 'assets/checkmark.svg'
-import { CircleTab, TabNavButtons, TabProgress } from '../forms/FormProgress'
-import { DateField, ParticipantsField } from '../forms/MatcherSettings'
-import { baseSchema } from '../forms/Schemas'
 
 export default function MatcherCreator() {
-  const { post, response } = useFetch()
+  const { post, response } = useFetch('/matchers')
   const navigate = useNavigate()
   const toast = useToast()
-  const schema = baseSchema.pick(['courseName', 'projectName', 'startDate', 'endDate', 'yourName', 'email', 'password'])
+  const schema = baseSchema.pick(['courseName', 'university', 'startDate', 'endDate'])
 
   const createMatcher = async (values: FormikValues) => {
-    const matcherData = await post('/register', values)
-    response.ok ? navigate('/dashboard') : toast({
-      title: matcherData.message,
-      description: response.status,
-      status: 'error'
-    })
+    const matcherData = await post(values)
+    response.ok ? navigate('/dashboard') : toast({ title: matcherData.message, status: 'error' })
   }
 
   return (
-      <VStack h='100vh' overflow='hidden' position='relative' spacing={12}>
-        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' left='-45%' top='-40%' zIndex={-1} />
-        <VStack spacing={4}>
+      <VStack flexGrow={1} overflow='hidden' position='relative' spacing={8}>
+        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' left='-60%' top='-40%' zIndex={-1} />
+        <VStack spacing={4} bg='white' p={2}>
           <Heading fontSize='3xl'>Create Group Matcher</Heading>
           <Text color='gray.600' textAlign='center' lineHeight={1.5} w='md'>
             Creating a group matcher is really easy. Just follow the steps below and build awesome teams.
@@ -57,8 +53,8 @@ export default function MatcherCreator() {
                       <Heading fontSize='3xl'>Matcher Details</Heading>
                       <Text color='gray.600'>Please fill your information so we can get in touch with you.</Text>
                       <SimpleGrid columns={2} spacing={8} py={10}>
-                        <NameField prefix='course' icon={AiOutlineAudit}/>
-                        <NameField prefix='project' icon={AiOutlineFundProjectionScreen}/>
+                        <NameField fieldName='courseName' icon={AiOutlineAudit}/>
+                        <NameField fieldName='university' icon={AiOutlineFundProjectionScreen}/>
                         <DateField prefix='publish' />
                         <DateField prefix='due' />
                       </SimpleGrid>

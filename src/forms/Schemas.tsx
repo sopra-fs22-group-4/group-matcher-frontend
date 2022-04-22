@@ -11,9 +11,9 @@ setLocale({
 })
 
 export const baseSchema = object({
-  yourName: string().ensure().required(),
+  name: string().ensure().required(),
   courseName: string().ensure().required(),
-  projectName: string().ensure().required(),
+  university: string().ensure().required(),
   email: string().ensure().email('Not a valid email address'),
   password: string().ensure().required().min(6).max(20)
       .matches(/[a-zA-Z]/, 'Enter at least one character')

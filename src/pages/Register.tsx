@@ -12,15 +12,11 @@ export default function Register() {
   const { post, response } = useFetch()
   const navigate = useNavigate()
   const toast = useToast()
-  const schema = baseSchema.pick(['email', 'password', 'repeatPassword'])
+  const schema = baseSchema.pick(['name', 'email', 'password', 'repeatPassword'])
 
   const register = async (values: FormikValues) => {
     const adminData = await post('/register', values)
-    response.ok ? navigate('/dashboard') : toast({
-      title: adminData.message,
-      description: response.status,
-      status: 'error'
-    })
+    response.ok ? navigate('/') : toast({ title: adminData.message, status: 'error' })
   }
 
   return (
@@ -32,7 +28,7 @@ export default function Register() {
         <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={register}>
           {(formProps: FormikProps<any>) =>
               <VStack as={Form} spacing={8}>
-                <NameField prefix='your' icon={AiOutlineUser} />
+                <NameField icon={AiOutlineUser} />
                 <EmailField />
                 <PasswordField/>
                 <PasswordField repeat/>

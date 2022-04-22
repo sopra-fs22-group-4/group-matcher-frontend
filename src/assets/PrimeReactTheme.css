@@ -5700,7 +5700,7 @@
 .p-progressbar .p-progressbar-value {
     border: 0 none;
     margin: 0;
-    background: var(--chakra-colors-purple-500);
+    background: var(--chakra-colors-blue-500);
 }
 .p-progressbar .p-progressbar-label {
     color: #495057;

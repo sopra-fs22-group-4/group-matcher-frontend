@@ -15,10 +15,7 @@ const ChakraFileUpload = chakra(FileUpload)
 const ChakraProgressBar = chakra(ProgressBar)
 
 export function DateField({ prefix }: { prefix: string }) {
-  const groupStyle: any = useStyleConfig('InputGroup', {})
   const fieldStyle: any = useStyleConfig('Input', { variant: 'outline' })
-  console.log(groupStyle)
-  console.log(fieldStyle)
   return (
       <Field name={prefix+'Date'} children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
@@ -53,7 +50,6 @@ export function ParticipantsField() {
         <Icon boxSize='6rem' as={AiOutlineCloudUpload} color='gray.200' />
         <Text color='gray.600'>Drag and drop a file here or</Text>
       </VStack>
-
   return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse' rounded='3xl'
                  h='2xs' justify='center' m={8} url='./upload' chooseLabel='Select file' progressBarTemplate={() => {}}
                  itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />

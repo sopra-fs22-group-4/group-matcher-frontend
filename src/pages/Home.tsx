@@ -1,19 +1,15 @@
 import { Button, ButtonGroup, Heading, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Link } from 'react-router-dom'
-import MatcherCard from "./MatcherCard";
-
-interface adminProps {
-    id: number,
-}
 
 export default function Home() {
+
   return (
       <VStack h='100vh' justify='center' spacing={10}>
-        <Heading color='blue.500'>Group Matcher</Heading>
-        <ButtonGroup colorScheme='blue'>
-          <Button as={Link} to='register' variant='outline'>Register</Button>
-          <Button as={Link} to='login'>Login</Button>
+        <Heading>Group Matcher</Heading>
+        <ButtonGroup>
+          <Button as={Link} to='login' variant='outline'>Login</Button>
+          <Button as={Link} to='register'>Register</Button>
         </ButtonGroup>
       </VStack>
   )

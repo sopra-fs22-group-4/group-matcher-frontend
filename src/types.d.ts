@@ -1,9 +1,22 @@
-declare interface AppContext {
-  message: string;
+declare interface MatcherProps {
+  id: number;
+  courseName: string;
+  publishDate: string;
+  dueDate: string;
+  active: boolean
+  submissionsCount: number;
 }
 
-declare interface Matcher {
+declare interface SubmissionProps {
+  name: string;
+  email: string;
+  courseName: string;
+  submissionTimestamp: string;
+}
+
+declare interface AdminData {
   id: number;
   name: string;
-  isNew?: boolean;
+  email: string;
+  verified: boolean;
 }

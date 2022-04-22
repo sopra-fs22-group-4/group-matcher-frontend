@@ -2,24 +2,29 @@ import { Box, Button, Flex, Heading, HStack, Text, useToast, VStack } from '@cha
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
 import { GrUndo } from 'react-icons/gr'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
+import useLocalStorage from 'use-local-storage'
 import { EmailField, PasswordField } from '../forms/AuthFields'
 import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
+  const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
   const { post, response } = useFetch()
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['email', 'password'])
 
+  if (adminData?.id)
+    return <Navigate to='/dashboard' />
+
   const login = async (values: FormikValues) => {
-    const adminData = await post('/login', values)
-    response.ok ? navigate('/dashboard') : toast({
-      title: adminData.message,
-      description: response.status,
-      status: 'error'
-    })
+    const fetchedData = await post('/login', values)
+    if (response.ok) {
+      setAdminData(fetchedData)
+      navigate('/dashboard')
+    } else
+      toast({ title: fetchedData.message, status: 'error' })
   }
 
   return (

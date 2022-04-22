@@ -3,16 +3,17 @@ import {
   FormControl, FormErrorMessage, FormLabel, IconButton, Input, InputGroup, InputRightElement, useBoolean
 } from '@chakra-ui/react'
 import { Field, FieldProps } from 'formik'
+import { startCase } from 'lodash'
 import React from 'react'
 import { IconType } from 'react-icons'
 import { AiOutlineMail } from 'react-icons/ai'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
-export function NameField({ prefix, icon }: { prefix: string, icon: IconType }) {
+export function NameField({ fieldName, icon }: { fieldName?: string, icon: IconType }) {
   return (
-      <Field name={prefix+'Name'} children={(fieldProps: FieldProps) =>
+      <Field name={fieldName || 'name'} children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-            <FormLabel>{prefix} Name</FormLabel>
+            <FormLabel>{startCase(fieldName) || 'Your Name'}</FormLabel>
             <InputGroup>
               <InputRightElement>
                 <Icon as={icon} boxSize={5} color='gray.500' />
@@ -33,7 +34,7 @@ export function EmailField() {
               <InputRightElement>
                 <Icon as={AiOutlineMail} color='gray.500' />
               </InputRightElement>
-              <Input {...fieldProps.field} placeholder='max.muster@email.com' type='email' />
+              <Input {...fieldProps.field} placeholder='max.muster@email.com' type='email' autoComplete='new-password' />
             </InputGroup>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
@@ -51,7 +52,8 @@ export function PasswordField({ repeat }: { repeat?: boolean }) {
                 <IconButton icon={showPassword ? <FaEye /> : <FaEyeSlash />} h='full' p={3} variant='ghost'
                             aria-label='toggle show password' cursor='pointer' onClick={toggle}/>
               </InputRightElement>
-              <Input {...fieldProps.field} placeholder={(repeat ? 'Repeat ' : '')+'Password'} type={showPassword ? 'text' : 'password'}/>
+              <Input {...fieldProps.field} placeholder={(repeat ? 'Repeat ' : '')+'Password'}
+                     type={showPassword ? 'text' : 'password'} autoComplete='new-password' />
             </InputGroup>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
