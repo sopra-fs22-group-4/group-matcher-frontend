@@ -12,8 +12,8 @@ export function CircleTab({ index }: { index: number }) {
 
 export function TabProgress({ index }: { index: number }) {
   const { selectedIndex } = useTabsContext()
-  const progressValue = index < selectedIndex ? 100 : (selectedIndex === index ? 50 : 0)
-  return <ChakraProgressBar value={progressValue} showValue={false} flexGrow={1} h={2} />
+  const progressValue = index < selectedIndex ? 100 : 0
+  return <ChakraProgressBar value={selectedIndex === index ? 50 : progressValue} showValue={false} flexGrow={1} h={2} />
 }
 
 export function TabNavButtons({ lastIndex }: { lastIndex: number }) {

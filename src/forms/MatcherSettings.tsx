@@ -4,7 +4,7 @@ import {
 } from '@chakra-ui/react'
 import { Field, FieldProps } from 'formik'
 import { Calendar } from 'primereact/calendar'
-import { FileUpload, FileUploadHeaderTemplateOptions, ItemTemplateOptions } from 'primereact/fileupload'
+import { FileUpload, FileUploadHeaderTemplateOptions } from 'primereact/fileupload'
 import { ProgressBar } from 'primereact/progressbar'
 import React from 'react'
 import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
@@ -26,7 +26,7 @@ export function DateField({ prefix }: { prefix: string }) {
   )
 }
 
-function ItemTemplate(file: { name: string }, options: ItemTemplateOptions) {
+function ItemTemplate(file: { name: string }) {
   return (
       <HStack fontSize='sm' spacing={4}>
         <Icon boxSize='4rem' opacity={0.1} as={ImFileText2} />
@@ -51,6 +51,6 @@ export function ParticipantsField() {
         <Text color='gray.600'>Drag and drop a file here or</Text>
       </VStack>
   return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse' rounded='3xl'
-                 h='2xs' justify='center' m={8} url='./upload' chooseLabel='Select file' progressBarTemplate={() => {}}
+                 h='2xs' justify='center' m={8} url='./upload' chooseLabel='Select file'
                  itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
 }
