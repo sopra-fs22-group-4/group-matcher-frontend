@@ -11,9 +11,9 @@ export function AddFormButton() {
                  flexDir='column' color='purple.400' as={Link} to='create-matcher'>Add form</Button>
 }
 
-export function SidebarButton(props: { to: string, icon: IconType }) {
+export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconType }) {
   const targetPath = useResolvedPath(props.to)
-  const currentPath = useMatch({ path: targetPath.pathname, end: true })
+  const currentPath = useMatch({ path: targetPath.pathname, end: props.isEnd })
   return <Button as={Link} to={targetPath.pathname} leftIcon={<props.icon fontSize='120%'/>} justifyContent='start' iconSpacing={3}
                  isActive={!!currentPath} textTransform='capitalize' isFullWidth
                  _active={{ bg: 'gray.100' }}>{props.to || 'Dashboard'}</Button>

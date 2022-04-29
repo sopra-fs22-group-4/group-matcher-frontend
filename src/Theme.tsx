@@ -4,7 +4,9 @@ const theme = extendTheme({
   fonts: { body: '"DM Sans", sans-serif', heading: '"DM Sans", sans-serif' },
   colors: {
     orange: {
-      500: '#FDBC64'
+      400: '#ffc87c',
+      500: '#FDBC64',
+      600: '#efa846'
     },
     gray: {
       100: '#F6F6F6',

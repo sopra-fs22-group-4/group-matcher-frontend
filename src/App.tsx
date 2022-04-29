@@ -17,10 +17,10 @@ import Login from './pages/Login'
 import MatcherCreator from './pages/MatcherCreator'
 import QuestionCreator from './pages/QuestionCreator'
 import Register from './pages/Register'
+import MatcherQuiz from './pages/students/MatcherQuiz'
+import StudentAccess from './pages/students/StudentAccess'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
-import StudentAccess from "./pages/students/StudentAccess";
-import MatcherQuiz from "./pages/students/MatcherQuiz";
 
 export default function App() {
 
@@ -41,8 +41,8 @@ export default function App() {
                 <Route path='matchers/:matcherId' element={<Matcher />} />
                 <Route path='matchers/:matcherId/create-question' element={<QuestionCreator />} />
               </Route>
-              <Route path='/matchers/:matcherId/students' element={<StudentAccess />} />
-              <Route path='/matchers/:matcherId/students/quiz' element={<MatcherQuiz />} />
+              <Route path='/matchers/:matcherId' element={<StudentAccess />} />
+              <Route path='/matchers/:matcherId/quiz' element={<MatcherQuiz />} />
               <Route path='*' element={<Error/>}/>
             </Routes>
           </BrowserRouter>

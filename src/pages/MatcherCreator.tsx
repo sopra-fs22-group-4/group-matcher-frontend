@@ -7,10 +7,10 @@ import { ReactComponent as CheckmarkIllustration } from 'assets/checkmark.svg'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import { NameField } from 'forms/AuthFields'
 import { CircleTab, TabNavButtons, TabProgress } from 'forms/FormProgress'
-import { DateField, ParticipantsField } from 'forms/MatcherSettings'
+import { DateField, MatchingLogicField, ParticipantsField } from 'forms/MatcherSettings'
 import { baseSchema } from 'forms/Schemas'
 import React from 'react'
-import { AiOutlineAudit, AiOutlineFundProjectionScreen } from 'react-icons/ai'
+import { AiOutlineAudit, AiOutlineBank } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
 
@@ -26,7 +26,7 @@ export default function MatcherCreator() {
   }
 
   return (
-      <VStack flexGrow={1} overflow='hidden' position='relative' spacing={8}>
+      <VStack flexGrow={1} position='relative' overflow='hidden' spacing={8}>
         <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' left='-60%' top='-40%' zIndex={-1} />
         <VStack spacing={4} bg='white' p={2}>
           <Heading fontSize='3xl'>Create Group Matcher</Heading>
@@ -54,17 +54,20 @@ export default function MatcherCreator() {
                       <Text color='gray.600'>Please fill your information so we can get in touch with you.</Text>
                       <SimpleGrid columns={2} spacing={8} py={10}>
                         <NameField fieldName='courseName' icon={AiOutlineAudit}/>
-                        <NameField fieldName='university' icon={AiOutlineFundProjectionScreen}/>
+                        <NameField fieldName='university' icon={AiOutlineBank}/>
                         <DateField prefix='publish' />
                         <DateField prefix='due' />
                       </SimpleGrid>
                     </TabPanel>
                     <TabPanel px={0}>
                       <Heading fontSize='3xl'>Participants</Heading>
-                      Upload e-mail addresses
+                      You can restrict the access to the matching quiz to specific students by providing their e-mail addresses.
                       <ParticipantsField />
                     </TabPanel>
                     <TabPanel px={0}>
+                      <Heading fontSize='3xl'>How should groups be matched?</Heading>
+                      We will optimize the matching process based on your preferences.
+                      <MatchingLogicField />
                     </TabPanel>
                     <TabPanel as={VStack} spacing={6}>
                       <Icon as={CheckmarkIllustration} boxSize='10rem' />
@@ -72,7 +75,7 @@ export default function MatcherCreator() {
                       <Text textAlign='center' color='gray.600' w='sm'>
                         Please review the information you provided previously and when you are ready, click submit.
                       </Text>
-                      <Button type='submit' isLoading={formProps.isSubmitting}>Submit</Button>
+                      <Button type='submit' isDisabled={!formProps.errors} isLoading={formProps.isSubmitting}>Submit</Button>
                     </TabPanel>
                   </TabPanels>
                 </Stack>

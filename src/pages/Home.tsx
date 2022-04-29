@@ -1,47 +1,47 @@
-import { Button, Heading, HStack, VStack, Text } from '@chakra-ui/react'
+import { Icon } from '@chakra-ui/icons'
+import { Button, Container, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
+import { GoPrimitiveDot } from 'react-icons/go'
 import { Link } from 'react-router-dom'
-import {GoPrimitiveDot} from "react-icons/go"
-import {Icon} from "@chakra-ui/icons";
+import { ReactComponent as BackgroundIllustration } from '../assets/bg.svg'
 
 export default function Home() {
 
   return (
-      <VStack h='100vh' justify='center' spacing={10}>
-        <HStack marginRight={'40vw'}>
-          <VStack spacing={-5}>
-            <HStack spacing={-5}>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"white"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"white"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"purple.700"}/>
-            </HStack>
-            <HStack spacing={-5}>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"white"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"blue.800"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"purple.700"}/>
-            </HStack>
-            <HStack spacing={-5}>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"blue"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"blue.800"}/>
-              <Icon fontSize={"5xl"} as={GoPrimitiveDot} color={"purple.700"}/>
-            </HStack>
-          </VStack>
-            <Heading color="black" fontSize={"5xl"}>group</Heading>
-            <Heading color="blue.500" fontSize={"5xl"}>matcher</Heading>
-        </HStack>
-        <VStack spacing={3}>
-          <Text color="blue.600" fontSize="md" fontWeight="bold">WE MATCH YOUR GROUPS</Text>
-          <VStack spacing={-3}>
-            <Heading color="blue.900" fontSize="5xl" >Building teams has never</Heading>
-            <Heading color="blue.900" fontSize="5xl" >been easier.</Heading>
-          </VStack>
-          <VStack spacing={0}>
-            <Text color="blue.600">Optimize your group work and enhance your productivity with a personalized data</Text>
-            <Text color="blue.600">science based team building tool.</Text>
+      <Stack h='100vh' p={7} spacing={16} position='relative' overflow='hidden'>
+        <Flex align='end' justify='space-between'>
+          <Flex align='end' gap={2} flexGrow={1}>
+            <Stack align='end' spacing={-2} fontSize='xl' color='blue.500'>
+              <Icon as={GoPrimitiveDot} />
+              <HStack spacing={-2}>
+                <Icon as={GoPrimitiveDot} />
+                <Icon as={GoPrimitiveDot} />
+              </HStack>
+              <HStack spacing={-2}>
+                <Icon as={GoPrimitiveDot} />
+                <Icon as={GoPrimitiveDot} />
+                <Icon as={GoPrimitiveDot} />
+              </HStack>
+            </Stack>
+            <Heading fontSize='5xl' bg='white'>groupmatcher</Heading>
+          </Flex>
+          <Button as={Link} to='login'>Login</Button>
+        </Flex>
+        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' transform='scaleX(-1) rotate(90deg)' right={0} bottom='-55%' zIndex={-1} />
+        <VStack h='70%' justify='space-evenly'>
+          <Container centerContent textAlign='center' color='blue.500'>
+            <Text fontSize='sm' letterSpacing='0.2rem' bg='white'>WE MATCH YOUR GROUPS</Text>
+            <Heading fontSize='5xl' bg='white'>Building teams has never been easier.</Heading>
+            <Text bg='white' color='gray.600'>
+              Optimize your group work and enhance your productivity with a personalized data science based team building tool.
+            </Text>
+          </Container>
+          <Button width='xs' as={Link} to='login'>Create your matcher</Button>
+          <VStack>
+            <Flex fontSize='sm'>Looking for an existing<Text pl={1} color='blue.500'>Matcher</Text>?</Flex>
+            <Button width='xs' variant='outline' bg='white'>Find existing matcher</Button>
           </VStack>
         </VStack>
-          <Button width={'10vw'} colorScheme={"blue"} as={Link} to='login'>Login</Button>
-          <Button width={'10vw'} colorScheme={"blue"} as={Link} to='register' variant='outline'>Register</Button>
-      </VStack>
+      </Stack>
   )
 }

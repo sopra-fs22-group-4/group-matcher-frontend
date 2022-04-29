@@ -30,8 +30,6 @@ export function QuestionTypeField() {
                 <Radio {...fieldProps.field} value='text'>Text</Radio>
               </HStack>
             </RadioGroup>
-            {/*TODO: add radio buttons with big icons, something like this: https://i.stack.imgur.com/JWs2s.png*/}
-            {/*To implement using Chakra UI: https://chakra-ui.com/docs/styled-system/component-hooks/use-radio-group*/}
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
   )

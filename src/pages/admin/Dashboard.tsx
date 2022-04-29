@@ -12,7 +12,7 @@ import { ReactComponent as BackgroundIllustration } from '../../assets/bg.svg'
 import { SidebarButton } from '../../components/Buttons'
 
 export default function Dashboard() {
-  const [adminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
+  const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
 
   if (!adminData?.id)
     return <Navigate to='/login' />
@@ -26,13 +26,13 @@ export default function Dashboard() {
           </Box>
           <Icon as={BackgroundIllustration} w='max' h='70vh' position='absolute' left='-25%' top='-60%' zIndex={-1} />
           <Stack as={ButtonGroup} spacing={10} variant='ghost' colorScheme='gray' w='12rem' flexGrow={1}>
-            <SidebarButton to='' icon={FiGrid} />
+            <SidebarButton to='' isEnd icon={FiGrid} />
             <SidebarButton to='matchers' icon={FaRegClipboard} />
-            <SidebarButton to='profile' icon={BiUser} />
-            <SidebarButton to='settings' icon={FiSettings} />
+            <SidebarButton to='profile' isEnd icon={BiUser} />
+            <SidebarButton to='settings' isEnd icon={FiSettings} />
           </Stack>
           <Divider borderColor='gray.300' />
-          <Button variant='ghost' colorScheme='gray' leftIcon={<FiLogOut />}>Logout</Button>
+          <Button onClick={() => setAdminData(undefined)} variant='ghost' colorScheme='gray' leftIcon={<FiLogOut />}>Logout</Button>
         </Stack>
         <Divider orientation='vertical' borderColor='gray.300' />
         <Provider url={'/admins/'+adminData.id} options={{ data: [], cache: 'no-cache' }}>

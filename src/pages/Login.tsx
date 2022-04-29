@@ -1,3 +1,4 @@
+import { Icon } from '@chakra-ui/icons'
 import { Box, Button, Flex, Heading, HStack, Text, useToast, VStack } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
@@ -5,6 +6,7 @@ import { GrUndo } from 'react-icons/gr'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
+import { ReactComponent as BackgroundIllustration } from '../assets/bg.svg'
 import { EmailField, PasswordField } from '../forms/AuthFields'
 import { baseSchema } from '../forms/Schemas'
 
@@ -28,15 +30,18 @@ export default function Login() {
   }
 
   return (
-      <VStack h='100vh' justify='center' spacing={12} color='blue.700'>
+      <VStack h='100vh' justify='center' position='relative' overflow='hidden' spacing={12}>
         <VStack>
           <Heading>Login</Heading>
-          <Text>Login to your personal account to view and manage your matchers.</Text>
+          <Text textAlign='center' w='md' color='gray.600'>
+            Login to your personal account to view and manage your ongoing and past group matching projects.
+          </Text>
         </VStack>
+        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' transform='scaleY(-1)' right='-80%' top='-25%' zIndex={-1} />
         <Formik initialValues={schema.getDefaultFromShape()} onSubmit={login}>
           {(formProps: FormikProps<any>) =>
               <VStack as={Form} spacing={8}>
-                <Flex gap={5}>
+                <Flex gap={5} bg='white' boxShadow='lg' rounded='3xl' borderWidth={1} px={10} py={6}>
                   <EmailField />
                   <Box w='full'>
                     <PasswordField />

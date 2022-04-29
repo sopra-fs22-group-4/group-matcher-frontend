@@ -49,7 +49,7 @@ export function PasswordField({ repeat }: { repeat?: boolean }) {
             <FormLabel>{repeat && 'Repeat '}Password</FormLabel>
             <InputGroup>
               <InputRightElement>
-                <IconButton icon={showPassword ? <FaEye /> : <FaEyeSlash />} h='full' p={3} variant='ghost'
+                <IconButton icon={showPassword ? <FaEye /> : <FaEyeSlash />} h='full' variant='ghost' isRound
                             aria-label='toggle show password' cursor='pointer' onClick={toggle}/>
               </InputRightElement>
               <Input {...fieldProps.field} placeholder={(repeat ? 'Repeat ' : '')+'Password'}
