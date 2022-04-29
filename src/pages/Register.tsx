@@ -11,7 +11,7 @@ import { EmailField, NameField, PasswordField } from '../forms/AuthFields'
 import { baseSchema } from '../forms/Schemas'
 
 export default function Register() {
-  const { post, response } = useFetch('/api/register')
+  const { post, response } = useFetch('/register')
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['name', 'email', 'password', 'repeatPassword'])

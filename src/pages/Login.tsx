@@ -12,7 +12,7 @@ import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
   const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
-  const { post, response } = useFetch('/api/login')
+  const { post, response } = useFetch('/login')
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['email', 'password'])

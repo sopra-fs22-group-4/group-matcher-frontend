@@ -22,7 +22,7 @@ export default function MatcherCreator() {
 
   const createMatcher = async (values: FormikValues) => {
     const matcherData = await post(values)
-    response.ok ? navigate('/dashboard') : toast({ title: matcherData.message, status: 'error' })
+    response.ok ? navigate('..') : toast({ title: matcherData.message, status: 'error' })
   }
 
   return (

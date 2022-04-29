@@ -32,5 +32,3 @@ J
 src/Theme.tsx,8\5\8548046d94ecbc94928edfe86422cfde4aa3e055
 >
 src/types.d.ts,5\7\5703d29ccdb1d3877ed74ea020a9392e24ae35f1
-H
-src/components/Cards.tsx,2\c\2ce8c55e5020e5b5ea381400d404fc6796938ea4

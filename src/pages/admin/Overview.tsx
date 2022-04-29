@@ -22,8 +22,8 @@ export default function Overview() {
       <Stack flexGrow={1} spacing={10} p={12}>
         <Heading fontSize='xl'>Active Group Matchers</Heading>
         <HStack spacing={5}>
-          {activeMatchers[0] && <MatcherCard matcher={activeMatchers[0]} colorIndex={2} />}
-          {activeMatchers[1] && <MatcherCard matcher={activeMatchers[1]} colorIndex={1} />}
+          {activeMatchers[0] && <MatcherCard matcher={activeMatchers[0]} colorIndex={2} path='matchers/' />}
+          {activeMatchers[1] && <MatcherCard matcher={activeMatchers[1]} colorIndex={1} path='matchers/' />}
           <AddFormButton />
         </HStack>
         <Flex gap={20}>

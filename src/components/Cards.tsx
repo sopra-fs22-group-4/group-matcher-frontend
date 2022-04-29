@@ -8,10 +8,10 @@ import { Link } from 'react-router-dom'
 
 const bgColors: Array<string> = ['purple', 'blue', 'orange', 'green']
 
-export function MatcherCard({ matcher, colorIndex }: { matcher: MatcherProps, colorIndex: number }) {
+export function MatcherCard({ matcher, colorIndex, path }: { matcher: MatcherProps, colorIndex: number, path?: string }) {
   const bgColor = bgColors[colorIndex % bgColors.length]
   return (
-      <Button as={Link} to={'matchers/'+matcher.id} p={5} h='3xs' width='sm' rounded='2xl' position='relative' overflow='hidden'
+      <Button as={Link} to={(path || '/') + matcher.id} p={5} h='3xs' width='sm' rounded='2xl' position='relative' overflow='hidden'
              bg={bgColor+'.500'} color='white' boxShadow='hover' _hover={{ transform: 'translateY(-0.5rem)' }} _active={{ bg: bgColor+'.600' }}>
         <Stack w='full'>
           <Heading whiteSpace='normal' fontSize='3xl'>{matcher.courseName}</Heading>
