@@ -1,19 +1,20 @@
 import { Button, ButtonGroup, Heading, useToast, VStack } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
-import { ChoiceBasedQuestion, QuestionTitleField, QuestionTypeField } from '../forms/Questions'
-import { baseSchema } from '../forms/Schemas'
+import { ChoiceBasedQuestion, QuestionTitleField, QuestionTypeField } from '../../forms/Questions'
+import { baseSchema } from '../../forms/Schemas'
 
 export default function QuestionCreator() {
-  const { post, response } = useFetch()
+  const { matcherId } = useParams()
+  const { post, response } = useFetch(`/matchers/${matcherId}/questions`)
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['question'])
 
   const createQuestion = async (values: FormikValues) => {
-    const questionData = await post('/register', values)
+    const questionData = await post(values)
     response.ok ? navigate('/dashboard') : toast({
       title: questionData.message,
       description: response.status,

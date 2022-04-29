@@ -35,7 +35,7 @@ export default function Dashboard() {
           <Button onClick={() => setAdminData(undefined)} variant='ghost' colorScheme='gray' leftIcon={<FiLogOut />}>Logout</Button>
         </Stack>
         <Divider orientation='vertical' borderColor='gray.300' />
-        <Provider url={'/admins/'+adminData.id} options={{ data: [], cache: 'no-cache' }}>
+        <Provider url={`/admins/${adminData.id}`} options={{ data: [], cache: 'no-cache' }}>
           <Outlet context={adminData} />
         </Provider>
       </Flex>

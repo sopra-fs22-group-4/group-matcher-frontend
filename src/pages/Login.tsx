@@ -12,7 +12,7 @@ import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
   const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
-  const { post, response } = useFetch()
+  const { post, response } = useFetch('/api/login')
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['email', 'password'])
@@ -21,7 +21,7 @@ export default function Login() {
     return <Navigate to='/dashboard' />
 
   const login = async (values: FormikValues) => {
-    const fetchedData = await post('/login', values)
+    const fetchedData = await post(values)
     if (response.ok) {
       setAdminData(fetchedData)
       navigate('/dashboard')

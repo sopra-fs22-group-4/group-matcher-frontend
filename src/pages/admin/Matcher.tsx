@@ -11,7 +11,7 @@ import { useFetch } from 'use-http'
 
 export default function Matcher() {
   const { matcherId } = useParams()
-  const { data: matcher } = useFetch<MatcherProps>('/matchers/'+matcherId, [matcherId])
+  const { data: matcher } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
 
   if (!matcher)
     return <Center h='100vh'><Spinner /></Center>

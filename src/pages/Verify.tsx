@@ -9,7 +9,7 @@ import { ReactComponent as CheckmarkIllustration } from '../assets/checkmark.svg
 
 export default function Verify() {
   const { adminId } = useParams()
-  const { put } = useFetch(`/admins/${adminId}/verify`)
+  const { put } = useFetch(`api/admins/${adminId}/verify`)
   const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
   const navigate = useNavigate()
   const toast = useToast()

@@ -11,13 +11,13 @@ import { EmailField, NameField, PasswordField } from '../forms/AuthFields'
 import { baseSchema } from '../forms/Schemas'
 
 export default function Register() {
-  const { post, response } = useFetch()
+  const { post, response } = useFetch('/api/register')
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(['name', 'email', 'password', 'repeatPassword'])
 
   const register = async (values: FormikValues) => {
-    const adminData = await post('/register', values)
+    const adminData = await post(values)
     response.ok ? navigate('/') : toast({ title: adminData.message, status: 'error' })
   }
 
