@@ -4,8 +4,8 @@
     "/**": "index.html"
   },
   "proxies": {
-    "/matchers": {
-      "origin": "https://group-matcher-api.herokuapp.com/matchers"
+    "/": {
+      "origin": "https://group-matcher-api.herokuapp.com/"
     }
   }
 }

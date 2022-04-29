@@ -1,8 +1,6 @@
 import { Icon } from '@chakra-ui/icons'
 import {
-  Button, ButtonGroup, Center, Flex, Heading, HStack, Spinner, Stack, Stat, StatArrow, StatGroup, StatHelpText,
-  StatLabel,
-  StatNumber, Text
+  Button, ButtonGroup, Center, Flex, Heading, HStack, Spinner, Stack, Stat, StatGroup, StatLabel, StatNumber
 } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
 import React from 'react'
