@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Heading, HStack, Stack, Text } from '@chakra-ui/react'
+import { Button, Heading, HStack, RadioGroup, Stack, Text } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai'
@@ -38,3 +38,12 @@ export function SubmissionItem({ submission }: { submission: SubmissionProps }) 
   )
 }
 
+export function AnswersList(question: QuestionProps) {
+  return (
+      <RadioGroup>
+        <Stack>
+        {question.answers?.map(answer => <Text key={answer.id} children={answer.content} />)}
+        </Stack>
+      </RadioGroup>
+  )
+}

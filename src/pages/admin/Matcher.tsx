@@ -5,16 +5,16 @@ import {
 import { parseISO } from 'date-fns'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai'
 import { HiCalendar, HiLightBulb, HiUser } from 'react-icons/hi'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
+import { AnswersList } from '../../components/Cards'
 import StudentCreator from './StudentCreator'
 
-const demoStudents = [{ email: 'email1@email.com', submissionTimestamp: '22.05.22' },{ email: 'email1@email.com', submissionTimestamp: '22.05.22' }]
-
 export default function Matcher() {
+  const [expandedRows, setExpandedRows] = useState<any[]>([])
   const { matcherId } = useParams()
   const { data: matcher } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
 
@@ -63,19 +63,21 @@ export default function Matcher() {
               <Button as={Link} to='questions/create' colorScheme='blue' variant='ghost' px={4} py={2} size='sm' fontWeight={400}
                       color='white' bg='green.500' _hover={{ bg: 'green.400' }} leftIcon={<AiOutlinePlus />}>New question</Button>
             </HStack>
-            <DataTable value={matcher.questions} autoLayout stripedRows>
-              <Column style={{ width: '2rem' }} field='ordinalNum' header='#' />
-              <Column field='content' header='Question' />
-              <Column header='Possible Answers' />
-              <Column style={{ width: '2rem' }} body={(questions) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
+            <DataTable value={matcher.questions} autoLayout stripedRows expandedRows={expandedRows} emptyMessage='No questions found.'
+                       onRowToggle={(event) => setExpandedRows(event.data)} rowExpansionTemplate={AnswersList}>
+              <Column expander />
+              <Column style={{ paddingInline: 0 }} field='ordinalNum' header='#' />
+              <Column style={{ minWidth: '12rem' }} field='content' header='Question' />
+              <Column field='answers' header='Answers' body={(question) => question.answers.length} />
+              <Column style={{ paddingInline: 0 }} body={(question) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
             </DataTable>
           </Stack>
           <Stack>
             <StudentCreator />
-            <DataTable value={demoStudents} stripedRows autoLayout>
+            <DataTable value={matcher.students} stripedRows autoLayout emptyMessage='No students found.'>
               <Column field='email' header='Email' />
               <Column field='submissionTimestamp' header='Submission Date' />
-              <Column style={{ width: '2rem' }} body={(student) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
+              <Column style={{ paddingInline: 0 }} body={(student) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
             </DataTable>
           </Stack>
         </Flex>

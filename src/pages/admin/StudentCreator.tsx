@@ -2,7 +2,7 @@ import {
   Button, Heading, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
   Text, useDisclosure, useToast
 } from '@chakra-ui/react'
-import { Form, Formik, FormikValues } from 'formik'
+import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
 import { useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
@@ -28,18 +28,19 @@ export default function StudentCreator() {
         <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
           <ModalOverlay />
           <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={addStudents}>
-            <ModalContent>
-              <ModalHeader>Add Students</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody as={Form} textAlign='center'>
-                <FileUploader />
-                <Text>or</Text>
-                <StudentsField />
-              </ModalBody>
-              <ModalFooter justifyContent='center'>
-                <Button type='submit'>Submit</Button>
-              </ModalFooter>
-            </ModalContent>
+            {(formProps: FormikProps<any>) =>
+                <ModalContent as={Form}>
+                  <ModalHeader>Add Students</ModalHeader>
+                  <ModalCloseButton />
+                  <ModalBody textAlign='center'>
+                    <FileUploader />
+                    <Text>or</Text>
+                    <StudentsField />
+                  </ModalBody>
+                  <ModalFooter justifyContent='center'>
+                    <Button type='submit' isDisabled={!formProps.errors} isLoading={formProps.isSubmitting}>Submit</Button>
+                  </ModalFooter>
+                </ModalContent>}
           </Formik>
         </Modal>
       </HStack>

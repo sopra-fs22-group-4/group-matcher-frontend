@@ -1,7 +1,7 @@
 import { Center, Flex, Heading, HStack, Spinner, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { useFetch } from 'use-http'
-import { AddFormButton } from '../../components/Buttons'
+import { AddMatcherButton } from '../../components/Buttons'
 import { MatcherCard, SubmissionItem } from '../../components/Cards'
 import { GradientLineChart } from '../../components/Charts'
 
@@ -25,7 +25,7 @@ export default function Overview() {
           <HStack spacing={5}>
             {matchers[0] && <MatcherCard matcher={matchers[0]} colorIndex={2} path='matchers/' />}
             {matchers[1] && <MatcherCard matcher={matchers[1]} colorIndex={1} path='matchers/' />}
-            <AddFormButton />
+            <AddMatcherButton />
           </HStack>
         </Stack>
         <Flex flexGrow={1} gap={20}>

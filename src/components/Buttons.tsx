@@ -5,10 +5,10 @@ import { IconType } from 'react-icons'
 import { MdAddCircleOutline } from 'react-icons/md'
 import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 
-export function AddFormButton() {
+export function AddMatcherButton() {
   return <Button minH='8rem' h='full' rounded='2xl' variant='outline' border='2px dashed' borderColor='#999999'
                  iconSpacing={0} leftIcon={<Icon as={MdAddCircleOutline} fontSize='150%' color='#999999' m={2}/>}
-                 flexDir='column' color='purple.400' as={Link} to='matchers/create'>Add form</Button>
+                 flexDir='column' color='purple.400' as={Link} to='matchers/create'>Add matcher</Button>
 }
 
 export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconType }) {

@@ -3,7 +3,7 @@ import {
   Button, Divider, Heading, HStack, Stack, TabList, TabPanel, TabPanels, Tabs, Text, useToast, VStack
 } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { ReactComponent as CheckmarkIllustration } from '../../assets/checkmark.svg'
@@ -19,13 +19,11 @@ export default function QuestionCreator() {
   const toast = useToast()
   const schema = baseSchema.pick(['content', 'questionType', 'answers'])
 
+  useEffect(() => () => window.location.reload(),[]) // See MatcherCreator for comment
+
   const createQuestion = async (values: FormikValues) => {
     const questionData = await post(values)
-    response.ok ? navigate('/dashboard') : toast({
-      title: questionData.message,
-      description: response.status,
-      status: 'error'
-    })
+    response.ok ? navigate('/dashboard') : toast({ title: questionData.message, status: 'error' })
   }
 
   return (
@@ -68,24 +66,10 @@ export default function QuestionCreator() {
                     </TabPanel>
                   </TabPanels>
                 </Stack>
-                <TabNavButtons lastIndex={3} />
+                <TabNavButtons lastIndex={2} />
               </Tabs>}
         </Formik>
         <LineBackground viewBox='400 200 1500 500' />
       </VStack>
-      // <VStack h='100vh' justify='center' spacing={10}>
-      //   <Heading color='blue.500'>Form for Creating A Question</Heading>
-      //   <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={createQuestion}>
-      //     {(formProps: FormikProps<any>) =>
-      //         <VStack as={Form} spacing={8}>
-      //           <QuestionTitleField />
-      //
-      //
-      //           <ButtonGroup>
-      //             <Button colorScheme='blue' px={10} type='submit'>Post Question</Button>
-      //           </ButtonGroup>
-      //         </VStack>}
-      //   </Formik>
-      // </VStack>
   )
 }

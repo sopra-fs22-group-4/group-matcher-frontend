@@ -180,7 +180,7 @@
 }
 
 .pi {
-    font-size: 1rem;
+    font-size: 0.8rem;
 }
 
 .p-link {
@@ -2544,9 +2544,6 @@
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-init,
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-save,
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-cancel {
-    width: 2rem;
-    height: 2rem;
-    color: #6c757d;
     border: 0 none;
     background: transparent;
     border-radius: 50%;
