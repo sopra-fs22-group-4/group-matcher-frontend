@@ -5,7 +5,7 @@
   },
   "proxies": {
     "/api": {
-      "origin": "https://group-matcher-api.herokuapp.com/"
+      "origin": "https://group-matcher-api.herokuapp.com/api/"
     }
   }
 }

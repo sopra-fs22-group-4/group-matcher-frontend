@@ -14,7 +14,5 @@ D
 public/manifest.json,4\2\42e89cd2213b9d5dfae4f63522702c623170d792
 H
 src/assets/checkmark.svg,5\1\51c28bc6630e02427b452f43fdca814de115c4ec
-;
-static.json,9\7\977dbc6bfab9949c769d3470d3c716418f16632f
 <
 package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
