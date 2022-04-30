@@ -1,4 +1,3 @@
-import { Icon } from '@chakra-ui/icons'
 import { Box, Button, Flex, Heading, HStack, Text, useToast, VStack } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
@@ -6,12 +5,12 @@ import { GrUndo } from 'react-icons/gr'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
-import { ReactComponent as BackgroundIllustration } from '../assets/bg.svg'
+import { LineBackground } from '../components/Backgrounds'
 import { EmailField, PasswordField } from '../forms/AuthFields'
 import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
-  const [adminData, setAdminData] = useLocalStorage<AdminData | undefined>('adminData', undefined)
+  const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
   const { post, response } = useFetch('/api/login')
   const navigate = useNavigate()
   const toast = useToast()
@@ -30,14 +29,13 @@ export default function Login() {
   }
 
   return (
-      <VStack h='100vh' justify='center' position='relative' overflow='hidden' spacing={12}>
+      <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>
         <VStack>
           <Heading>Login</Heading>
           <Text textAlign='center' w='md' color='gray.600'>
             Login to your personal account to view and manage your ongoing and past group matching projects.
           </Text>
         </VStack>
-        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' transform='scaleY(-1)' right='-80%' top='-25%' zIndex={-1} />
         <Formik initialValues={schema.getDefaultFromShape()} onSubmit={login}>
           {(formProps: FormikProps<any>) =>
               <VStack as={Form} spacing={8}>
@@ -61,6 +59,7 @@ export default function Login() {
               </VStack>}
         </Formik>
         <Button as={Link} to='/' leftIcon={<GrUndo />} variant='ghost'>Back</Button>
+        <LineBackground transform='scaleY(-1)' viewBox='-1400 0 1500 500' />
       </VStack>
   )
 }

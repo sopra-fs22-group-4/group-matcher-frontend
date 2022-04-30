@@ -16,6 +16,7 @@ import QuestionCreator from './pages/admin/QuestionCreator'
 import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
+import Redirect from './pages/Redirect'
 import Register from './pages/Register'
 import MatcherQuiz from './pages/students/MatcherQuiz'
 import StudentAccess from './pages/students/StudentAccess'
@@ -36,11 +37,12 @@ export default function App() {
               <Route path='/verify/:adminId' element={<Verify />}/>
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route index element={<Overview />} />
-                <Route path='create-matcher' element={<MatcherCreator />} />
                 <Route path='matchers' element={<Matchers />} />
+                <Route path='matchers/create' element={<MatcherCreator />} />
                 <Route path='matchers/:matcherId' element={<Matcher />} />
-                <Route path='matchers/:matcherId/create-question' element={<QuestionCreator />} />
+                <Route path='matchers/:matcherId/questions/create' element={<QuestionCreator />} />
               </Route>
+              <Route path='/redirect/:path' element={<Redirect />} />
               <Route path='/matchers/:matcherId' element={<StudentAccess />} />
               <Route path='/matchers/:matcherId/quiz' element={<MatcherQuiz />} />
               <Route path='*' element={<Error/>}/>

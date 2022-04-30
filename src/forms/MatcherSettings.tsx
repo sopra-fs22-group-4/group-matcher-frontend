@@ -1,15 +1,17 @@
 import { Icon } from '@chakra-ui/icons'
 import {
-  ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Radio, RadioGroup, RadioProps,
-  Stack, Text, useStyleConfig, VStack
+  Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, InputGroup,
+  InputRightElement, Radio, RadioGroup, RadioProps, Stack, Text, useStyleConfig, VStack
 } from '@chakra-ui/react'
-import { Field, FieldProps, useField } from 'formik'
+import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useField } from 'formik'
 import { Calendar } from 'primereact/calendar'
 import { FileUpload, FileUploadHeaderTemplateOptions } from 'primereact/fileupload'
 import { ProgressBar } from 'primereact/progressbar'
 import React from 'react'
 import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
+import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
+import { MdOutlineClose } from 'react-icons/md'
 
 const ChakraCalendar = chakra(Calendar)
 const ChakraFileUpload = chakra(FileUpload)
@@ -47,7 +49,6 @@ export function MatchingLogicField() {
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
   )
-
 }
 
 function ItemTemplate(file: { name: string }) {
@@ -67,14 +68,35 @@ function ItemTemplate(file: { name: string }) {
   )
 }
 
-export function ParticipantsField() {
+export function FileUploader() {
   const header = (options: FileUploadHeaderTemplateOptions) => <ButtonGroup m={2}>{options.chooseButton}</ButtonGroup>
   const empty = () =>
       <VStack>
         <Icon boxSize='6rem' as={AiOutlineCloudUpload} color='gray.200' />
-        <Text color='gray.600'>Drag and drop a file here or</Text>
+        <Text color='gray.600'>drag & drop a file here</Text>
       </VStack>
   return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse' rounded='3xl'
                  h='2xs' justify='center' m={8} url='./upload' chooseLabel='Select file'
                  itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
+}
+
+export function StudentsField() {
+  return (
+      <FieldArray name='students' children={(fieldArrayProps: FieldArrayRenderProps) =>
+          <Stack p={2} maxH='10rem' overflow='auto'>
+            {fieldArrayProps.form.values.students.map((student: string, index: number) =>
+                <Field key={index} name={`students.${index}`} children={(fieldProps: FieldProps) =>
+                    <FormControl as={HStack} isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+                      <Text textAlign='center' w='1rem'>{index+1}</Text>
+                      <InputGroup>
+                        <Input {...fieldProps.field} variant='flushed' placeholder='Enter student email' />
+                        <InputRightElement>
+                          <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove student'
+                                      cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
+                        </InputRightElement>
+                      </InputGroup>
+                    </FormControl>} />)}
+            <Button size='sm' py={2} variant='ghost' leftIcon={<BiPlus />} onClick={() => fieldArrayProps.push('')}>Add</Button>
+          </Stack>} />
+  )
 }

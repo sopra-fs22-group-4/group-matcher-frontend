@@ -2495,43 +2495,16 @@
     border-width: 0 0 1px 0;
     border-radius: 0;
 }
-.p-datatable .p-datatable-header {
-    background: #f8f9fa;
-    color: #343a40;
-    border: 1px solid #dee2e6;
-    border-width: 1px 0 1px 0;
-    padding: 1rem 1rem;
-    font-weight: 700;
-}
-.p-datatable .p-datatable-footer {
-    background: #f8f9fa;
-    color: #343a40;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
-    font-weight: 700;
-}
-.p-datatable .p-datatable-thead > tr > th {
+.p-datatable .p-datatable-thead > tr > th,
+.p-datatable .p-datatable-tfoot > tr > td,
+.p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 1px 0;
-    font-weight: 700;
-    color: #343a40;
-    background: #f8f9fa;
+    padding: 0.5rem 0.8rem;
+    font-weight: 400;
     transition: box-shadow 0.2s;
-}
-.p-datatable .p-datatable-tfoot > tr > td {
-    text-align: left;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 1px 0;
-    font-weight: 700;
-    color: #343a40;
-    background: #f8f9fa;
+    font-size: var(--chakra-fontSizes-sm);
 }
 .p-datatable .p-sortable-column .p-sortable-column-icon {
-    color: #343a40;
     margin-left: 0.5rem;
 }
 .p-datatable .p-sortable-column .p-sortable-column-badge {
@@ -2545,10 +2518,6 @@
 }
 .p-datatable .p-sortable-column:not(.p-highlight):not(.p-sortable-disabled):hover {
     background: #e9ecef;
-    color: #343a40;
-}
-.p-datatable .p-sortable-column:not(.p-highlight):not(.p-sortable-disabled):hover .p-sortable-column-icon {
-    color: #343a40;
 }
 .p-datatable .p-sortable-column.p-highlight {
     background: #EFF6FF;
@@ -2569,15 +2538,7 @@
     outline: 0 none;
 }
 .p-datatable .p-datatable-tbody > tr {
-    background: #ffffff;
-    color: #495057;
     transition: box-shadow 0.2s;
-}
-.p-datatable .p-datatable-tbody > tr > td {
-    text-align: left;
-    border: 1px solid #dee2e6;
-    border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
 }
 .p-datatable .p-datatable-tbody > tr > td .p-row-toggler,
 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-init,
@@ -2674,7 +2635,7 @@
     border-width: 0 1px 1px 1px;
 }
 .p-datatable.p-datatable-gridlines .p-datatable-thead > tr > th {
-    border-width: 1px 1px 1px 1px;
+    border-width: 1px;
 }
 .p-datatable.p-datatable-gridlines .p-datatable-tbody > tr > td {
     border-width: 1px;
@@ -2682,8 +2643,14 @@
 .p-datatable.p-datatable-gridlines .p-datatable-tfoot > tr > td {
     border-width: 1px;
 }
+
+.p-datatable.p-datatable-striped .p-datatable-tbody {
+    background: rgba(222, 219, 255, 0.4);
+    border: solid #dee2e6;
+    border-width: 0.5px 0 0.5px 0;
+}
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd {
-    background: #fcfcfc;
+    background: white;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd.p-highlight {
     background: #EFF6FF;
@@ -2699,19 +2666,19 @@
     background: #fcfcfc;
 }
 .p-datatable.p-datatable-sm .p-datatable-header {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-datatable.p-datatable-sm .p-datatable-tbody > tr > td {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-datatable.p-datatable-sm .p-datatable-tfoot > tr > td {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-datatable.p-datatable-sm .p-datatable-footer {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-datatable.p-datatable-lg .p-datatable-header {
     padding: 1.25rem 1.25rem;
@@ -2746,7 +2713,7 @@
     color: #343a40;
     border: 1px solid #dee2e6;
     border-width: 1px 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
 }
 .p-dataview .p-dataview-content {
@@ -2762,9 +2729,9 @@
 .p-dataview .p-dataview-footer {
     background: #f8f9fa;
     color: #343a40;
-    border: 1px solid #dee2e6;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -2786,7 +2753,7 @@
     color: #343a40;
     border: 1px solid #dee2e6;
     border-width: 1px 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
 }
 .p-datascroller .p-datascroller-content {
@@ -2802,9 +2769,9 @@
 .p-datascroller .p-datascroller-footer {
     background: #f8f9fa;
     color: #343a40;
-    border: 1px solid #dee2e6;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
     border-bottom-left-radius: 6px;
     border-bottom-right-radius: 6px;
@@ -3576,21 +3543,21 @@
     color: #343a40;
     border: 1px solid #dee2e6;
     border-width: 1px 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
 }
 .p-treetable .p-treetable-footer {
     background: #f8f9fa;
     color: #343a40;
-    border: 1px solid #dee2e6;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
     font-weight: 700;
 }
 .p-treetable .p-treetable-thead > tr > th {
     text-align: left;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
+    padding: 1rem;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
     font-weight: 700;
     color: #343a40;
@@ -3599,8 +3566,8 @@
 }
 .p-treetable .p-treetable-tfoot > tr > td {
     text-align: left;
-    padding: 1rem 1rem;
-    border: 1px solid #dee2e6;
+    padding: 1rem;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
     font-weight: 700;
     color: #343a40;
@@ -3643,9 +3610,9 @@
 }
 .p-treetable .p-treetable-tbody > tr > td {
     text-align: left;
-    border: 1px solid #dee2e6;
+    border: solid #dee2e6;
     border-width: 0 0 1px 0;
-    padding: 1rem 1rem;
+    padding: 1rem;
 }
 .p-treetable .p-treetable-tbody > tr > td .p-treetable-toggler {
     width: 2rem;
@@ -3729,16 +3696,16 @@
     padding: 0.875rem 0.875rem;
 }
 .p-treetable.p-treetable-sm .p-treetable-thead > tr > th {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-treetable.p-treetable-sm .p-treetable-tbody > tr > td {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-treetable.p-treetable-sm .p-treetable-tfoot > tr > td {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-treetable.p-treetable-sm .p-treetable-footer {
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
 }
 .p-treetable.p-treetable-lg .p-treetable-header {
     padding: 1.25rem 1.25rem;
@@ -4288,7 +4255,7 @@
     height: 0.25rem;
 }
 .p-fileupload .p-fileupload-row > div {
-    padding: 1rem 1rem;
+    padding: 1rem;
 }
 .p-fileupload.p-fileupload-advanced .p-message {
     margin-top: 0;
@@ -4396,7 +4363,7 @@
 .p-dock .p-dock-list {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.5rem 0.5rem;
+    padding: 0.5rem;
     border-radius: 0.5rem;
 }
 .p-dock .p-dock-item {

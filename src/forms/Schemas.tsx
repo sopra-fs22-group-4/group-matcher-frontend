@@ -1,4 +1,4 @@
-import { array, date, InferType, object, ref, setLocale, string } from 'yup'
+import { array, date, object, ref, setLocale, string } from 'yup'
 
 setLocale({
   string: {
@@ -19,11 +19,9 @@ export const baseSchema = object({
       .matches(/[a-zA-Z]/, 'Enter at least one character')
       .matches(/\d/, 'Enter at least one number'),
   repeatPassword: string().ensure().required().oneOf([ref('password'), null], 'Passwords do not match'),
-  question: object({
-    title: string().ensure().required().min(10).max(200),
-    type: string().ensure().required().oneOf(['text', 'single choice', 'multiple choice']),
-    answers: array().of(string().ensure().required().min(1).max(20)).default(['', ''])
-        .when('type', { is: 'single choice' || 'multiple choice', then: (answerSchema: InferType<any>) => answerSchema.min(2) })
-  }),
-  startDate: date(), endDate: date()
+  content: string().ensure().required().min(1).max(200),
+  questionType: string().ensure().required().oneOf(['TEXT', 'SINGLE_CHOICE', 'MULTIPLE_CHOICE']),
+  answers: array().of(string().ensure().required().min(1).max(200)).default(['', '']),
+  startDate: date(), endDate: date(),
+  students: array().of(string().ensure().email('Not a valid email address')).default([])
 })

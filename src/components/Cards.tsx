@@ -11,9 +11,9 @@ const bgColors: Array<string> = ['purple', 'blue', 'orange', 'green']
 export function MatcherCard({ matcher, colorIndex, path }: { matcher: MatcherProps, colorIndex: number, path?: string }) {
   const bgColor = bgColors[colorIndex % bgColors.length]
   return (
-      <Button as={Link} to={(path || '/') + matcher.id} p={5} h='3xs' width='sm' rounded='2xl' position='relative' overflow='hidden'
+      <Button as={Link} to={(path || '/') + matcher.id} p={5} minH='full' h='fit-content' w='xs' rounded='2xl' position='relative' overflow='hidden'
              bg={bgColor+'.500'} color='white' boxShadow='hover' _hover={{ transform: 'translateY(-0.5rem)' }} _active={{ bg: bgColor+'.600' }}>
-        <Stack w='full'>
+        <Stack boxSize='full' spacing={8} justify='space-between'>
           <Heading whiteSpace='normal' fontSize='3xl'>{matcher.courseName}</Heading>
           <Stack fontWeight={600} spacing={0} justify='end' zIndex={1}>
             <Text>Deadline: {parseISO(matcher.dueDate).toLocaleDateString()}</Text>
@@ -37,3 +37,4 @@ export function SubmissionItem({ submission }: { submission: SubmissionProps }) 
       </HStack>
   )
 }
+

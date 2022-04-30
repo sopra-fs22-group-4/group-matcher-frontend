@@ -1,10 +1,35 @@
 declare interface MatcherProps {
   id: number;
+  university: string;
   courseName: string;
   publishDate: string;
   dueDate: string;
-  active: boolean
+  createdAt: string;
+  active: boolean;
+  published: boolean;
+  pastDue: boolean;
   submissionsCount: number;
+  matchingStrategy: string;
+  groupSize: number;
+  questions: Array<QuestionProps>;
+  admins: Array<AdminProps>;
+  students: Array<StudentProps>;
+}
+
+declare interface QuestionProps {
+  id: number;
+  ordinalNum: number;
+  content: string;
+  weight: number;
+  questionType: string;
+  questionCategory: string;
+  answers: Array<AnswerProps>;
+}
+
+declare interface AnswerProps {
+  id: number;
+  ordinalNum: number;
+  content: string;
 }
 
 declare interface SubmissionProps {
@@ -14,7 +39,11 @@ declare interface SubmissionProps {
   submissionTimestamp: string;
 }
 
-declare interface AdminData {
+declare interface StudentProps extends SubmissionProps {
+  id: number;
+}
+
+declare interface AdminProps {
   id: number;
   name: string;
   email: string;

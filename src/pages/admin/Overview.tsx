@@ -1,11 +1,9 @@
-import { Flex, Heading, HStack, Stack } from '@chakra-ui/react'
-import { ScriptableContext } from 'chart.js'
-import { Chart } from 'primereact/chart'
+import { Center, Flex, Heading, HStack, Spinner, Stack } from '@chakra-ui/react'
 import React from 'react'
 import { useFetch } from 'use-http'
 import { AddFormButton } from '../../components/Buttons'
 import { MatcherCard, SubmissionItem } from '../../components/Cards'
-
+import { GradientLineChart } from '../../components/Charts'
 
 const demoSubmissions: Array<SubmissionProps> = [
     { name: 'Student 1', courseName: 'Software Engineering FS22', submissionTimestamp: '2022-04-28T12:11:48Z', email: 'student1@uzh.ch' },
@@ -16,53 +14,28 @@ const demoSubmissions: Array<SubmissionProps> = [
 export default function Overview() {
   const { data: matchers } = useFetch<Array<MatcherProps>>('/matchers', [])
   const { data: latestSubmissions } = useFetch<Array<SubmissionProps>>('/submissions/latest', [])
-  const activeMatchers = matchers?.filter(matcher => matcher.active) || []
+
+  if (!matchers || !latestSubmissions)
+    return <Center h='100vh'><Spinner /></Center>
 
   return (
-      <Stack flexGrow={1} spacing={10} p={12}>
-        <Heading fontSize='xl'>Active Group Matchers</Heading>
-        <HStack spacing={5}>
-          {activeMatchers[0] && <MatcherCard matcher={activeMatchers[0]} colorIndex={2} path='matchers/' />}
-          {activeMatchers[1] && <MatcherCard matcher={activeMatchers[1]} colorIndex={1} path='matchers/' />}
-          <AddFormButton />
-        </HStack>
-        <Flex gap={20}>
+      <Stack flexGrow={1} justify='space-between' spacing={20} p={12}>
+        <Stack spacing={4}>
+          <Heading fontSize='xl'>Recent Matchers</Heading>
+          <HStack spacing={5}>
+            {matchers[0] && <MatcherCard matcher={matchers[0]} colorIndex={2} path='matchers/' />}
+            {matchers[1] && <MatcherCard matcher={matchers[1]} colorIndex={1} path='matchers/' />}
+            <AddFormButton />
+          </HStack>
+        </Stack>
+        <Flex flexGrow={1} gap={20}>
           <Stack flexGrow={1} pr={10} spacing={5}>
             <Heading fontSize='xl'>Recent Submissions</Heading>
-            {demoSubmissions.map((submission, index) =>
-                <SubmissionItem key={index} submission={submission} />)}
+            {demoSubmissions.map((submission, index) => <SubmissionItem key={index} submission={submission} />)}
           </Stack>
-          <Stack w='md' spacing={6}>
+          <Stack minW='40%' spacing={6}>
             <Heading fontSize='xl'>Activity</Heading>
-            <Chart type='line' data={{
-              labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-              datasets: [{ data: [25, 29, 26, 15, 14, 11, 20],
-                borderColor: (context: ScriptableContext<any>) => {
-                  if (!context?.chart?.chartArea)
-                    return;
-                  const gradient = context.chart.ctx.createLinearGradient(0, context.chart.chartArea.bottom, 0, context.chart.chartArea.top)
-                  gradient.addColorStop(0, '#344FDB')
-                  gradient.addColorStop(0.6, '#CF6BFF')
-                  gradient.addColorStop(1, '#CF6BFF')
-                  return gradient
-                },
-                pointRadius: 0,
-                fill: 'start',
-                backgroundColor: 'rgba(177,255,140,0.1)',
-                tension: .2 }]
-            }} options={{
-              aspectRatio: 1,
-              scales: {
-                x: {
-                  ticks: { color: '#999999', font: { family: '"DM Sans", sans-serif', size: 10 } },
-                  grid: { display: false } },
-                y: {
-                  min: 0, max: 50,
-                  ticks: { color: '#999999', font: { family: '"DM Sans", sans-serif', size: 10 } },
-                  grid: { color: '#ebedef', borderDash: [8,4] } }
-              },
-              plugins: {legend: { display: false } }
-            }} />
+            <GradientLineChart labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']} data={[25, 29, 26, 15, 14, 11, 20]} />
           </Stack>
         </Flex>
       </Stack>

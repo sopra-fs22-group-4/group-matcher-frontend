@@ -2,17 +2,17 @@ import { Icon } from '@chakra-ui/icons'
 import {
   Button, Divider, Heading, HStack, SimpleGrid, Stack, TabList, TabPanel, TabPanels, Tabs, Text, useToast, VStack
 } from '@chakra-ui/react'
-import { ReactComponent as BackgroundIllustration } from 'assets/bg.svg'
 import { ReactComponent as CheckmarkIllustration } from 'assets/checkmark.svg'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import { NameField } from 'forms/AuthFields'
 import { CircleTab, TabNavButtons, TabProgress } from 'forms/FormProgress'
-import { DateField, MatchingLogicField, ParticipantsField } from 'forms/MatcherSettings'
+import { DateField, FileUploader, MatchingLogicField } from 'forms/MatcherSettings'
 import { baseSchema } from 'forms/Schemas'
 import React from 'react'
 import { AiOutlineAudit, AiOutlineBank } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
+import { LineBackground } from '../../components/Backgrounds'
 
 export default function MatcherCreator() {
   const { post, response } = useFetch('/matchers')
@@ -22,12 +22,11 @@ export default function MatcherCreator() {
 
   const createMatcher = async (values: FormikValues) => {
     const matcherData = await post(values)
-    response.ok ? navigate('..') : toast({ title: matcherData.message, status: 'error' })
+    response.ok ? navigate('/redirect/dashboard') : toast({ title: matcherData.message, status: 'error' })
   }
 
   return (
-      <VStack flexGrow={1} position='relative' overflow='hidden' spacing={8}>
-        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' left='-60%' top='-40%' zIndex={-1} />
+      <VStack flexGrow={1} p={4} spacing={5} position='relative'>
         <VStack spacing={4} bg='white' p={2}>
           <Heading fontSize='3xl'>Create Group Matcher</Heading>
           <Text color='gray.600' textAlign='center' lineHeight={1.5} w='md'>
@@ -60,9 +59,9 @@ export default function MatcherCreator() {
                       </SimpleGrid>
                     </TabPanel>
                     <TabPanel px={0}>
-                      <Heading fontSize='3xl'>Participants</Heading>
+                      <Heading fontSize='3xl'>Students</Heading>
                       You can restrict the access to the matching quiz to specific students by providing their e-mail addresses.
-                      <ParticipantsField />
+                      <FileUploader />
                     </TabPanel>
                     <TabPanel px={0}>
                       <Heading fontSize='3xl'>How should groups be matched?</Heading>
@@ -82,6 +81,7 @@ export default function MatcherCreator() {
                 <TabNavButtons lastIndex={3} />
               </Tabs>}
         </Formik>
+        <LineBackground viewBox='400 200 1500 500' />
       </VStack>
   )
 }
