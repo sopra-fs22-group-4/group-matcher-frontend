@@ -67,7 +67,7 @@ export default function Matcher() {
               <Column style={{ width: '2rem' }} field='ordinalNum' header='#' />
               <Column field='content' header='Question' />
               <Column header='Possible Answers' />
-              <Column style={{ width: '2rem' }} body={(student) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
+              <Column style={{ width: '2rem' }} body={(questions) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
             </DataTable>
           </Stack>
           <Stack>

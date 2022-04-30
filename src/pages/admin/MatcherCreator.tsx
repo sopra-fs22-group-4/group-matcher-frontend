@@ -8,7 +8,7 @@ import { NameField } from 'forms/AuthFields'
 import { CircleTab, TabNavButtons, TabProgress } from 'forms/FormProgress'
 import { DateField, FileUploader, MatchingLogicField } from 'forms/MatcherSettings'
 import { baseSchema } from 'forms/Schemas'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AiOutlineAudit, AiOutlineBank } from 'react-icons/ai'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
@@ -20,9 +20,13 @@ export default function MatcherCreator() {
   const toast = useToast()
   const schema = baseSchema.pick(['courseName', 'university', 'startDate', 'endDate'])
 
+  // Forces the page to reload when MatcherCreator is unmounted, allowing the new data
+  // to be correctly displayed in the Overview component. Yes I hate this
+  useEffect(() => () => window.location.reload(),[])
+
   const createMatcher = async (values: FormikValues) => {
     const matcherData = await post(values)
-    response.ok ? navigate('/redirect/dashboard') : toast({ title: matcherData.message, status: 'error' })
+    response.ok ? navigate('/dashboard') : toast({ title: matcherData.message, status: 'error' })
   }
 
   return (
