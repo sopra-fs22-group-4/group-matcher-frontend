@@ -10,7 +10,8 @@ export default function Matchers() {
       <Stack flexGrow={1} spacing={10} p={12}>
         <Heading>All Matchers</Heading>
         <Wrap spacing={8}>
-          {matchers?.map((matcher, index) => <MatcherCard key={index} matcher={matcher} colorIndex={index} />)}
+          {matchers?.map((matcher, index) =>
+              <MatcherCard key={index} matcher={matcher} colorIndex={index} />)}
         </Wrap>
       </Stack>
   )

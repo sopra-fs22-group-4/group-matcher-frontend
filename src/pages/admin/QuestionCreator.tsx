@@ -23,7 +23,7 @@ export default function QuestionCreator() {
 
   const createQuestion = async (values: FormikValues) => {
     const questionData = await post(values)
-    response.ok ? navigate('/dashboard') : toast({ title: questionData.message, status: 'error' })
+    response.ok ? navigate('/dashboard/matchers/'+matcherId) : toast({ title: questionData.message, status: 'error' })
   }
 
   return (
