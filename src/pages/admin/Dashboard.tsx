@@ -19,12 +19,12 @@ export default function Dashboard() {
 
   return (
       <Flex minH='100vh' minW='fit-content'>
-        <Stack flexGrow={1} maxW='fit-content' p={12} spacing={12} position='relative' borderRightWidth={1}>
+        <Stack flexGrow={1} maxW='fit-content' p={8} spacing={8} position='relative' borderRightWidth={1}>
           <Box>
             <Icon boxSize='5rem' rounded='full' p={3} bg='gray.50' as={AiOutlineUser} />
             <Heading p={3} fontSize='lg'>Hi, {adminData.name}</Heading>
           </Box>
-          <Stack as={ButtonGroup} spacing={10} variant='ghost' colorScheme='gray' w='12rem' flexGrow={1}>
+          <Stack as={ButtonGroup} spacing={6} variant='ghost' colorScheme='gray' w='12rem' flexGrow={1}>
             <SidebarButton to='' icon={FiGrid} />
             <SidebarButton to='matchers' isEnd={false} icon={FaRegClipboard} />
             <SidebarButton to='profile' icon={BiUser} />

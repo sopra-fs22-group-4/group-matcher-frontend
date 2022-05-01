@@ -1,7 +1,7 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, InputGroup,
-  InputRightElement, Radio, RadioGroup, RadioProps, Stack, Text, useStyleConfig, VStack
+  InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, RadioProps, Stack, Text, useStyleConfig, VStack
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useField } from 'formik'
 import { Calendar } from 'primereact/calendar'
@@ -43,11 +43,27 @@ export function MatchingLogicField() {
       <Field name='logic' children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <Stack as={RadioGroup} w='fit-content' spacing={5} fontWeight={500} my={8}>
-              <BorderRadio {...fieldProps.field} value='SIMILAR' children='Similar working styles and experience' />
+              <BorderRadio {...fieldProps.field} value='MOST_SIMILAR' children='Similar working styles and experience' />
               <BorderRadio {...fieldProps.field} value='LEAST_SIMILAR' children='Similar working styles but different levels of experience' />
             </Stack>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
+  )
+}
+
+export function GroupSizeField() {
+  return (
+      <Field name='groupSize' children={(fieldProps: FieldProps) =>
+          <FormControl as={HStack} isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+            <FormLabel>Group size:</FormLabel>
+            <NumberInput variant='flushed' w='4rem' min={0} max={8} onChange={(value) => fieldProps.form.setFieldValue('groupSize', value)}>
+              <NumberInputField {...fieldProps.field} textAlign='center' />
+              <NumberInputStepper>
+                <NumberIncrementStepper />
+                <NumberDecrementStepper />
+              </NumberInputStepper>
+            </NumberInput>
+          </FormControl>} />
   )
 }
 
@@ -71,12 +87,12 @@ function ItemTemplate(file: { name: string }) {
 export function FileUploader() {
   const header = (options: FileUploadHeaderTemplateOptions) => <ButtonGroup m={2}>{options.chooseButton}</ButtonGroup>
   const empty = () =>
-      <VStack>
-        <Icon boxSize='6rem' as={AiOutlineCloudUpload} color='gray.200' />
+      <VStack flexGrow={1}>
+        <Icon boxSize='30%' as={AiOutlineCloudUpload} color='gray.200' />
         <Text color='gray.600'>drag & drop a file here</Text>
       </VStack>
-  return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse' rounded='3xl'
-                 h='2xs' justify='center' m={8} url='./upload' chooseLabel='Select file'
+  return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse'
+                 justify='center' m={8} url='./upload' chooseLabel='Select file' rounded='3xl'
                  itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
 }
 

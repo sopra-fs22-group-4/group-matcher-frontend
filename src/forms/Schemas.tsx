@@ -1,4 +1,4 @@
-import { array, date, object, ref, setLocale, string } from 'yup'
+import { array, date, number, object, ref, setLocale, string } from 'yup'
 
 setLocale({
   string: {
@@ -22,6 +22,8 @@ export const baseSchema = object({
   content: string().ensure().required().min(1).max(200),
   questionType: string().ensure().required().oneOf(['TEXT', 'SINGLE_CHOICE', 'MULTIPLE_CHOICE']),
   answers: array().of(string().ensure().required().min(1).max(200)).default(['', '']),
-  startDate: date(), endDate: date(),
+  publishDate: date(),
+  dueDate: date(),
+  groupSize: number().default(3).min(0).max(8).required(),
   students: array().of(string().ensure().email('Not a valid email address')).default([])
 })

@@ -3,11 +3,12 @@ import {
   Button, Center, Flex, Heading, HStack, IconButton, Spinner, Stack, Stat, StatGroup, StatLabel, StatNumber
 } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
+import { lowerCase, startCase } from 'lodash'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai'
-import { HiCalendar, HiLightBulb, HiUser } from 'react-icons/hi'
+import { HiCalendar, HiQuestionMarkCircle, HiPuzzle, HiUser, HiAdjustments } from 'react-icons/hi'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { AnswersList } from '../../components/Cards'
@@ -19,39 +20,59 @@ export default function Matcher() {
   const { data: matcher } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
 
   if (!matcher?.id)
-    return <Center h='100vh'><Spinner /></Center>
+    return <Center flexGrow={1}><Spinner /></Center>
 
   return (
-      <Stack flexGrow={1} spacing={10} p={12}>
+      <Stack flexGrow={1} spacing={8} p={10}>
         <Heading fontSize='3xl'>{matcher.courseName}</Heading>
-        <StatGroup boxShadow='lg' p={5}>
-          <Stat>
+        <StatGroup boxShadow='lg' p={3}>
+          <Stat w='fit-content'>
             <HStack>
               <Icon as={HiUser} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Total Students</StatLabel>
+              <StatLabel>Students</StatLabel>
             </HStack>
             <StatNumber pl={6}>{matcher.students.length}</StatNumber>
           </Stat>
           <Stat>
             <HStack>
-              <Icon as={HiLightBulb} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Total Questions</StatLabel>
+              <Icon as={HiQuestionMarkCircle} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
+              <StatLabel>Questions</StatLabel>
             </HStack>
             <StatNumber pl={6}>{matcher.questions.length}</StatNumber>
+          </Stat>
+          <Stat>
+            <HStack>
+              <Icon as={HiAdjustments} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
+              <StatLabel>Group Size</StatLabel>
+            </HStack>
+            <StatNumber pl={6}>{matcher.groupSize}</StatNumber>
+          </Stat>
+          <Stat>
+            <HStack>
+              <Icon as={HiPuzzle} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
+              <StatLabel>Strategy</StatLabel>
+            </HStack>
+            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
+              {lowerCase(matcher.matchingStrategy.replace('_', ' '))}
+            </StatNumber>
           </Stat>
           <Stat>
             <HStack>
               <Icon as={HiCalendar} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
               <StatLabel>Publish Date</StatLabel>
             </HStack>
-            <StatNumber pl={6}>{parseISO(matcher.publishDate).toLocaleDateString()}</StatNumber>
+            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
+              {parseISO(matcher.publishDate).toLocaleDateString()}
+            </StatNumber>
           </Stat>
           <Stat>
             <HStack>
               <Icon as={HiCalendar} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
               <StatLabel>Due Date</StatLabel>
             </HStack>
-            <StatNumber pl={6}>{parseISO(matcher.dueDate).toLocaleDateString()}</StatNumber>
+            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
+              {parseISO(matcher.dueDate).toLocaleDateString()}
+            </StatNumber>
           </Stat>
           <Button colorScheme='green' borderColor='green.500' color='green.500' variant='outline' borderWidth={2}
                   boxShadow='lg' rounded='lg' leftIcon={<AiOutlineEdit />} p={6}>Edit</Button>

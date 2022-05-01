@@ -12,6 +12,7 @@ const theme = extendTheme({
       100: '#F6F6F6',
       200: '#EFF0F7',
       300: '#E6E6E6',
+      400: '#999999',
       500: '#A0A3BD',
       600: '#6F6C90',
       800: '#170F49'
@@ -48,13 +49,13 @@ const theme = extendTheme({
       defaultProps: { focusBorderColor: 'blue.100' },
       variants: {
         outline: {
-          field: { rounded: '3xl', h: 12, boxShadow: 'lg', minW: '2xs', _focus: { boxShadow: 'focus' } },
+          field: { rounded: '3xl', h: 12, boxShadow: 'lg', _focus: { boxShadow: 'focus' } },
           addon: { rounded: '3xl' }
         }
       }
     },
     FormLabel: {
-      baseStyle: { fontWeight: 500, m: 3, textTransform: 'capitalize' }
+      baseStyle: { fontWeight: 500, m: 1, textTransform: 'capitalize' }
     },
     FormError: {
       baseStyle: {
