@@ -2642,11 +2642,13 @@
 }
 
 .p-datatable.p-datatable-striped .p-datatable-tbody {
-    background: rgba(222, 219, 255, 0.4);
     border: solid #dee2e6;
     border-width: 0.5px 0 0.5px 0;
 }
-.p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd {
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr:not(.p-row-odd) {
+    background: rgba(222, 219, 255, 0.4);
+}
+.p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd + .p-datatable-row-expansion {
     background: white;
 }
 .p-datatable.p-datatable-striped .p-datatable-tbody > tr.p-row-odd.p-highlight {

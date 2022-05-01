@@ -4,8 +4,8 @@ import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
-import { ReactComponent as BackgroundIllustration } from '../assets/bg.svg'
 import { ReactComponent as CheckmarkIllustration } from '../assets/checkmark.svg'
+import { LineBackground } from '../components/Backgrounds'
 
 export default function Verify() {
   const { adminId } = useParams()
@@ -17,7 +17,7 @@ export default function Verify() {
   useEffect(() => {
     put().then(fetchedData => {
       setAdminData(fetchedData)
-      setTimeout(() => navigate('/dashboard'), 5000)
+      setTimeout(() => navigate('/dashboard'), 3000)
     }).catch(fetchedData => toast({ title: fetchedData.message, status: 'error' }))
   }, [])
 
@@ -25,8 +25,7 @@ export default function Verify() {
     return <Center h='100vh'><Spinner /></Center>
 
   return (
-      <VStack h='100vh' justify='center' position='relative' overflow='hidden' spacing={12}>
-        <Icon as={BackgroundIllustration} boxSize='max-content' position='absolute' transform='scaleY(-1)' right='-80%' top='-25%' zIndex={-1} />
+      <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>
         <VStack>
           <Heading>Thank you, {adminData.name}!</Heading>
           <Text textAlign='center' w='md' color='gray.600'>Your account has been successfully created.</Text>
@@ -34,8 +33,10 @@ export default function Verify() {
         <Container gap={6} w='lg' centerContent bg='white' boxShadow='lg' rounded='3xl' borderWidth={1} p={10}>
           <Icon as={CheckmarkIllustration} boxSize='10rem' />
           <Heading fontSize='lg'>Your account is ready for you.</Heading>
+          <Spinner />
           <Text>You will now be redirected to your dashboard...</Text>
         </Container>
+        <LineBackground transform='scaleY(-1)' viewBox='-1400 0 1500 500' />
       </VStack>
   )
 }

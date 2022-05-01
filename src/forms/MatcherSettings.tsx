@@ -1,7 +1,8 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, InputGroup,
-  InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Radio, RadioGroup, RadioProps, Stack, Text, useStyleConfig, VStack
+  InputRightElement, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper,
+  Radio, RadioGroup, RadioProps, Stack, Text, useStyleConfig, VStack
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps, useField } from 'formik'
 import { Calendar } from 'primereact/calendar'
@@ -30,7 +31,7 @@ export function DateField({ prefix }: { prefix: string }) {
 }
 
 function BorderRadio(props: RadioProps) {
-  const [_, fieldMeta] = useField('logic')
+  const [_, fieldMeta] = useField(props.name || '')
   return (
         <HStack p={3} rounded='xl' borderWidth={2} boxShadow='lg' borderColor={fieldMeta.value === props.value ? 'blue.500' : 'gray.200'}>
           <Radio {...props} />

@@ -4,10 +4,10 @@ import React from 'react'
 
 const ChakraProgressBar = chakra(ProgressBar)
 
-export function CircleTab({ index }: { index: number }) {
+export function CircleTab({ index, label }: { index: number, label?: string }) {
   const { selectedIndex } = useTabsContext()
   return <Tab boxSize={10} color={index <= selectedIndex ? 'whiteAlpha.900' : 'gray.600'}
-              bg={index <= selectedIndex ? 'blue.500' : 'gray.200'} _selected={{}}>{index+1}</Tab>
+              bg={index <= selectedIndex ? 'blue.500' : 'gray.200'} _selected={{}}>{label || index+1}</Tab>
 }
 
 export function TabProgress({ index }: { index: number }) {

@@ -41,6 +41,8 @@ declare interface SubmissionProps {
 
 declare interface StudentProps extends SubmissionProps {
   id: number;
+  questions: Array<QuestionProps>;
+  selectedAnswers: Array<AnswerProps>;
 }
 
 declare interface AdminProps {

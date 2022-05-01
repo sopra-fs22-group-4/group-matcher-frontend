@@ -3,12 +3,12 @@ import {
   Button, Center, Flex, Heading, HStack, IconButton, Spinner, Stack, Stat, StatGroup, StatLabel, StatNumber
 } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
-import { lowerCase, startCase } from 'lodash'
+import { lowerCase } from 'lodash'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
 import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai'
-import { HiCalendar, HiQuestionMarkCircle, HiPuzzle, HiUser, HiAdjustments } from 'react-icons/hi'
+import { HiAdjustments, HiCalendar, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { AnswersList } from '../../components/Cards'
@@ -89,7 +89,8 @@ export default function Matcher() {
               <Column expander />
               <Column style={{ paddingInline: 0 }} field='ordinalNum' header='#' />
               <Column style={{ minWidth: '12rem' }} field='content' header='Question' />
-              <Column field='answers' header='Answers' body={(question) => question.answers.length} />
+              <Column style={{ textTransform: 'capitalize' }} field='questionType' header='Type'
+                      body={(question) => lowerCase(question.questionType.replace('_', ' '))} />
               <Column style={{ paddingInline: 0 }} body={(question) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
             </DataTable>
           </Stack>

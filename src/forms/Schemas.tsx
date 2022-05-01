@@ -25,5 +25,5 @@ export const baseSchema = object({
   publishDate: date(),
   dueDate: date(),
   groupSize: number().default(3).min(0).max(8).required(),
-  students: array().of(string().ensure().email('Not a valid email address')).default([])
+  students: array().of(string().ensure().email('Not a valid email address')).default([''])
 })

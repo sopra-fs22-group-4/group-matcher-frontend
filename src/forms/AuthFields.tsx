@@ -34,7 +34,7 @@ export function EmailField() {
               <InputRightElement>
                 <Icon as={AiOutlineMail} color='gray.500' />
               </InputRightElement>
-              <Input {...fieldProps.field} placeholder='max.muster@email.com' type='email' autoComplete='new-password' />
+              <Input {...fieldProps.field} type='email' autoComplete='new-password' />
             </InputGroup>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>

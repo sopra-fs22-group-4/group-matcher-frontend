@@ -17,8 +17,8 @@ import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
-import MatcherQuiz from './pages/students/MatcherQuiz'
-import StudentAccess from './pages/students/StudentAccess'
+import Quiz from './pages/students/Quiz'
+import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
 
@@ -41,8 +41,8 @@ export default function App() {
                 <Route path='matchers/:matcherId' element={<Matcher />} />
                 <Route path='matchers/:matcherId/questions/create' element={<QuestionCreator />} />
               </Route>
-              <Route path='/matchers/:matcherId' element={<StudentAccess />} />
-              <Route path='/matchers/:matcherId/quiz' element={<MatcherQuiz />} />
+              <Route path='/matchers/:matcherId' element={<QuizAuth />} />
+              <Route path='/matchers/:matcherId/quiz' element={<Quiz />} />
               <Route path='*' element={<Error/>}/>
             </Routes>
           </BrowserRouter>

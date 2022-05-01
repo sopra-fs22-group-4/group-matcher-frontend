@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Heading, HStack, RadioGroup, Stack, Text } from '@chakra-ui/react'
+import { Button, Flex, Heading, HStack, RadioGroup, Stack, Text } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai'
@@ -42,7 +42,11 @@ export function AnswersList(question: QuestionProps) {
   return (
       <RadioGroup>
         <Stack>
-        {question.answers?.map(answer => <Text key={answer.id} children={answer.content} />)}
+          {question.answers?.map(answer =>
+              <HStack>
+                <Text key={answer.id}>Answer {answer.ordinalNum}:</Text>
+                <Text key={answer.id} fontWeight={500}>{answer.content}</Text>
+              </HStack>)}
         </Stack>
       </RadioGroup>
   )
