@@ -7,7 +7,7 @@ import { lowerCase } from 'lodash'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React, { useState } from 'react'
-import { AiOutlineEdit, AiOutlinePlus } from 'react-icons/ai'
+import { AiOutlineEdit, AiOutlineExport, AiOutlinePlus } from 'react-icons/ai'
 import { HiAdjustments, HiCalendar, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
@@ -24,7 +24,11 @@ export default function Matcher() {
 
   return (
       <Stack flexGrow={1} spacing={8} p={10}>
-        <Heading fontSize='3xl'>{matcher.courseName}</Heading>
+        <HStack justify='space-between'>
+          <Heading fontSize='3xl'>{matcher.courseName}</Heading>
+          <Button as={Link} to={'/matchers/'+matcherId} colorScheme='purple' boxShadow='lg' rounded='lg' p={6}
+                  leftIcon={<Icon as={AiOutlineExport} boxSize='1.5rem' />}>View Matching Quiz</Button>
+        </HStack>
         <StatGroup boxShadow='lg' p={3}>
           <Stat w='fit-content'>
             <HStack>

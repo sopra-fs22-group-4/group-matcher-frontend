@@ -4,6 +4,7 @@ import React from 'react'
 import { GoPrimitiveDot } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import { LineBackground } from '../components/Backgrounds'
+import BetaTestersModal from '../components/BetaTestersModal'
 
 export default function Home() {
 
@@ -42,6 +43,7 @@ export default function Home() {
           </VStack>
         </VStack>
         <LineBackground transform='scaleX(-1) rotate(90deg)' />
+        <BetaTestersModal />
       </Stack>
   )
 }

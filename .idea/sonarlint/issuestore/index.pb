@@ -16,7 +16,5 @@ H
 src/assets/checkmark.svg,5\1\51c28bc6630e02427b452f43fdca814de115c4ec
 <
 package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
-A
-src/assets/bg.svg,0\6\06fc18bc6fb25bdb952c20b05c57c399cfdf153e
 ;
 static.json,9\7\977dbc6bfab9949c769d3470d3c716418f16632f

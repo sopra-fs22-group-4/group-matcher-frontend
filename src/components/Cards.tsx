@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Flex, Heading, HStack, RadioGroup, Stack, Text } from '@chakra-ui/react'
+import { Button, Heading, HStack, RadioGroup, Stack, Text } from '@chakra-ui/react'
 import { parseISO } from 'date-fns'
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai'
