@@ -21,6 +21,7 @@ import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
+import Profile from "./pages/admin/Profile";
 
 export default function App() {
 
@@ -36,6 +37,7 @@ export default function App() {
               <Route path='/verify/:adminId' element={<Verify />}/>
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route index element={<Overview />} />
+                <Route path='profile' element={<Profile />} />
                 <Route path='matchers' element={<Matchers />} />
                 <Route path='matchers/create' element={<MatcherCreator />} />
                 <Route path='matchers/:matcherId' element={<Matcher />} />
