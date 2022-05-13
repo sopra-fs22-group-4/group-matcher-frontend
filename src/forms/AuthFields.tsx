@@ -6,9 +6,8 @@ import { Field, FieldProps } from 'formik'
 import { startCase } from 'lodash'
 import React from 'react'
 import { IconType } from 'react-icons'
-import {AiOutlineMail, AiOutlineUser} from 'react-icons/ai'
+import {AiOutlineMail} from 'react-icons/ai'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
-import useLocalStorage from "use-local-storage";
 
 export function NameField({ fieldName, icon }: { fieldName?: string, icon: IconType }) {
   return (

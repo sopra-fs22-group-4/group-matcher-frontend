@@ -7,7 +7,6 @@ import {CgProfile} from "react-icons/cg";
 import {EmailField, NameField, PasswordField} from "../../forms/AuthFields";
 import {useFetch} from "use-http";
 import {useNavigate} from "react-router";
-import {object, ref, string} from "yup";
 import {AiOutlineUser} from "react-icons/ai";
 
 export default function Profile() {
