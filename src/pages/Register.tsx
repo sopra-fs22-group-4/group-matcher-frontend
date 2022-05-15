@@ -39,7 +39,9 @@ export default function Register() {
                   <PasswordField repeat/>
                 </SimpleGrid>
                 <ButtonGroup>
-                  <Button type='submit' isLoading={formProps.isSubmitting} isDisabled={!formProps.isValid}>Register</Button>
+                  <Button variant='round' type='submit' isLoading={formProps.isSubmitting} isDisabled={!formProps.isValid}>
+                    Register
+                  </Button>
                 </ButtonGroup>
               </VStack>}
         </Formik>

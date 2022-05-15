@@ -314,7 +314,7 @@
     background: #ffffff;
 }
 .p-datepicker .p-datepicker-header {
-    padding: 0.5rem;
+    padding: 0.3rem;
     color: #495057;
     background: #ffffff;
     font-weight: 600;
@@ -365,14 +365,14 @@
     margin: 0.5rem 0;
 }
 .p-datepicker table th {
-    padding: 0.5rem;
+    padding: 0.3rem;
 }
 .p-datepicker table th > span {
     width: 2.5rem;
     height: 2.5rem;
 }
 .p-datepicker table td {
-    padding: 0.5rem;
+    padding: 0.3rem;
 }
 .p-datepicker table td > span {
     width: 2.5rem;
@@ -408,7 +408,7 @@
 }
 .p-datepicker .p-timepicker {
     border-top: 1px solid #dee2e6;
-    padding: 0.5rem;
+    padding: 0.2rem;
 }
 .p-datepicker .p-timepicker button {
     width: 2rem;
@@ -2500,7 +2500,6 @@
 .p-datatable .p-datatable-tbody > tr > td {
     text-align: left;
     padding: 0.5rem 0.8rem;
-    font-weight: 400;
     transition: box-shadow 0.2s;
     font-size: var(--chakra-fontSizes-sm);
 }

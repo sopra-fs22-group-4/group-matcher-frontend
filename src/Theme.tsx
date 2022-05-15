@@ -27,7 +27,13 @@ const theme = extendTheme({
     green: {
       500: '#10CD45',
       600: '#18b048',
-    }
+      700: '#00a531'
+    },
+    purple: {
+      70: '#ecd5f7',
+      150: '#E1E1FB',
+      500: '#9D31D0'
+    },
   },
   shadows: {
     md: '0px 3px 12px rgba(74, 58, 255, 0.18)',
@@ -38,11 +44,29 @@ const theme = extendTheme({
   },
   components: {
     Button: {
-      baseStyle: { fontWeight: 700 },
       variants: {
-        solid: { rounded: 'full', py: 7, px: 10, boxShadow: 'md' },
-        outline: (props: ThemingProps) =>
-            ({ rounded: 'full', py: 7, px: 10, borderColor: props.colorScheme+'.500', color: props.colorScheme+'.500' }),
+        round: {
+          rounded: 'full', py: 7, px: 10, boxShadow: 'md', fontWeight: 700,
+          bg: 'blue.500', color: 'white', _hover: { bg: 'blue.600', _disabled: { bg: 'blue.500' } }
+        },
+        'round-outline': {
+            rounded: 'full', py: 7, px: 10, boxShadow: 'md', fontWeight: 700, borderWidth: 1,
+            bg: 'white', borderColor: 'blue.500', color: 'blue.500', _hover: { bg: 'blue.50' }
+          },
+        dashed: {
+          h: 'full', minH: '10vh', rounded: '2xl', border: '2px dashed', borderColor: 'gray.400',
+          flexDir: 'column', gap: 3, color: 'purple.600', _hover: { bg: 'purple.50' }
+        },
+        hover: (props: ThemingProps) => ({
+          p: 5, h: 'fit-content', maxW: 'xs', rounded: '2xl', color: 'white', position: 'relative', overflow: 'hidden',
+          bg: `${props.colorScheme}.500`, boxShadow: 'hover', _hover: { transform: 'translateY(-0.5rem)' },
+          _focus: { bg: `${props.colorScheme}.600`, boxShadow: 'hover' }
+        }),
+        card: {
+          rounded: 'xl', h: 'fit-content', borderWidth: 2, p: 3, boxShadow: 'lg', w: 'full', flexDir: 'column',
+          alignItems: 'start', textAlign: 'start', whiteSpace: 'wrap', bg: 'white', borderColor: 'gray.200',
+          cursor: 'pointer', _hover: { bg: 'gray.50' }, _checked: { bg: 'gray.50', borderColor: 'blue.500' }
+        }
       }
     },
     Input: {
@@ -51,6 +75,9 @@ const theme = extendTheme({
         outline: {
           field: { rounded: '3xl', h: 12, boxShadow: 'lg', _focus: { boxShadow: 'focus' } },
           addon: { rounded: '3xl' }
+        },
+        filled: {
+          field: { h: 6, maxW: '10rem', textAlignLast: 'center', p: 0 }
         }
       }
     },

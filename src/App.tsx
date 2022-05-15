@@ -12,7 +12,9 @@ import Matcher from './pages/admin/Matcher'
 import MatcherCreator from './pages/admin/MatcherCreator'
 import Matchers from './pages/admin/Matchers'
 import Overview from './pages/admin/Overview'
+import Profile from './pages/admin/Profile'
 import QuestionCreator from './pages/admin/QuestionCreator'
+import Students from './pages/admin/Students'
 import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -21,7 +23,6 @@ import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
-import Profile from "./pages/admin/Profile";
 
 export default function App() {
 
@@ -40,8 +41,11 @@ export default function App() {
                 <Route path='profile' element={<Profile />} />
                 <Route path='matchers' element={<Matchers />} />
                 <Route path='matchers/create' element={<MatcherCreator />} />
-                <Route path='matchers/:matcherId' element={<Matcher />} />
-                <Route path='matchers/:matcherId/questions/create' element={<QuestionCreator />} />
+                <Route path='matchers/:matcherId'>
+                  <Route index element={<Matcher />} />
+                  <Route path='students' element={<Students />} />
+                  <Route path='questions/create' element={<QuestionCreator />} />
+                </Route>
               </Route>
               <Route path='/matchers/:matcherId' element={<QuizAuth />} />
               <Route path='/matchers/:matcherId/quiz' element={<Quiz />} />

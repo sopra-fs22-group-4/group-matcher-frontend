@@ -5,12 +5,12 @@ declare interface MatcherProps {
   publishDate: string;
   dueDate: string;
   createdAt: string;
-  active: boolean;
   published: boolean;
   pastDue: boolean;
   submissionsCount: number;
   matchingStrategy: string;
   groupSize: number;
+  status: string;
   questions: Array<QuestionProps>;
   admins: Array<AdminProps>;
   students: Array<StudentProps>;

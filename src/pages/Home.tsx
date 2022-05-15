@@ -1,10 +1,9 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Container, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
+import { Button, ButtonGroup, Container, Flex, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { GoPrimitiveDot } from 'react-icons/go'
 import { Link } from 'react-router-dom'
 import { LineBackground } from '../components/Backgrounds'
-import BetaTestersModal from '../components/BetaTestersModal'
 
 export default function Home() {
 
@@ -26,9 +25,12 @@ export default function Home() {
             </Stack>
             <Heading fontSize='5xl' bg='white'>groupmatcher</Heading>
           </Flex>
-          <Button as={Link} to='login'>Login</Button>
+          <ButtonGroup>
+            <Button variant='round-outline' as={Link} to='login'>Login</Button>
+            <Button variant='round' as={Link} to='register'>Register</Button>
+          </ButtonGroup>
         </Flex>
-        <VStack flexGrow={1} justify='space-evenly' p={4} spacing={4}>
+        <VStack minH='50vh' justify='space-evenly'>
           <Container centerContent textAlign='center' color='blue.500'>
             <Text fontSize='sm' letterSpacing='0.2rem' bg='white'>WE MATCH YOUR GROUPS</Text>
             <Heading fontSize='5xl' bg='white'>Building teams has never been easier.</Heading>
@@ -36,14 +38,9 @@ export default function Home() {
               Optimize your group work and enhance your productivity with a personalized data science based team building tool.
             </Text>
           </Container>
-          <Button width='xs' as={Link} to='login'>Create your matcher</Button>
-          <VStack>
-            <Flex fontSize='sm' bg='white'>Looking for an existing<Text pl={1} color='blue.500'>Matcher</Text>?</Flex>
-            <Button width='xs' variant='outline' bg='white'>Find existing matcher</Button>
-          </VStack>
+          <Button variant='round' minW='xs' as={Link} to='login'>Create your matcher</Button>
         </VStack>
         <LineBackground transform='scaleX(-1) rotate(90deg)' />
-        <BetaTestersModal />
       </Stack>
   )
 }

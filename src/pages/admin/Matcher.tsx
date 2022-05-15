@@ -1,110 +1,151 @@
-import { EditIcon, Icon } from '@chakra-ui/icons'
+import { Icon } from '@chakra-ui/icons'
 import {
-  Button, Center, Flex, Heading, HStack, IconButton, Spinner, Stack, Stat, StatGroup, StatLabel, StatNumber
+  Button, ButtonGroup, Center, Flex, Heading, HStack, IconButton, Select, Spinner, Stack, StatGroup, Table, Tag,
+  TagLabel, Tbody, Td, Text, Th, Thead, Tr, useBoolean, useToast
 } from '@chakra-ui/react'
-import { parseISO } from 'date-fns'
-import { lowerCase } from 'lodash'
-import { Column } from 'primereact/column'
-import { DataTable } from 'primereact/datatable'
-import React, { useState } from 'react'
-import { AiOutlineEdit, AiOutlineExport, AiOutlinePlus } from 'react-icons/ai'
-import { HiAdjustments, HiCalendar, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
+import { Form, Formik, FormikValues } from 'formik'
+import React from 'react'
+import { AiOutlineCheck, AiOutlineEdit, AiOutlineSetting } from 'react-icons/ai'
+import { BiGroup, BiUserMinus, BiUserPlus } from 'react-icons/bi'
+import { BsCircleFill } from 'react-icons/bs'
+import { FaPlus } from 'react-icons/fa'
+import { HiAdjustments, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
+import { VscAdd } from 'react-icons/vsc'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
-import { AnswersList } from '../../components/Cards'
-import StudentCreator from './StudentCreator'
+import { StatIcon, StatItem } from '../../components/Buttons'
+import { DateEditor } from '../../forms/MatcherFields'
+import ModalForm from '../../forms/ModalForm'
+import { QuestionContentField, SelectionField } from '../../forms/QuestionFields'
 
 export default function Matcher() {
-  const [expandedRows, setExpandedRows] = useState<any[]>([])
   const { matcherId } = useParams()
-  const { data: matcher } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
+  const { data: matcher, put, error } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
+  const [isEditing, { on, off }] = useBoolean()
+  const toast = useToast()
 
   if (!matcher?.id)
     return <Center flexGrow={1}><Spinner /></Center>
 
+  const updateMatcher = (values: FormikValues) => {
+    if (isEditing)
+      put(values)
+          .then(() => { off(); toast({ status: 'success', title: `Successfully updated!` }) })
+          .catch(() => toast({ status: 'error', title: error?.message }))
+    else on()
+  }
+
   return (
       <Stack flexGrow={1} spacing={8} p={10}>
         <HStack justify='space-between'>
-          <Heading fontSize='3xl'>{matcher.courseName}</Heading>
-          <Button as={Link} to={'/matchers/'+matcherId} colorScheme='purple' boxShadow='lg' rounded='lg' p={6}
-                  leftIcon={<Icon as={AiOutlineExport} boxSize='1.5rem' />}>View Matching Quiz</Button>
+          <HStack spacing={4}>
+            <Heading fontSize='3xl'>{matcher.courseName}</Heading>
+            <Tag color='gray.400' bg='none' size='sm' gap={2}>
+              <Icon as={BsCircleFill} boxSize={2} />
+              <TagLabel fontWeight={600} textTransform='uppercase'>{matcher.status}</TagLabel>
+            </Tag>
+            <Tag color='purple.400' bg='none' size='sm' gap={2}>
+              <Icon as={BsCircleFill} boxSize={2} />
+              <TagLabel fontWeight={600}>2 ONLINE</TagLabel>
+            </Tag>
+          </HStack>
         </HStack>
-        <StatGroup boxShadow='lg' p={3}>
-          <Stat w='fit-content'>
-            <HStack>
-              <Icon as={HiUser} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Students</StatLabel>
-            </HStack>
-            <StatNumber pl={6}>{matcher.students.length}</StatNumber>
-          </Stat>
-          <Stat>
-            <HStack>
-              <Icon as={HiQuestionMarkCircle} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Questions</StatLabel>
-            </HStack>
-            <StatNumber pl={6}>{matcher.questions.length}</StatNumber>
-          </Stat>
-          <Stat>
-            <HStack>
-              <Icon as={HiAdjustments} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Group Size</StatLabel>
-            </HStack>
-            <StatNumber pl={6}>{matcher.groupSize}</StatNumber>
-          </Stat>
-          <Stat>
-            <HStack>
-              <Icon as={HiPuzzle} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Strategy</StatLabel>
-            </HStack>
-            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
-              {lowerCase(matcher.matchingStrategy.replace('_', ' '))}
-            </StatNumber>
-          </Stat>
-          <Stat>
-            <HStack>
-              <Icon as={HiCalendar} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Publish Date</StatLabel>
-            </HStack>
-            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
-              {parseISO(matcher.publishDate).toLocaleDateString()}
-            </StatNumber>
-          </Stat>
-          <Stat>
-            <HStack>
-              <Icon as={HiCalendar} color='#9D31D0' p={0.5} bg='rgb(157 49 208 / 20%)' rounded='full' />
-              <StatLabel>Due Date</StatLabel>
-            </HStack>
-            <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
-              {parseISO(matcher.dueDate).toLocaleDateString()}
-            </StatNumber>
-          </Stat>
-          <Button colorScheme='green' borderColor='green.500' color='green.500' variant='outline' borderWidth={2}
-                  boxShadow='lg' rounded='lg' leftIcon={<AiOutlineEdit />} p={6}>Edit</Button>
-        </StatGroup>
-        <Flex flexGrow={1} gap={20}>
-          <Stack flexGrow={1}>
+        <Formik initialValues={matcher} onSubmit={updateMatcher}>
+          <StatGroup as={Form} boxShadow='lg' p={3}>
+            <StatItem label='Students' value={matcher.students.length} icon={HiUser} />
+            <StatItem label='Questions' value={matcher.questions.length} icon={HiQuestionMarkCircle} />
+            <DateEditor prefix='publish' disable={!isEditing} />
+            <DateEditor prefix='due' disable={!isEditing} />
+            <ButtonGroup colorScheme='green'>
+              <Button variant='outline' boxShadow='lg' rounded='lg' p={6} type='submit'
+                      leftIcon={<Icon as={isEditing ? AiOutlineCheck : AiOutlineEdit} boxSize='1.5rem' />}>
+                {isEditing ? 'Save' : 'Edit'}
+              </Button>
+              <Button as={Link} to='students' boxShadow='lg' rounded='lg' p={6} leftIcon={<BiGroup fontSize='1.5rem' />} >
+                Manage Students
+              </Button>
+            </ButtonGroup>
+          </StatGroup>
+        </Formik>
+        <Flex flexGrow={1} justify='space-between' gap={4}>
+          <Stack spacing={4}>
             <HStack justify='space-between'>
-              <Heading fontSize='2xl' color='purple.400'>Matching Questions</Heading>
-              <Button as={Link} to='questions/create' colorScheme='blue' variant='ghost' px={4} py={2} size='sm' fontWeight={400}
-                      color='white' bg='green.500' _hover={{ bg: 'green.400' }} leftIcon={<AiOutlinePlus />}>New question</Button>
+              <Heading fontSize='2xl' color='purple.500'>Matching Questions</Heading>
+              <Button as={Link} to='questions/create' colorScheme='green' size='sm' leftIcon={<FaPlus />}>
+                New Question
+              </Button>
             </HStack>
-            <DataTable value={matcher.questions} autoLayout stripedRows expandedRows={expandedRows} emptyMessage='No questions found.'
-                       onRowToggle={(event) => setExpandedRows(event.data)} rowExpansionTemplate={AnswersList}>
-              <Column expander />
-              <Column style={{ paddingInline: 0 }} field='ordinalNum' header='#' />
-              <Column style={{ minWidth: '12rem' }} field='content' header='Question' />
-              <Column style={{ textTransform: 'capitalize' }} field='questionType' header='Type'
-                      body={(question) => lowerCase(question.questionType.replace('_', ' '))} />
-              <Column style={{ paddingInline: 0 }} body={(question) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
-            </DataTable>
+            {matcher.questions?.map(question =>
+                <HStack key={question.id} borderWidth={2} borderColor='purple.150' p={6} pl={0} minW='lg'>
+                  <Center as={Heading} color='purple.300' px={8}>
+                    {question.ordinalNum}
+                  </Center>
+                  <Stack flexGrow={1}>
+                    <Text fontWeight={600}>{question.content}</Text>
+                    <HStack>
+                      <Tag colorScheme='gray' color='gray.500' textTransform='capitalize'>{question.questionType}</Tag>
+                      <Button variant='link' textDecoration='underline 1px'>
+                        {question.answers?.length || 0} Answers
+                      </Button>
+                    </HStack>
+                  </Stack>
+                  <ModalForm defaults={question} fields={['content', 'questionType', 'questionCategory']}
+                             url={`/matchers/${matcherId}/questions/${question.id}`} title='Edit Question'
+                             buttonStyle={{ leftIcon: <AiOutlineEdit fontSize='1.5rem' />, variant: 'ghost', children: '' }}>
+                    <Stack spacing={6}>
+                      <QuestionContentField />
+                      <SelectionField name='questionType' />
+                      <SelectionField name='questionCategory' />
+                    </Stack>
+                  </ModalForm>
+                </HStack>)}
           </Stack>
-          <Stack>
-            <StudentCreator />
-            <DataTable value={matcher.students} stripedRows autoLayout emptyMessage='No students found.'>
-              <Column field='email' header='Email' />
-              <Column field='submissionTimestamp' header='Submission Date' />
-              <Column style={{ paddingInline: 0 }} body={(student) => <IconButton variant='ghost' aria-label='edit student' icon={<EditIcon />} />} />
-            </DataTable>
+          <Stack spacing={8}>
+            <Heading fontSize='2xl' color='purple.500'>Matching Logic</Heading>
+            <Stack>
+              <HStack>
+                <StatIcon icon={HiAdjustments} />
+                <Text fontSize='sm' fontWeight={600} flexGrow={1} pr={3}>Optimal Group</Text>
+                <Button leftIcon={<AiOutlineSetting />} variant='outline' colorScheme='green' size='xs'>
+                  Settings
+                </Button>
+              </HStack>
+              <Table size='sm' colorScheme='gray'>
+                <Thead>
+                  <Tr>
+                    <Th>Member</Th>
+                    <Th w='full'>Skill</Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                    {[...Array(matcher.groupSize)].map((_, index) =>
+                        <Tr key={index}>
+                          <Td whiteSpace='nowrap'>Student {index+1}</Td>
+                          <Td w='full'>
+                            <Select size='sm' w='full'>
+                              <option value='python'>Python</option>
+                            </Select>
+                          </Td>
+                        </Tr>
+                    )}
+                </Tbody>
+              </Table>
+            </Stack>
+            <Stack>
+              <HStack>
+                <StatIcon icon={HiPuzzle} />
+                <Text fontSize='sm' fontWeight={600} flexGrow={1} pr={3}>Strategy</Text>
+                <Button leftIcon={<AiOutlineSetting />} variant='outline' colorScheme='green' size='xs'>
+                  Settings
+                </Button>
+              </HStack>
+              <Button variant='card' maxW='fit-content'>
+                <Heading fontSize='xl'>{matcher.matchingStrategy}</Heading>
+                <Text fontSize='xs' fontWeight={400}>
+                  Some explanation what does this strategy mean and breakdown of question category strategies
+                </Text>
+              </Button>
+            </Stack>
           </Stack>
         </Flex>
       </Stack>

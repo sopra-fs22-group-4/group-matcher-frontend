@@ -1,12 +1,12 @@
 import { Icon } from '@chakra-ui/icons'
 import {
-    FormControl, FormErrorMessage, FormLabel, IconButton, Input, InputGroup, InputRightElement, useBoolean
+  FormControl, FormErrorMessage, FormLabel, IconButton, Input, InputGroup, InputRightElement, useBoolean
 } from '@chakra-ui/react'
 import { Field, FieldProps } from 'formik'
 import { startCase } from 'lodash'
 import React from 'react'
 import { IconType } from 'react-icons'
-import {AiOutlineMail} from 'react-icons/ai'
+import { AiOutlineMail } from 'react-icons/ai'
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
 export function NameField({ fieldName, icon }: { fieldName?: string, icon: IconType }) {

@@ -1,13 +1,13 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, chakra, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, InputGroup, InputRightElement,
-  Radio, Stack, Text, useRadio, useRadioGroup, VStack, Wrap
+  SimpleGrid, Text, useRadio, useRadioGroup, VStack, Wrap
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
-import { lowerCase } from 'lodash'
 import React, { ComponentProps } from 'react'
-import { BiCheckCircle, BiPlus, BiSelectMultiple, BiText } from 'react-icons/bi'
+import { BiPlus } from 'react-icons/bi'
 import { MdOutlineClose } from 'react-icons/md'
+import { selectOptions } from './Schemas'
 
 export function QuestionContentField() {
   return (
@@ -26,34 +26,34 @@ export function QuestionContentField() {
 
 function CardRadio(props: ComponentProps<any>) {
   const { icon, children, ...radioProps } = props
-  const { state, getInputProps, getCheckboxProps, htmlProps, getLabelProps } = useRadio(radioProps)
-  const iconStyle = state.isChecked ?
+  const { state, getInputProps, getCheckboxProps } = useRadio(radioProps)
+  const style = state.isChecked ?
       { bg: 'blue.500', color: 'white', borderColor: 'blue.100' } :
       { bg: 'gray.200',  color: 'gray.700', borderColor: 'gray.100' }
   return (
-      <chakra.label {...htmlProps} cursor='pointer'>
-        <input {...getInputProps()} hidden />
-        <HStack {...getCheckboxProps()} px={3} py={2} rounded='xl' borderWidth={2} boxShadow='lg' borderColor={state.isChecked ? 'blue.500' : 'gray.200'}>
-          {props.icon ? <Icon as={props.icon} boxSize='2.5rem' p={1} rounded='full' borderWidth={7} {...iconStyle} /> : <Radio {...radioProps} />}
-          <Text color={state.isChecked ? 'blue.500' : 'gray.700'} textTransform='capitalize' {...getLabelProps()}>
-            {children || lowerCase(radioProps.value.replace('_', ' '))}
+      <Button as='label' variant='card' {...getCheckboxProps()}>
+        <input {...getInputProps()} />
+        <HStack>
+        <Icon as={props.icon} boxSize='2.5rem' p={1} rounded='full' borderWidth={7} {...style} />
+          <Text fontWeight={500}>
+            {radioProps.value}
           </Text>
         </HStack>
-      </chakra.label>
+      </Button>
   )
 }
 
-export function QuestionTypeField() {
-  const { getRadioProps, getRootProps } = useRadioGroup({ name: 'questionType' })
+export function SelectionField({ name }: { name: string }) {
+  const { getRadioProps, getRootProps } = useRadioGroup({ name })
   return (
-      <Field name='questionType' children={(fieldProps: FieldProps) =>
+      <Field name={name} children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-            <Stack {...getRootProps()} {...fieldProps.field} spacing={3} fontWeight={500}>
-              <CardRadio {...getRadioProps({ ...fieldProps.field, value: 'SINGLE_CHOICE' })} icon={BiCheckCircle} />
-              <CardRadio {...getRadioProps({ ...fieldProps.field, value: 'MULTIPLE_CHOICE' })} icon={BiSelectMultiple} />
-              <CardRadio {...getRadioProps({ ...fieldProps.field, value: 'TEXT' })} icon={BiText} />
-            </Stack>
-            <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
+            <SimpleGrid {...getRootProps(fieldProps.field)} columns={2} spacing={3}>
+              {selectOptions[name].map(selectOption =>
+                  <CardRadio {...getRadioProps({ value: selectOption.value })}
+                             isChecked={selectOption.value === fieldProps.field.value}
+                             icon={selectOption.icon} key={selectOption.value} /> )}
+            </SimpleGrid>
           </FormControl> }/>
   )
 }
@@ -90,7 +90,8 @@ export function SingleChoiceAnswers({ question }: { question: QuestionProps }) {
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <Wrap {...getRootProps()} {...fieldProps.field} spacing={4} fontWeight={500}>
               {question.answers.map(answer =>
-                  <CardRadio key={answer.id} {...getRadioProps({ ...fieldProps.field, value: answer.id.toString() })} children={answer.content} />)}
+                  <CardRadio key={answer.id} {...getRadioProps({ ...fieldProps.field, value: answer.id.toString() })}
+                             children={answer.content} />)}
             </Wrap>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>

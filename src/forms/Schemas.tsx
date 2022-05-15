@@ -1,3 +1,5 @@
+import { IconType } from 'react-icons'
+import { BiCheckCircle, BiPalette, BiSelectMultiple, BiWrench } from 'react-icons/bi'
 import { array, date, number, object, ref, setLocale, string } from 'yup'
 
 setLocale({
@@ -10,6 +12,11 @@ setLocale({
   }
 })
 
+export const selectOptions: Record<string, Array<{ value: string, icon: IconType }>> = {
+  'questionType': [{ value: 'Single Choice', icon: BiCheckCircle }, { value: 'Multiple Choice', icon: BiSelectMultiple }],
+  'questionCategory': [{ value: 'Preferences', icon: BiPalette }, { value: 'Skills', icon: BiWrench }]
+}
+
 export const baseSchema = object({
   name: string().ensure().required(),
   courseName: string().ensure().required(),
@@ -20,10 +27,15 @@ export const baseSchema = object({
       .matches(/\d/, 'Enter at least one number'),
   repeatPassword: string().ensure().required().oneOf([ref('password'), null], 'Passwords do not match'),
   content: string().ensure().required().min(1).max(200),
-  questionType: string().ensure().required().oneOf(['TEXT', 'SINGLE_CHOICE', 'MULTIPLE_CHOICE']),
+  questionType: string().ensure().required(),
+  questionCategory: string().ensure().required(),
+  matchingStrategy: string().ensure().required(),
   answers: array().of(string().ensure().required().min(1).max(200)).default(['', '']),
   publishDate: date(),
   dueDate: date(),
-  groupSize: number().default(3).min(0).max(8).required(),
-  students: array().of(string().ensure().email('Not a valid email address')).default([''])
+  groupSize: number().default(3).min(2).max(7).required(),
+  students: array().of(string().ensure().email('Not a valid email address')).default(['']),
+  collaborators: array().default([{ name: '', email: '' }]).of(object({
+    name: string().ensure().required(),
+    email: string().ensure().email('Not a valid email address') }))
 })

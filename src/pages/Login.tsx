@@ -54,7 +54,7 @@ export default function Login() {
                     <Button as={Link} to='/register' variant='link' size='sm'>Register</Button>
                     <Text>now!</Text>
                   </Flex>
-                  <Button px={8} py={6} type='submit' isLoading={formProps.isSubmitting}>Login</Button>
+                  <Button variant='round' px={8} py={6} type='submit' isLoading={formProps.isSubmitting}>Login</Button>
                 </HStack>
               </VStack>}
         </Formik>
