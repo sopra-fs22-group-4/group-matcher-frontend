@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Center, Heading, IconButton, Spinner, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Heading, HStack, IconButton, Spinner, Stack, Text } from '@chakra-ui/react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
@@ -36,7 +36,7 @@ export default function Students() {
           <Column header='Name' field='name' />
           <Column header='Email' field='email' />
           <Column field='submissionTimestamp' header='Submission Date' />
-          <Column style={{ paddingInline: 0 }} body={(student) =>
+          <Column style={{ paddingInline: 0 }} body={(_student) =>
               <IconButton icon={<AiOutlineEdit fontSize='1.5rem' />} variant='ghost' aria-label='edit student' />} />
         </DataTable>
       </Stack>

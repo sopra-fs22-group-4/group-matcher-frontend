@@ -1,19 +1,19 @@
 import { Icon } from '@chakra-ui/icons'
 import {
-  Button, ButtonGroup, Center, Flex, Heading, HStack, IconButton, Select, Spinner, Stack, StatGroup, Table, Tag,
-  TagLabel, Tbody, Td, Text, Th, Thead, Tr, useBoolean, useToast
+  Button, ButtonGroup, Center, Flex, Heading, HStack, Select, Spinner, Stack, StatGroup, Table, Tag, TagLabel, Tbody,
+  Td, Text, Th, Thead, Tr, useBoolean, useToast
 } from '@chakra-ui/react'
 import { Form, Formik, FormikValues } from 'formik'
 import React from 'react'
 import { AiOutlineCheck, AiOutlineEdit, AiOutlineSetting } from 'react-icons/ai'
-import { BiGroup, BiUserMinus, BiUserPlus } from 'react-icons/bi'
+import { BiGroup } from 'react-icons/bi'
 import { BsCircleFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
 import { HiAdjustments, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
-import { VscAdd } from 'react-icons/vsc'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { StatIcon, StatItem } from '../../components/Buttons'
+import DeleteForm from '../../forms/DeleteForm'
 import { DateEditor } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 import { QuestionContentField, SelectionField } from '../../forms/QuestionFields'
@@ -49,6 +49,7 @@ export default function Matcher() {
               <TagLabel fontWeight={600}>2 ONLINE</TagLabel>
             </Tag>
           </HStack>
+          <DeleteForm name='Matcher' url={`/matchers/${matcherId}`} />
         </HStack>
         <Formik initialValues={matcher} onSubmit={updateMatcher}>
           <StatGroup as={Form} boxShadow='lg' p={3}>

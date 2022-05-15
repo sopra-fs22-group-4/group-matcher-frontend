@@ -1,7 +1,6 @@
 import {
-  Button, ButtonProps, Heading, HStack, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
-  ModalOverlay,
-  Text, useDisclosure, useToast
+  Button, ButtonProps, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  useDisclosure, useToast
 } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React, { ReactNode } from 'react'
