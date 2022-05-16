@@ -48,7 +48,7 @@ export default function QuizAuth() {
                   <NameField icon={AiOutlineUser} />
                   <EmailField />
                 </HStack>
-                <Button px={8} py={6} type='submit' isLoading={formProps.isSubmitting}>Access Matcher</Button>
+                <Button variant='round' type='submit' isLoading={formProps.isSubmitting}>Start Matching Quiz</Button>
               </VStack>}
         </Formik>
         <LineBackground transform='scaleY(-1)' viewBox='-1400 0 1500 500' />

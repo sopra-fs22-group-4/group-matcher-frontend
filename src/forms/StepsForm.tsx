@@ -6,7 +6,7 @@ import { useFetch } from 'use-http'
 import { StepTab, TabNavButtons } from './FormProgress'
 import { baseSchema } from './Schemas'
 
-export default function StepsForm({ fields, url, children }: { fields: any, url: string, children: ReactNode }) {
+export default function StepsForm({ fields, url, children, flatten }: { fields: any, url: string, children: ReactNode, flatten?: boolean }) {
   const { post, response, error } = useFetch(url)
   const navigate = useNavigate()
   const toast = useToast()
@@ -16,8 +16,9 @@ export default function StepsForm({ fields, url, children }: { fields: any, url:
   useEffect(() => () => window.location.reload(), [])
 
   const onSubmit = (values: FormikValues) =>
-    post(values).then(() => navigate(`/dashboard/matchers/${response.data.id}`))
-        .catch(() => toast({ title: error?.message, status: 'error' }))
+    post(flatten ? Object.keys(values).flat() : values).then(
+        () => navigate(`/dashboard/matchers/${response.data.id}`),
+        () => toast({ title: error?.message, status: 'error' }))
 
   return (
       <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={onSubmit}>
@@ -33,7 +34,7 @@ export default function StepsForm({ fields, url, children }: { fields: any, url:
                   {children}
                 </TabPanels>
               </Stack>
-              <TabNavButtons lastIndex={numSteps} />
+              <TabNavButtons lastIndex={numSteps-1} />
             </Tabs>}
       </Formik>
   )

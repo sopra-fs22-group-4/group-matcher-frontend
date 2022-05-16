@@ -2,6 +2,7 @@ import {
   Button, ButtonGroup, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text,
   useDisclosure
 } from '@chakra-ui/react'
+import { lowerCase } from 'lodash'
 import React, { useEffect } from 'react'
 import { BsTrash } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
@@ -17,15 +18,15 @@ export default function DeleteForm({ name, url }: { name: string, url: string })
   return (
       <>
         <Button variant='ghost' size='lg' colorScheme='red' onClick={onOpen} leftIcon={<BsTrash />}>
-          Delete {name}
+          Delete
         </Button>
-        <Modal size='lg' isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} isCentered>
+        <Modal isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false} isCentered>
           <ModalOverlay />
           <ModalContent>
             <ModalHeader>Delete {name}</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
-              <Text>Are you sure you want to delete this {name}?</Text>
+              <Text>Are you sure you want to delete this {lowerCase(name)}?</Text>
               <Text fontWeight={600}>This action is not reversible!</Text>
             </ModalBody>
             <ModalFooter as={ButtonGroup} justifyContent='center' spacing={4}>

@@ -1,37 +1,49 @@
 import {
-  Button, ButtonProps, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
+  Button, IconButton, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay,
   useDisclosure, useToast
 } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
+import { pick } from 'lodash'
 import React, { ReactNode } from 'react'
+import { AiOutlineEdit } from 'react-icons/ai'
+import { FaPlus } from 'react-icons/fa'
 import { useFetch } from 'use-http'
+import DeleteForm from './DeleteForm'
 import { baseSchema } from './Schemas'
 
-type ModalFormProps = { fields: any, defaults?: object, url: string, title: string, children: ReactNode, buttonStyle: ButtonProps }
+type ModalFormProps = { fields: any, currentValues?: object, url: string, name: string, children: ReactNode, variant?: string }
 
-export default function ModalForm({ fields, defaults, url, title, children, buttonStyle }: ModalFormProps) {
+export default function ModalForm({ fields, currentValues, url, name, children, variant }: ModalFormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { post, response } = useFetch(url)
-  const schema = baseSchema.pick(fields)
+  const { put, error } = useFetch(url)
   const toast = useToast()
+  const schema = baseSchema.pick(fields)
+  const initialValues = currentValues ? pick(currentValues, fields) : schema.getDefaultFromShape()
+  const addButtonProps = { leftIcon: <FaPlus fontSize='1.5rem' />, children: 'Add '+name, variant: 'solid' }
 
   const onSubmit = (values: FormikValues) =>
-      post(values).then(onClose).catch(() => toast({ title: response.data.message, status: 'error' }))
+      put(values).then(
+          () => { toast({ status: 'success', title: `Successfully updated!` }); onClose() },
+          () => toast({ title: error?.message, status: 'error' }))
 
   return (
       <>
-        <Button onClick={onOpen} children={title} {...buttonStyle} />
+        {(variant === 'icon')
+            ? <IconButton aria-label={'Edit '+name} onClick={onOpen} icon={<AiOutlineEdit />} size='lg' variant='ghost'/>
+            : <Button onClick={onOpen} variant='outline' boxShadow='lg' rounded='lg' p={6} children='Edit' colorScheme='green'
+                      leftIcon={<AiOutlineEdit fontSize='1.5rem' />} {...(variant === 'add' && addButtonProps)} />}
         <Modal size='lg' isOpen={isOpen} onClose={onClose} closeOnOverlayClick={false}>
           <ModalOverlay />
-          <Formik initialValues={defaults || schema.getDefaultFromShape()} validationSchema={schema} onSubmit={onSubmit}>
+          <Formik initialValues={initialValues} validationSchema={schema} onSubmit={onSubmit}>
             {(formProps: FormikProps<any>) =>
                 <ModalContent as={Form}>
-                  <ModalHeader>{title}</ModalHeader>
+                  <ModalHeader textAlign='center'>{variant === 'add' ? 'Add' : 'Edit'} {name}</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     {children}
                   </ModalBody>
-                  <ModalFooter justifyContent='center'>
+                  <ModalFooter justifyContent={variant !== 'add' ? 'space-between' : 'center'}>
+                    {variant !== 'add' && <DeleteForm name={name} url={url} />}
                     <Button variant='round' type='submit' isDisabled={!formProps.errors} isLoading={formProps.isSubmitting}>
                       Submit
                     </Button>

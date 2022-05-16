@@ -4,7 +4,7 @@ import { useLocation } from 'react-router'
 import { Navigate, useParams } from 'react-router-dom'
 import { LineBackground } from '../../components/Backgrounds'
 import { ConfirmForm } from '../../forms/FormProgress'
-import { SingleChoiceAnswers } from '../../forms/QuestionFields'
+import { MultipleChoiceAnswers, SingleChoiceAnswers } from '../../forms/QuestionFields'
 import StepsForm from '../../forms/StepsForm'
 
 export default function Quiz() {
@@ -29,11 +29,13 @@ export default function Quiz() {
             </HStack>
           </Box>
         </VStack>
-        <StepsForm fields={[]} url={`/api/matchers/${matcherId}/students/${student?.email}`}>
+        <StepsForm fields={[]} url={`/api/matchers/${matcherId}/students/${student?.email}`} flatten>
           {student.questions.map(question =>
             <TabPanel key={question.id} px={0}>
               <Heading fontSize='xl' mb={3}>{question.content}</Heading>
-              <SingleChoiceAnswers question={question} />
+              {question.questionType === 'Single Choice'
+                  ? <SingleChoiceAnswers question={question} />
+                  : <MultipleChoiceAnswers question={question} />}
             </TabPanel>)}
           <TabPanel>
             <ConfirmForm />

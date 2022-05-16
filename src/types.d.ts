@@ -2,8 +2,8 @@ declare interface MatcherProps {
   id: number;
   university: string;
   courseName: string;
-  publishDate: string;
-  dueDate: string;
+  publishDate: Date;
+  dueDate: Date;
   createdAt: string;
   published: boolean;
   pastDue: boolean;

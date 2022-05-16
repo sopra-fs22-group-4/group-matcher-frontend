@@ -3,7 +3,7 @@ import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
 import { AiOutlineEdit } from 'react-icons/ai'
-import { FaPlus, FaRegArrowAltCircleLeft } from 'react-icons/fa'
+import { FaRegArrowAltCircleLeft } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { FileUploader, StudentsField } from '../../forms/MatcherFields'
@@ -25,8 +25,7 @@ export default function Students() {
             </Button>
             <Heading fontSize='3xl' pl={8}>Students</Heading>
           </Box>
-          <ModalForm fields={['students']} title='Add Students' url={`/matchers/${matcherId}/students`}
-                     buttonStyle={{ colorScheme: 'green', leftIcon: <FaPlus /> }}>
+          <ModalForm fields={['students']} name='Students' url={`/matchers/${matcherId}`} variant='add'>
             <FileUploader />
             <Text>or</Text>
             <StudentsField />

@@ -1,8 +1,8 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, Heading, HStack, IconButton, Input, InputGroup,
-  InputRightElement, RadioProps, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Stat, StatLabel,
-  StatNumber, Text, useRadio, useRadioGroup, useStyleConfig, VStack
+  InputRightElement, RadioProps, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useBoolean, useRadio,
+  useRadioGroup, useStyleConfig, VStack
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
 import { Calendar } from 'primereact/calendar'
@@ -11,10 +11,8 @@ import { ProgressBar } from 'primereact/progressbar'
 import React, { ComponentProps } from 'react'
 import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
-import { HiCalendar } from 'react-icons/hi'
 import { ImFileText2 } from 'react-icons/im'
 import { MdOutlineClose } from 'react-icons/md'
-import { StatIcon } from '../components/Buttons'
 import { baseSchema } from './Schemas'
 
 const ChakraCalendar = chakra(Calendar)
@@ -22,10 +20,10 @@ const ChakraFileUpload = chakra(FileUpload)
 const ChakraProgressBar = chakra(ProgressBar)
 
 export function DateTimePicker(props: ComponentProps<any>) {
-  const variant = props.variant || 'outline'
-  const fieldStyle: any = useStyleConfig('Input', { variant })
-  return <ChakraCalendar showTime showIcon={variant === 'outline'} dateFormat='dd/mm/yy'
-                         __css={fieldStyle.field} {...props} />
+  const fieldStyle: any = useStyleConfig('Input', { variant: 'outline' })
+  const [isVisible, { toggle }] = useBoolean()
+  return <ChakraCalendar showTime showIcon dateFormat='dd/mm/yy' autoZIndex={false} {...props}
+                          __css={fieldStyle.field} visible={isVisible} onVisibleChange={toggle} onBlur={toggle} />
 }
 
 export function DateField({ prefix }: { prefix: string }) {
@@ -36,21 +34,6 @@ export function DateField({ prefix }: { prefix: string }) {
             <DateTimePicker {...fieldProps.field} />
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
-  )
-}
-
-export function DateEditor({ prefix, disable }: { prefix: string, disable?: boolean }) {
-  return (
-      <Stat maxW='fit-content'>
-        <HStack>
-          <StatIcon icon={HiCalendar}/>
-          <StatLabel whiteSpace='nowrap' textTransform='capitalize'>{prefix} Date</StatLabel>
-        </HStack>
-        <StatNumber>
-          <Field name={prefix + 'Date'} children={(fieldProps: FieldProps) =>
-              <DateTimePicker variant='filled' {...fieldProps.field} disabled={disable} />}/>
-        </StatNumber>
-      </Stat>
   )
 }
 

@@ -15,10 +15,12 @@ export default function Verify() {
   const toast = useToast()
 
   useEffect(() => {
-    put().then(fetchedData => {
-      setAdminData(fetchedData)
-      setTimeout(() => navigate('/dashboard'), 3000)
-    }).catch(fetchedData => toast({ title: fetchedData.message, status: 'error' }))
+    put().then(
+        fetchedData => {
+          setAdminData(fetchedData)
+          setTimeout(() => navigate('/dashboard'), 3000)
+        },
+        fetchedData => toast({ title: fetchedData.message, status: 'error' }))
   }, [])
 
   if (!adminData?.id)

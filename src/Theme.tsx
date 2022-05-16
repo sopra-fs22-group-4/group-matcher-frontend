@@ -32,7 +32,8 @@ const theme = extendTheme({
     purple: {
       70: '#ecd5f7',
       150: '#E1E1FB',
-      500: '#9D31D0'
+      500: '#9D31D0',
+      600: '#861cb8'
     },
   },
   shadows: {

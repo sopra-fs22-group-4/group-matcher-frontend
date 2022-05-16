@@ -14,10 +14,10 @@ import { LineBackground } from '../../components/Backgrounds'
 import { SidebarButton } from '../../components/Buttons'
 
 const interceptors: Interceptors<any> = { response: async ({ response }) => {
-  if (response.data.publishDate)
+  if (response.data) {
     response.data.publishDate = parseISO(response.data.publishDate)
-  if (response.data.dueDate)
     response.data.dueDate = parseISO(response.data.dueDate)
+  }
   return response
 }}
 
