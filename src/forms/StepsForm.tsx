@@ -1,21 +1,23 @@
 import { Divider, HStack, Stack, TabList, TabPanels, Tabs, useToast } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
-import React, { Children, ReactNode } from 'react'
+import React, { Children, ReactNode, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { StepTab, TabNavButtons } from './FormProgress'
 import { baseSchema } from './Schemas'
 
 export default function StepsForm({ fields, url, children }: { fields: any, url: string, children: ReactNode }) {
-  const { post, response } = useFetch(url)
+  const { post, response, error } = useFetch(url)
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(fields)
   const numSteps = Children.count(children)
 
+  useEffect(() => () => window.location.reload(), [])
+
   const onSubmit = (values: FormikValues) =>
-    post(values).then(() => { if (response.ok) navigate(`/dashboard/matchers/${response.data.id}`) })
-        .catch(() => toast({ title: response.data.message, status: 'error' }))
+    post(values).then(() => navigate(`/dashboard/matchers/${response.data.id}`))
+        .catch(() => toast({ title: error?.message, status: 'error' }))
 
   return (
       <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={onSubmit}>

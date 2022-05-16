@@ -14,6 +14,14 @@ declare interface MatcherProps {
   questions: Array<QuestionProps>;
   admins: Array<AdminProps>;
   students: Array<StudentProps>;
+  notifications: Array<NotificationProps>;
+}
+
+declare interface NotificationProps {
+  id: number;
+  content: string;
+  creatorName: string;
+  createdAt: string;
 }
 
 declare interface QuestionProps {

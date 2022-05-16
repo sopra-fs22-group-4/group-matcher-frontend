@@ -12,8 +12,8 @@ export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconTy
   const targetPath = useResolvedPath(props.to)
   const currentPath = useMatch({ path: targetPath.pathname, end: props.isEnd })
   return <Button as={Link} to={targetPath.pathname} leftIcon={<props.icon fontSize='1.2rem' />}
-                 justifyContent='start' iconSpacing={3} _active={{ bg: 'gray.100' }} isActive={!!currentPath}
-                 isFullWidth>{capitalize(props.to) || 'Dashboard'}</Button>
+                 justifyContent='start' w='full' iconSpacing={3} _active={{ bg: 'gray.100' }}
+                 isActive={!!currentPath}>{capitalize(props.to) || 'Dashboard'}</Button>
 }
 
 export function MatcherCard({ matcher, colorScheme }: { matcher: MatcherProps, colorScheme: string }) {
@@ -37,10 +37,10 @@ export function StatIcon(props: { icon: IconType }) {
 
 export function StatItem(props: { label: string, value: any, icon: IconType }) {
   return (
-      <Stat>
+      <Stat maxW='fit-content'>
         <HStack>
           <StatIcon icon={props.icon}/>
-          <StatLabel>{props.label}</StatLabel>
+          <StatLabel whiteSpace='nowrap'>{props.label}</StatLabel>
         </HStack>
         <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
           {props.value}

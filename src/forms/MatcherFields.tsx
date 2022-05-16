@@ -41,10 +41,10 @@ export function DateField({ prefix }: { prefix: string }) {
 
 export function DateEditor({ prefix, disable }: { prefix: string, disable?: boolean }) {
   return (
-      <Stat>
+      <Stat maxW='fit-content'>
         <HStack>
           <StatIcon icon={HiCalendar}/>
-          <StatLabel textTransform='capitalize'>{prefix} Date</StatLabel>
+          <StatLabel whiteSpace='nowrap' textTransform='capitalize'>{prefix} Date</StatLabel>
         </HStack>
         <StatNumber>
           <Field name={prefix + 'Date'} children={(fieldProps: FieldProps) =>
@@ -137,7 +137,7 @@ export function CollaboratorsField() {
               <FormLabel>Name</FormLabel>
               <FormLabel>Email</FormLabel>
             </HStack>
-            {fieldArrayProps.form.values.collaborators.map((_student: string, index: number) =>
+            {fieldArrayProps.form.values.collaborators.map((_collaborator: string, index: number) =>
                 <HStack key={index}>
                   <Field name={`collaborators.${index}.name`} children={(fieldProps: FieldProps) =>
                       <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>

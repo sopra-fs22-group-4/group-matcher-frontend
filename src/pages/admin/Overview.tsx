@@ -28,12 +28,12 @@ export default function Overview() {
         </Stack>
         <Flex>
           <Stack flexGrow={1} spacing={5}>
-            <Heading fontSize='xl'>Recent Activity in Your Workspaces</Heading>
+            <Heading fontSize='xl'>Recent Submissions</Heading>
             {latestSubmissions.map((submission, index) => <SubmissionItem key={index} submission={submission} />)}
             {!latestSubmissions.length && <Text color='gray.400' fontSize='sm'>No submissions found.</Text>}
           </Stack>
           <Stack minW='40%' spacing={4}>
-            <Heading fontSize='xl'>Submissions History</Heading>
+            <Heading fontSize='xl'>Activity</Heading>
             <GradientLineChart labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']} data={[25, 29, 26, 15, 14, 11, 20]} />
           </Stack>
         </Flex>

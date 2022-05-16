@@ -16,8 +16,7 @@ export default function ModalForm({ fields, defaults, url, title, children, butt
   const toast = useToast()
 
   const onSubmit = (values: FormikValues) =>
-      post(values).then(() => { if (response.ok) onClose() })
-          .catch(() => toast({ title: response.data.message, status: 'error' }))
+      post(values).then(onClose).catch(() => toast({ title: response.data.message, status: 'error' }))
 
   return (
       <>

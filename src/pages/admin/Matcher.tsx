@@ -1,7 +1,7 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, Center, Flex, Heading, HStack, Select, Spinner, Stack, StatGroup, Table, Tag, TagLabel, Tbody,
-  Td, Text, Th, Thead, Tr, useBoolean, useToast
+  Td, Text, Th, Thead, Tr, useBoolean, useToast, Wrap
 } from '@chakra-ui/react'
 import { Form, Formik, FormikValues } from 'formik'
 import React from 'react'
@@ -10,7 +10,8 @@ import { BiGroup } from 'react-icons/bi'
 import { BsCircleFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
 import { HiAdjustments, HiPuzzle, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useOutletContext, useParams } from 'react-router-dom'
+import { useSubscription } from 'react-stomp-hooks'
 import { useFetch } from 'use-http'
 import { StatIcon, StatItem } from '../../components/Buttons'
 import DeleteForm from '../../forms/DeleteForm'
@@ -20,11 +21,19 @@ import { QuestionContentField, SelectionField } from '../../forms/QuestionFields
 
 export default function Matcher() {
   const { matcherId } = useParams()
-  const { data: matcher, put, error } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [matcherId])
+  const { name } = useOutletContext<AdminProps>()
+  const { data: matcher, put, error } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [])
   const [isEditing, { on, off }] = useBoolean()
   const toast = useToast()
 
-  if (!matcher?.id)
+  useSubscription(`/topic/matchers/${matcherId}`, (message) => {
+    const notification: NotificationProps = JSON.parse(message.body)
+    if (notification.creatorName !== name)
+      toast({ title: notification.creatorName+notification.content,
+        description: 'Refresh the page to see changes', status: 'info' })
+  })
+
+  if (!matcher?.questions)
     return <Center flexGrow={1}><Spinner /></Center>
 
   const updateMatcher = (values: FormikValues) => {
@@ -44,15 +53,11 @@ export default function Matcher() {
               <Icon as={BsCircleFill} boxSize={2} />
               <TagLabel fontWeight={600} textTransform='uppercase'>{matcher.status}</TagLabel>
             </Tag>
-            <Tag color='purple.400' bg='none' size='sm' gap={2}>
-              <Icon as={BsCircleFill} boxSize={2} />
-              <TagLabel fontWeight={600}>2 ONLINE</TagLabel>
-            </Tag>
           </HStack>
           <DeleteForm name='Matcher' url={`/matchers/${matcherId}`} />
         </HStack>
-        <Formik initialValues={matcher} onSubmit={updateMatcher}>
-          <StatGroup as={Form} boxShadow='lg' p={3}>
+        <Formik initialValues={{ publishDate: matcher.publishDate, dueDate: matcher.dueDate }} onSubmit={updateMatcher}>
+          <Wrap as={Form} justify='space-between' boxShadow='lg' spacing={4} p={3}>
             <StatItem label='Students' value={matcher.students.length} icon={HiUser} />
             <StatItem label='Questions' value={matcher.questions.length} icon={HiQuestionMarkCircle} />
             <DateEditor prefix='publish' disable={!isEditing} />
@@ -66,7 +71,7 @@ export default function Matcher() {
                 Manage Students
               </Button>
             </ButtonGroup>
-          </StatGroup>
+          </Wrap>
         </Formik>
         <Flex flexGrow={1} justify='space-between' gap={4}>
           <Stack spacing={4}>
@@ -76,6 +81,10 @@ export default function Matcher() {
                 New Question
               </Button>
             </HStack>
+            {!matcher.questions?.length &&
+              <Center minW='lg' p={6} border='2px dashed' borderColor='gray.300' color='gray.400'>
+                No questions found.
+              </Center>}
             {matcher.questions?.map(question =>
                 <HStack key={question.id} borderWidth={2} borderColor='purple.150' p={6} pl={0} minW='lg'>
                   <Center as={Heading} color='purple.300' px={8}>
@@ -91,12 +100,13 @@ export default function Matcher() {
                     </HStack>
                   </Stack>
                   <ModalForm defaults={question} fields={['content', 'questionType', 'questionCategory']}
-                             url={`/matchers/${matcherId}/questions/${question.id}`} title='Edit Question'
+                             url={`/questions/${question.id}`} title='Edit Question'
                              buttonStyle={{ leftIcon: <AiOutlineEdit fontSize='1.5rem' />, variant: 'ghost', children: '' }}>
                     <Stack spacing={6}>
                       <QuestionContentField />
                       <SelectionField name='questionType' />
                       <SelectionField name='questionCategory' />
+                      <DeleteForm name='Question' url={`/questions/${question.id}`} />
                     </Stack>
                   </ModalForm>
                 </HStack>)}

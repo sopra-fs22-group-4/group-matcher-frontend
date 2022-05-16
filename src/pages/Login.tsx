@@ -2,7 +2,7 @@ import { Box, Button, Flex, Heading, HStack, Text, useToast, VStack } from '@cha
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
 import { GrUndo } from 'react-icons/gr'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
 import { LineBackground } from '../components/Backgrounds'
@@ -11,22 +11,17 @@ import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
   const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
-  const { post, response } = useFetch('/api/login')
-  const navigate = useNavigate()
+  const { post } = useFetch('/api/login')
   const toast = useToast()
   const schema = baseSchema.pick(['email', 'password'])
 
   if (adminData?.id)
     return <Navigate to='/dashboard' />
 
-  const login = async (values: FormikValues) => {
-    const fetchedData = await post(values)
-    if (response.ok) {
-      setAdminData(fetchedData)
-      navigate('/dashboard')
-    } else
-      toast({ title: fetchedData.message, status: 'error' })
-  }
+  const login = async (values: FormikValues) =>
+    post(values)
+        .then(response => setAdminData(response))
+        .catch(response => toast({ title: response, status: 'error' }))
 
   return (
       <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>
@@ -43,7 +38,7 @@ export default function Login() {
                   <EmailField />
                   <Box w='full'>
                     <PasswordField />
-                    <Button as={Link} to='reset' variant='link' size='xs' isFullWidth justifyContent='end'>
+                    <Button as={Link} to='reset' variant='link' size='xs' w='full' justifyContent='end'>
                       Forgot Password?
                     </Button>
                   </Box>
