@@ -15,7 +15,7 @@ import { useSubscription } from 'react-stomp-hooks'
 import { useFetch } from 'use-http'
 import { QuestionCard, StatIcon, StatItem } from '../../components/Buttons'
 import { NameField } from '../../forms/AuthFields'
-import { DateField } from '../../forms/MatcherFields'
+import { CollaboratorsField, DateField } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 
 const colorSchemes: Record<string, string> = { 'Draft': 'gray', 'Active': 'green', 'Completed': 'purple' }
@@ -56,18 +56,20 @@ export default function Matcher() {
           <StatItem label='Questions' value={matcher.questions.length} icon={HiQuestionMarkCircle} />
           <StatItem label='Publish Date' value={format(matcher.publishDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
           <StatItem label='Due Date' value={format(matcher.dueDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
-          <ButtonGroup colorScheme='green'>
+          <ButtonGroup>
             {matcher.status === 'Draft' &&
-              <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate']} currentValues={matcher}
-                         url={`/matchers/${matcherId}`} name='Matcher'>
-                <Stack spacing={6}>
-                  <NameField fieldName='courseName' icon={AiOutlineAudit}/>
-                  <NameField fieldName='university' icon={AiOutlineBank}/>
-                  <DateField prefix='publish' />
-                  <DateField prefix='due' />
-                </Stack>
+              <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'collaborators']}
+                         currentValues={matcher} url={`/matchers/${matcherId}`} name='Matcher'>
+                  <Stack spacing={6}>
+                    <NameField fieldName='courseName' icon={AiOutlineAudit}/>
+                    <NameField fieldName='university' icon={AiOutlineBank}/>
+                    <DateField prefix='publish' />
+                    <DateField prefix='due' />
+                    <Heading fontSize='xl'>Collaborators</Heading>
+                    <CollaboratorsField existingAdmins={matcher.collaborators} />
+                  </Stack>
               </ModalForm>}
-            <Button as={Link} to='students' boxShadow='lg' rounded='lg' p={6} leftIcon={<BiGroup fontSize='1.5rem' />} >
+            <Button as={Link} to='students' colorScheme='green' boxShadow='lg' rounded='lg' p={6} leftIcon={<BiGroup fontSize='1.5rem' />} >
               Manage Students
             </Button>
           </ButtonGroup>

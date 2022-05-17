@@ -12,7 +12,7 @@ declare interface MatcherProps {
   groupSize: number;
   status: string;
   questions: Array<QuestionProps>;
-  admins: Array<AdminProps>;
+  collaborators: Array<AdminProps>;
   students: Array<StudentProps>;
   notifications: Array<NotificationProps>;
 }

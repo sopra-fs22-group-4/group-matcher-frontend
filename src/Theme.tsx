@@ -55,13 +55,13 @@ const theme = extendTheme({
             bg: 'white', borderColor: 'blue.500', color: 'blue.500', _hover: { bg: 'blue.50' }
           },
         dashed: {
-          h: 'full', minH: '10vh', rounded: '2xl', border: '2px dashed', borderColor: 'gray.400',
+          minH: '20vh', h: 'full', rounded: '2xl', border: '2px dashed', borderColor: 'gray.400',
           flexDir: 'column', gap: 3, color: 'purple.600', _hover: { bg: 'purple.50' }
         },
         hover: (props: ThemingProps) => ({
-          p: 5, h: 'fit-content', maxW: 'xs', rounded: '2xl', color: 'white', position: 'relative', overflow: 'hidden',
-          bg: `${props.colorScheme}.500`, boxShadow: 'hover', _hover: { transform: 'translateY(-0.5rem)' },
-          _focus: { bg: `${props.colorScheme}.600`, boxShadow: 'hover' }
+          p: 5, minH: '20vh', h: 'fit-content', maxW: 'xs', rounded: '2xl', color: 'white', position: 'relative',
+          overflow: 'hidden', bg: `${props.colorScheme}.500`, boxShadow: 'hover',
+          _hover: { transform: 'translateY(-0.5rem)' }, _focus: { bg: `${props.colorScheme}.600`, boxShadow: 'hover' }
         }),
         card: {
           rounded: 'xl', h: 'fit-content', borderWidth: 2, p: 3, boxShadow: 'lg', w: 'full', flexDir: 'column',

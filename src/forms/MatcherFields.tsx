@@ -13,7 +13,7 @@ import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
 import { MdOutlineClose } from 'react-icons/md'
-import { baseSchema } from './Schemas'
+import { collaboratorSchema } from './Schemas'
 
 const ChakraCalendar = chakra(Calendar)
 const ChakraFileUpload = chakra(FileUpload)
@@ -111,8 +111,7 @@ export function FileUploader() {
                  itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
 }
 
-export function CollaboratorsField() {
-  const defaults: any = baseSchema.pick(['collaborators']).getDefaultFromShape()
+export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<AdminProps> }) {
   return (
       <FieldArray name='collaborators' children={(fieldArrayProps: FieldArrayRenderProps) =>
           <Stack my={3}>
@@ -120,20 +119,27 @@ export function CollaboratorsField() {
               <FormLabel>Name</FormLabel>
               <FormLabel>Email</FormLabel>
             </HStack>
-            {fieldArrayProps.form.values.collaborators.map((_collaborator: string, index: number) =>
-                <HStack key={index}>
-                  <Field name={`collaborators.${index}.name`} children={(fieldProps: FieldProps) =>
-                      <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-                        <Input {...fieldProps.field} placeholder='Enter name' />
-                      </FormControl>} />
-                  <Field key={index} name={`collaborators.${index}.email`} children={(fieldProps: FieldProps) =>
-                      <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-                        <Input {...fieldProps.field} placeholder='Enter Email' />
-                      </FormControl>} />
-                  <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove collaborator'
-                              cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
+            {existingAdmins?.map(admin =>
+                <HStack key={admin.id} pr={12}>
+                  <Input value={admin.name} isDisabled />
+                  <Input value={admin.email} isDisabled />
                 </HStack>)}
-              <Button py={2} variant='ghost' leftIcon={<BiPlus />} onClick={() => fieldArrayProps.push(defaults[0])}>
+            {fieldArrayProps.form.values.collaborators.map((collaborator: AdminProps, index: number) =>
+                (!existingAdmins?.find(admin => admin.email === collaborator.email)) &&
+                    <HStack key={index}>
+                      <Field name={`collaborators.${index}.name`} children={(fieldProps: FieldProps) =>
+                          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+                            <Input {...fieldProps.field} placeholder='Enter name' />
+                          </FormControl>} />
+                      <Field key={index} name={`collaborators.${index}.email`} children={(fieldProps: FieldProps) =>
+                          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+                            <Input {...fieldProps.field} placeholder='Enter Email' />
+                          </FormControl>} />
+                      <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove collaborator'
+                                  cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
+                    </HStack>)}
+              <Button py={2} variant='ghost' leftIcon={<BiPlus />} onClick={() =>
+                  fieldArrayProps.push(collaboratorSchema.getDefaultFromShape())}>
                 Add
               </Button>
           </Stack>} />

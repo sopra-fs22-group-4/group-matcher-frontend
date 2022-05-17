@@ -36,7 +36,7 @@ export default function ModalForm({ fields, currentValues, url, name, children, 
           <ModalOverlay />
           <Formik initialValues={initialValues} validationSchema={schema} onSubmit={onSubmit}>
             {(formProps: FormikProps<any>) =>
-                <ModalContent as={Form}>
+                <ModalContent minW='fit-content' as={Form}>
                   <ModalHeader textAlign='center'>{variant === 'add' ? 'Add' : 'Edit'} {name}</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
@@ -44,7 +44,8 @@ export default function ModalForm({ fields, currentValues, url, name, children, 
                   </ModalBody>
                   <ModalFooter justifyContent={variant !== 'add' ? 'space-between' : 'center'}>
                     {variant !== 'add' && <DeleteForm name={name} url={url} />}
-                    <Button variant='round' type='submit' isDisabled={!formProps.errors} isLoading={formProps.isSubmitting}>
+                    <Button variant='round' type='submit' isDisabled={!formProps.dirty || !formProps.isValid}
+                            isLoading={formProps.isSubmitting}>
                       Submit
                     </Button>
                   </ModalFooter>

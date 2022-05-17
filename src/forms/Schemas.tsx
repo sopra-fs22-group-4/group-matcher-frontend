@@ -17,6 +17,11 @@ export const selectOptions: Record<string, Array<{ value: string, icon: IconType
   'questionCategory': [{ value: 'Preferences', icon: BiPalette }, { value: 'Skills', icon: BiWrench }]
 }
 
+export const collaboratorSchema = object({
+  name: string().ensure().required(),
+  email: string().ensure().email('Not a valid email address')
+})
+
 export const baseSchema = object({
   name: string().ensure().required(),
   courseName: string().ensure().required(),
@@ -35,7 +40,5 @@ export const baseSchema = object({
   dueDate: date(),
   groupSize: number().default(3).min(2).max(7).required(),
   students: array().of(string().ensure().email('Not a valid email address')).default(['']),
-  collaborators: array().default([]).of(object({
-    name: string().ensure().required(),
-    email: string().ensure().email('Not a valid email address') }))
+  collaborators: array().default([]).of(collaboratorSchema)
 })
