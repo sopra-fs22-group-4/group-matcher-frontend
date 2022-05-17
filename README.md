@@ -26,18 +26,25 @@ and fair way of finding group members and organizing the surrounding structure.
 ## High-level Components
 Most important components:
 - [Dashboard](src/pages/admin/Dashboard.tsx)
+- [Overview](src/pages/admin/Overview.tsx)
 - [Matcher](src/pages/admin/Matcher.tsx)
 - [Quiz](src/pages/students/Quiz.tsx)
 
 ### Dashboard
-After successful login an admin will land on the dashboard page. The dashboard contains a narrow menu overview on the left including workspaces,
-the matchers and the profile. The remaining page is filled with recent information about the matchers:
+After successful login an admin will land on the dashboard page. The dashboard contains a narrow menu sidebar on the left including:
+ - Workspaces _TODO:CREATE PAGE_
+ - [Matchers](src/pages/admin/Matchers.tsx)
+ - [Profile](src/pages/admin/Profile.tsx)
+
+The remaining page is filled with recent information about the matchers as seen in Overview below. The dashboard is consistent throughout
+all admin pages.
+
+###Overview
+The overview provides any admin with information about his matchers and activities:
 
 - All active matchers are shown and can be clicked to access the individual matcher pages
 - Recent submissions on any matchers the admin is part of are listed with some basic information about the submission
 - An activity diagram shows real time traffic concerning the matchers
-
-The dashboard provides a great and quick overview over any matchers the admin is part of.
 
 ### Matcher
 Once a matcher has been initialized and clicked in the dashboard the matcher page is the next high level component. On here,
