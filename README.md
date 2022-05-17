@@ -39,7 +39,7 @@ After successful login an admin will land on the dashboard page. The dashboard c
 The remaining page is filled with recent information about the matchers as seen in Overview below. The dashboard is consistent throughout
 all admin pages.
 
-###Overview
+### Overview
 The overview provides any admin with information about his matchers and activities:
 
 - All active matchers are shown and can be clicked to access the individual matcher pages
