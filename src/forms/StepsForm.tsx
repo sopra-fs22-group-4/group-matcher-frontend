@@ -7,7 +7,7 @@ import { StepTab, TabNavButtons } from './FormProgress'
 import { baseSchema } from './Schemas'
 
 export default function StepsForm({ fields, url, children, flatten }: { fields: any, url: string, children: ReactNode, flatten?: boolean }) {
-  const { post, response, error } = useFetch(url)
+  const { post, response } = useFetch(url)
   const navigate = useNavigate()
   const toast = useToast()
   const schema = baseSchema.pick(fields)
@@ -15,10 +15,8 @@ export default function StepsForm({ fields, url, children, flatten }: { fields: 
 
   useEffect(() => () => window.location.reload(), [])
 
-  const onSubmit = (values: FormikValues) =>
-    post(flatten ? Object.keys(values).flat() : values).then(
-        () => navigate(`/dashboard/matchers/${response.data.id}`),
-        () => toast({ title: error?.message, status: 'error' }))
+  const onSubmit = (values: FormikValues) => post(flatten ? Object.keys(values).flat() : values).then(data =>
+      response.ok ? navigate(`/dashboard/matchers/${data.id}`) : toast({ title: data.message, status: 'error' }))
 
   return (
       <Formik initialValues={schema.getDefaultFromShape()} validationSchema={schema} onSubmit={onSubmit}>

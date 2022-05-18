@@ -18,7 +18,7 @@ export function NameField({ fieldName, icon }: { fieldName?: string, icon: IconT
               <InputRightElement>
                 <Icon as={icon} boxSize={5} color='gray.500' />
               </InputRightElement>
-              <Input {...fieldProps.field} />
+              <Input {...fieldProps.field} placeholder='Name' />
             </InputGroup>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
@@ -34,7 +34,7 @@ export function EmailField() {
               <InputRightElement>
                 <Icon as={AiOutlineMail} color='gray.500' />
               </InputRightElement>
-              <Input {...fieldProps.field} type='email' autoComplete='new-password' />
+              <Input {...fieldProps.field} type='email' placeholder='Email' autoComplete='new-password' />
             </InputGroup>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>

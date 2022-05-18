@@ -15,10 +15,8 @@ export default function Register() {
   const toast = useToast()
   const schema = baseSchema.pick(['name', 'email', 'password', 'repeatPassword'])
 
-  const register = async (values: FormikValues) => {
-    const createdAdmin = await post(values)
-    response.ok ? navigate(`/verify/${createdAdmin}`) : toast({ title: createdAdmin.message, status: 'error' })
-  }
+  const register = (values: FormikValues) => post(values).then(data =>
+      response.ok ? navigate(`/verify/${data.id}`) : toast({ title: data.message, status: 'error' }))
 
   return (
       <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>

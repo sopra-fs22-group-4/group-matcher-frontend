@@ -11,17 +11,15 @@ import { baseSchema } from '../forms/Schemas'
 
 export default function Login() {
   const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
-  const { post } = useFetch('/api/login')
+  const { post, response } = useFetch('/api/login')
   const toast = useToast()
   const schema = baseSchema.pick(['email', 'password'])
 
   if (adminData?.id)
     return <Navigate to='/dashboard' />
 
-  const login = async (values: FormikValues) =>
-    post(values)
-        .then(response => setAdminData(response))
-        .catch(response => toast({ title: response, status: 'error' }))
+  const login = (values: FormikValues) => post(values).then(data =>
+      response.ok ? setAdminData(data) : toast({ title: data.message, status: 'error' }))
 
   return (
       <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>

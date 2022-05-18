@@ -9,18 +9,16 @@ import { LineBackground } from '../components/Backgrounds'
 
 export default function Verify() {
   const { adminId } = useParams()
-  const { put } = useFetch(`/api/admins/${adminId}/verify`)
+  const { put, response } = useFetch(`/api/admins/${adminId}/verify`)
   const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
   const navigate = useNavigate()
   const toast = useToast()
 
   useEffect(() => {
-    put().then(
-        fetchedData => {
-          setAdminData(fetchedData)
-          setTimeout(() => navigate('/dashboard'), 3000)
-        },
-        fetchedData => toast({ title: fetchedData.message, status: 'error' }))
+    put().then(data => {
+        if (response.ok) { setAdminData(data); setTimeout(() => navigate('/dashboard'), 3000) }
+        else toast({ title: data.message, status: 'error' })
+    })
   }, [])
 
   if (!adminData?.id)

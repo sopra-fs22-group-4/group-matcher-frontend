@@ -15,16 +15,19 @@ type ModalFormProps = { fields: any, currentValues?: object, url: string, name: 
 
 export default function ModalForm({ fields, currentValues, url, name, children, variant }: ModalFormProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { put, error } = useFetch(url)
+  const { put, response } = useFetch(url)
   const toast = useToast()
   const schema = baseSchema.pick(fields)
   const initialValues = currentValues ? pick(currentValues, fields) : schema.getDefaultFromShape()
   const addButtonProps = { leftIcon: <FaPlus fontSize='1.5rem' />, children: 'Add '+name, variant: 'solid' }
 
-  const onSubmit = (values: FormikValues) =>
-      put(values).then(
-          () => { toast({ status: 'success', title: `Successfully updated!` }); onClose() },
-          () => toast({ title: error?.message, status: 'error' }))
+  const onSubmit = (values: FormikValues) => put(values).then(data => {
+    if (response.ok) {
+      toast({ status: 'success', title: `Successfully updated!` })
+      variant === 'add' ? window.location.reload() : onClose()
+    }
+    else toast({ title: data.message, status: 'error' })
+  })
 
   return (
       <>

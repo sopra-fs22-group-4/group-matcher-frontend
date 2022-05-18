@@ -1,8 +1,7 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Button, Checkbox, FormControl, FormErrorMessage, FormLabel, HStack, IconButton, Input, InputGroup, InputRightElement,
-  Radio,
-  SimpleGrid, Text, useCheckbox, useCheckboxGroup, useRadio, useRadioGroup, VStack, Wrap
+  Radio, SimpleGrid, Text, useCheckbox, useCheckboxGroup, useRadio, useRadioGroup, VStack, Wrap
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
 import React, { ComponentProps } from 'react'

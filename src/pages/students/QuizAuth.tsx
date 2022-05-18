@@ -19,10 +19,8 @@ export default function QuizAuth() {
   const toast = useToast()
   const schema = baseSchema.pick(['name', 'email'])
 
-  const verifyStudent = async (values: FormikValues) => {
-    const studentData = await post(values)
-    response.ok ? navigate('quiz', { state: studentData }) : toast({ title: studentData.message, status: 'error' })
-  }
+  const verifyStudent = (values: FormikValues) => post(values).then(data =>
+      response.ok ? navigate('quiz', { state: data }) : toast({ title: data.message, status: 'error' }))
 
   if (!matcher)
     return <Center h='100vh'><Spinner /></Center>

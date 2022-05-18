@@ -13,14 +13,10 @@ export default function Profile() {
   const { put, response } = useFetch('/profile')
   const toast = useToast()
 
-  const editProfile = async (values: FormikValues) => {
-    const responseData = await put(values)
-    if (response.ok) {
-      setAdminData(responseData)
-      toast({ title: 'Profile updated successfully!', status: 'success' })
-    } else
-      toast({ title: responseData.message, status: 'error' })
-  }
+  const editProfile = (values: FormikValues) => put(values).then(data => {
+    if (response.ok) { setAdminData(data); toast({ title: 'Profile updated successfully!', status: 'success' }) }
+    else toast({ title: data.message, status: 'error' })
+  })
 
   return (
       <VStack flexGrow={1} p={12} spacing={5}>
