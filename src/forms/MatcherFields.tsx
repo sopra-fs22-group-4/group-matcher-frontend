@@ -5,11 +5,11 @@ import {
   useRadioGroup, useStyleConfig, VStack, Center
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
+import getEmails from 'get-emails'
 import { Calendar } from 'primereact/calendar'
 import { FileUpload, FileUploadHeaderTemplateOptions } from 'primereact/fileupload'
-import { ProgressBar } from 'primereact/progressbar'
-import React, {ComponentProps, FormEvent} from 'react'
-import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
+import React, { ComponentProps } from 'react'
+import { AiOutlineCloudUpload } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
 import { MdOutlineClose } from 'react-icons/md'
@@ -17,7 +17,6 @@ import { collaboratorSchema } from './Schemas'
 
 const ChakraCalendar = chakra(Calendar)
 const ChakraFileUpload = chakra(FileUpload)
-const ChakraProgressBar = chakra(ProgressBar)
 
 export function DateTimePicker(props: ComponentProps<any>) {
   const fieldStyle: any = useStyleConfig('Input', { variant: 'outline' })
@@ -82,23 +81,6 @@ export function GroupSizeField() {
   )
 }
 
-function ItemTemplate(file: { name: string }) {
-  return (
-      <HStack fontSize='sm' spacing={4}>
-        <Icon boxSize='4rem' opacity={0.1} as={ImFileText2} />
-        <Stack w='xs' flexGrow={1}>
-          <Text textAlign='start' fontWeight={600}>{file.name}</Text>
-          <ChakraProgressBar value={0} />
-          <HStack justify='space-between'>
-            <Text>Detected 0 emails.</Text>
-            <Text fontWeight={600} color='purple.500'>Uploading... 70%</Text>
-          </HStack>
-        </Stack>
-        <IconButton aria-label='remove file' variant='ghost' px={0} icon={<AiOutlineDelete />} />
-      </HStack>
-  )
-}
-
 export function FileUploader() {
   const allowedTypes = ['text/plain', 'text/csv', 'application/json']
 
@@ -119,20 +101,15 @@ export function FileUploader() {
         <Text textAlign='start' fontWeight={600}>{file.name}</Text>
       </VStack>
 
-  const parseEmails = (content: string, fileType: string) => {
-    return fileType === 'application/json' ? JSON.stringify(content).match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi) : content.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-  }
-
   return (
       <Field name='students' children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <ChakraFileUpload p={4} minH='2xs' headerTemplate={header} emptyTemplate={empty} itemTemplate={itemTemplate}
                               chooseLabel='Select File' rounded='3xl' border='2px dashed' borderColor='gray.200'
                               onSelect={event => {
-                                const fileType = event.files[0]?.type
-                                if (allowedTypes.includes(fileType))
+                                if (allowedTypes.includes(event.files[0]?.type))
                                     event.files[0].text().then(content =>
-                                        fieldProps.form.setFieldValue('students', parseEmails(content, fileType)))
+                                        fieldProps.form.setFieldValue('students', Array.from(getEmails(content))))
                                 else fieldProps.form.setFieldError('students', 'File type is not supported.') }}
                               progressBarTemplate={
               <Center textAlign='center' fontWeight={600} color='purple.500'>
