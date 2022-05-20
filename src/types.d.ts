@@ -38,15 +38,12 @@ declare interface AnswerProps {
   content: string;
 }
 
-declare interface SubmissionProps {
+declare interface StudentProps {
+  id: number;
   name: string;
   email: string;
   courseName: string;
   submissionTimestamp: string;
-}
-
-declare interface StudentProps extends SubmissionProps {
-  id: number;
   questions: Array<QuestionProps>;
   selectedAnswers: Array<AnswerProps>;
 }
@@ -56,5 +53,5 @@ declare interface AdminProps {
   name: string;
   email: string;
   verified: boolean;
-  fullyRegistered: boolean;
+  hasPassword: boolean;
 }

@@ -119,7 +119,7 @@ export function FileUploader() {
   )
 }
 
-export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<AdminProps> }) {
+export function CollaboratorsField() {
   return (
       <FieldArray name='collaborators' children={(fieldArrayProps: FieldArrayRenderProps) =>
           <Stack my={3}>
@@ -127,25 +127,19 @@ export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<
               <FormLabel>Name</FormLabel>
               <FormLabel>Email</FormLabel>
             </HStack>
-            {existingAdmins?.map(admin =>
-                <HStack key={admin.id} pr={12}>
-                  <Input value={admin.name} isDisabled />
-                  <Input value={admin.email} isDisabled />
-                </HStack>)}
             {fieldArrayProps.form.values.collaborators.map((collaborator: AdminProps, index: number) =>
-                (!existingAdmins?.find(admin => admin.email === collaborator.email)) &&
-                    <HStack key={index}>
-                      <Field name={`collaborators.${index}.name`} children={(fieldProps: FieldProps) =>
-                          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-                            <Input {...fieldProps.field} placeholder='Enter name' />
-                          </FormControl>} />
-                      <Field key={index} name={`collaborators.${index}.email`} children={(fieldProps: FieldProps) =>
-                          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
-                            <Input {...fieldProps.field} placeholder='Enter Email' />
-                          </FormControl>} />
-                      <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove collaborator'
-                                  cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
-                    </HStack>)}
+                <HStack key={index}>
+                  <Field name={`collaborators.${index}.name`} children={(fieldProps: FieldProps) =>
+                      <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error} isDisabled={!!collaborator.id}>
+                        <Input {...fieldProps.field} placeholder='Enter name' />
+                      </FormControl>} />
+                  <Field key={index} name={`collaborators.${index}.email`} children={(fieldProps: FieldProps) =>
+                      <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error} isDisabled={!!collaborator.id}>
+                        <Input {...fieldProps.field} placeholder='Enter Email' />
+                      </FormControl>} />
+                  <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove collaborator'
+                              isDisabled={!!collaborator.id} onClick={() => fieldArrayProps.remove(index)}/>
+                </HStack>)}
               <Button py={2} variant='ghost' leftIcon={<BiPlus />} onClick={() =>
                   fieldArrayProps.push(collaboratorSchema.getDefaultFromShape())}>
                 Add

@@ -30,8 +30,8 @@ export default function Matcher() {
   useSubscription(`/topic/matchers/${matcherId}`, (message) => {
     const notification: NotificationProps = JSON.parse(message.body)
     if (notification.creatorName !== name)
-      toast({ title: notification.creatorName+notification.content,
-        description: 'Refresh the page to see changes', status: 'info' })
+      toast({ title: notification.creatorName+notification.content, description: 'Refreshing page...',
+        duration: 3000, onCloseComplete: () => window.location.reload() })
   })
 
   if (!matcher?.questions)
@@ -47,7 +47,7 @@ export default function Matcher() {
               <TagLabel fontWeight={600} textTransform='uppercase'>{matcher.status}</TagLabel>
             </Tag>
           </HStack>
-          <Button as={Link} to={`/matchers/${matcherId}`} variant='outline' colorScheme='purple' boxShadow='lg'
+          <Button as={Link} to={`/matchers/${matcherId}/quiz`} state={matcher} variant='outline' colorScheme='purple' boxShadow='lg'
                   rounded='lg' p={6} leftIcon={<Icon as={AiOutlineExport} boxSize='1.5rem' />}>
             View Matching Quiz
           </Button>
@@ -67,7 +67,7 @@ export default function Matcher() {
                     <DateField prefix='publish' />
                     <DateField prefix='due' />
                     <Heading fontSize='xl'>Collaborators</Heading>
-                    <CollaboratorsField existingAdmins={matcher.collaborators} />
+                    <CollaboratorsField />
                   </Stack>
               </ModalForm>}
             <Button as={Link} to='students' colorScheme='green' boxShadow='lg' rounded='lg' p={6} leftIcon={<BiGroup fontSize='1.5rem' />} >

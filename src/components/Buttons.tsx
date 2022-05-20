@@ -4,7 +4,6 @@ import { format, parseISO } from 'date-fns'
 import { capitalize } from 'lodash'
 import React from 'react'
 import { IconType } from 'react-icons'
-import { AiOutlineUser } from 'react-icons/ai'
 import { BsFillCircleFill } from 'react-icons/bs'
 import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 
@@ -46,18 +45,5 @@ export function StatItem(props: { label: string, value: any, icon: IconType }) {
           {props.value}
         </StatNumber>
       </Stat>
-  )
-}
-
-export function SubmissionItem({ submission }: { submission: SubmissionProps }) {
-  return (
-      <HStack fontSize='sm'>
-        <Icon boxSize='3rem' rounded='full' p={3} bg='gray.50' as={AiOutlineUser}/>
-        <Stack spacing={0} flexGrow={1}>
-          <Text fontWeight={700}>{submission.name}</Text>
-          <Text>{parseISO(submission.submissionTimestamp).toLocaleDateString()}</Text>
-        </Stack>
-        <Text fontWeight={700}>{submission.courseName}</Text>
-      </HStack>
   )
 }

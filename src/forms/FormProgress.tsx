@@ -38,7 +38,7 @@ export function TabNavButtons({ lastIndex }: { lastIndex: number }) {
   )
 }
 
-export function ConfirmForm() {
+export function ConfirmForm({ isDisabled }: { isDisabled?: boolean }) {
   const { dirty, isValid, isSubmitting } = useFormikContext()
   return (
       <VStack p={1} spacing={3}>
@@ -47,7 +47,7 @@ export function ConfirmForm() {
         <Text textAlign='center' color='gray.600' w='sm'>
           Please review the information you provided previously and when you are ready, click submit.
         </Text>
-        <Button variant='round' type='submit' isDisabled={!dirty || !isValid} isLoading={isSubmitting}>
+        <Button variant='round' type='submit' isDisabled={isDisabled || !dirty || !isValid} isLoading={isSubmitting}>
           Submit
         </Button>
       </VStack>
