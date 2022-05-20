@@ -8,7 +8,7 @@ import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
 import { Calendar } from 'primereact/calendar'
 import { FileUpload, FileUploadHeaderTemplateOptions } from 'primereact/fileupload'
 import { ProgressBar } from 'primereact/progressbar'
-import React, { ComponentProps } from 'react'
+import React, {ComponentProps, FormEvent} from 'react'
 import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
@@ -101,14 +101,29 @@ function ItemTemplate(file: { name: string }) {
 
 export function FileUploader() {
   const header = (options: FileUploadHeaderTemplateOptions) => <ButtonGroup m={2}>{options.chooseButton}</ButtonGroup>
+
   const empty = () =>
       <VStack flexGrow={1}>
         <Icon boxSize='30%' as={AiOutlineCloudUpload} color='gray.200' />
         <Text color='gray.600'>drag & drop a file here</Text>
       </VStack>
-  return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse'
-                 justify='center' m={8} url='./upload' chooseLabel='Select file' rounded='3xl'
-                 itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
+
+     /*<VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse'
+                   justify='center' m={8} url='./upload' chooseLabel='Select file' rounded='3xl'
+itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />*/
+      return <FileUpload name="upload" url='./upload' 
+      onSelect={(event)=>{ 
+                  const fileType = event.files[0].type
+                    if(fileType === 'text/plain' || fileType === 'text/csv' || fileType === 'application/json'){ 
+                      const fileContent = event.files[0].text();
+                      fileContent.then(result => {
+                        const emailList = result.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+                        const emailJson = JSON.stringify(emailList); 
+                        console.log(emailJson);
+                    })
+                  }
+                }
+              }/>
 }
 
 export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<AdminProps> }) {
