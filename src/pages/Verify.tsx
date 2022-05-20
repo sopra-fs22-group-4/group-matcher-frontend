@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/icons'
 import { Center, Container, Heading, Spinner, Text, useToast, VStack } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
@@ -16,8 +16,11 @@ export default function Verify() {
 
   useEffect(() => {
     put().then(data => {
-        if (response.ok) { setAdminData(data); setTimeout(() => navigate('/dashboard'), 3000) }
-        else toast({ title: data.message, status: 'error' })
+      if (response.ok) {
+        setAdminData(data)
+        const redirectURL = data?.fullyRegistered ? '/dashboard' : `/reset/${adminId}`
+        setTimeout(() => navigate(redirectURL), 3000)
+      } else toast({ title: data.message, status: 'error' })
     })
   }, [])
 
