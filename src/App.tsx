@@ -23,7 +23,7 @@ import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
-import VerifyCollab from "./pages/VerifyCollab";
+import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
 
@@ -37,7 +37,7 @@ export default function App() {
               <Route path='/login' element={<Login />}/>
               <Route path='/register' element={<Register />}/>
               <Route path='/verify/:adminId' element={<Verify />}/>
-              <Route path='/reset/:adminId' element={<VerifyCollab />} />
+              <Route path='/reset/:adminId' element={<ResetPassword />} />
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route index element={<Overview />} />
                 <Route path='profile' element={<Profile />} />
