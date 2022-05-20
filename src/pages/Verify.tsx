@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/icons'
 import { Center, Container, Heading, Spinner, Text, useToast, VStack } from '@chakra-ui/react'
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'

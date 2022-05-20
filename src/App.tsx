@@ -19,11 +19,11 @@ import Error from './pages/Error'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
+import ResetPassword from './pages/ResetPassword'
 import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
-import ResetPassword from "./pages/ResetPassword";
 
 export default function App() {
 

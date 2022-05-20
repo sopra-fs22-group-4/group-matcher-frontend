@@ -1,14 +1,14 @@
+import { Icon } from '@chakra-ui/icons'
+import { Button, Heading, HStack, Text, useToast, VStack } from '@chakra-ui/react'
+import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
-import {Button, Heading, HStack, Text, useToast, VStack} from '@chakra-ui/react'
-import {Form, Formik, FormikProps, FormikValues} from 'formik'
-import {Icon} from '@chakra-ui/icons'
-import {ReactComponent as WindowIllustration} from '../assets/window.svg'
-import {PasswordField} from '../forms/AuthFields'
-import {LineBackground} from '../components/Backgrounds'
-import {baseSchema} from '../forms/Schemas'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
-import {useFetch} from 'use-http'
-import {useNavigate, useParams} from 'react-router-dom'
+import { ReactComponent as WindowIllustration } from '../assets/window.svg'
+import { LineBackground } from '../components/Backgrounds'
+import { PasswordField } from '../forms/AuthFields'
+import { baseSchema } from '../forms/Schemas'
 
 export default function ResetPassword() {
   const { adminId } = useParams()
