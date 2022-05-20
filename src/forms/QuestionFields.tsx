@@ -61,22 +61,21 @@ export function SelectionField({ name }: { name: string }) {
   )
 }
 
-export function ChoiceBasedQuestion() {
+export function ChoiceAnswersField() {
   return (
       <FieldArray name='answers' children={(fieldArrayProps: FieldArrayRenderProps) =>
           <VStack p={0}>
             {fieldArrayProps.form.values.answers.map((_: string, index: number) =>
-                <Field key={index} name={`answers.${index}`} children={(fieldProps: FieldProps) =>
+                <Field key={index} name={`answers.${index}.content`} children={(fieldProps: FieldProps) =>
                   <FormControl as={HStack} isDisabled={fieldArrayProps.form.values.type === 'TEXT'}
                                isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
                     <FormLabel whiteSpace='nowrap'>Answer {index+1}</FormLabel>
                     <InputGroup>
                       <Input {...fieldProps.field} />
-                      {(index > 1) &&
-                        <InputRightElement>
-                          <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove answer'
-                                      cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
-                        </InputRightElement>}
+                      <InputRightElement>
+                        <IconButton icon={<MdOutlineClose />} isRound variant='ghost' aria-label='remove answer'
+                                    cursor='pointer' onClick={() => fieldArrayProps.remove(index)}/>
+                      </InputRightElement>
                     </InputGroup>
                     <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
                 </FormControl>} />)}

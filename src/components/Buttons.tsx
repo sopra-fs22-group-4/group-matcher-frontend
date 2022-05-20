@@ -1,5 +1,5 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Center, Heading, HStack, Stack, Stat, StatLabel, StatNumber, Tag, Text } from '@chakra-ui/react'
+import { Button, Heading, HStack, Stack, Stat, StatLabel, StatNumber, Text } from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns'
 import { capitalize } from 'lodash'
 import React from 'react'
@@ -7,8 +7,6 @@ import { IconType } from 'react-icons'
 import { AiOutlineUser } from 'react-icons/ai'
 import { BsFillCircleFill } from 'react-icons/bs'
 import { Link, useMatch, useResolvedPath } from 'react-router-dom'
-import ModalForm from '../forms/ModalForm'
-import { QuestionContentField, SelectionField } from '../forms/QuestionFields'
 
 export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconType }) {
   const targetPath = useResolvedPath(props.to)
@@ -30,34 +28,6 @@ export function MatcherCard({ matcher, colorScheme }: { matcher: MatcherProps, c
         </Stack>
         <Icon as={BsFillCircleFill} color='#0000000a' position='absolute' boxSize='xs' left='35%' top='-5%'/>
       </Button>
-  )
-}
-
-export function QuestionCard({ question, isDraft }: { question: QuestionProps, isDraft: boolean }) {
-  return (
-      <HStack key={question.id} borderWidth={2} borderColor='purple.150' p={6} pl={0} minW='lg'>
-        <Center as={Heading} color='purple.300' px={8}>
-          {question.ordinalNum}
-        </Center>
-        <Stack flexGrow={1}>
-          <Text fontWeight={600}>{question.content}</Text>
-          <HStack>
-            <Tag colorScheme='gray' color='gray.500' textTransform='capitalize'>{question.questionType}</Tag>
-            <Button variant='link' textDecoration='underline 1px'>
-              {question.answers?.length || 0} Answers
-            </Button>
-          </HStack>
-        </Stack>
-        {isDraft &&
-          <ModalForm currentValues={question} fields={['content', 'questionType', 'questionCategory']}
-                     url={`/questions/${question.id}`} name='Question' variant='icon'>
-            <Stack spacing={6}>
-              <QuestionContentField />
-              <SelectionField name='questionType' />
-              <SelectionField name='questionCategory' />
-            </Stack>
-          </ModalForm>}
-      </HStack>
   )
 }
 

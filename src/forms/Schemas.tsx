@@ -22,6 +22,9 @@ export const collaboratorSchema = object({
   email: string().ensure().email('Not a valid email address')
 })
 
+const answerSchema = object({ content: string().ensure().required().min(1).max(200) })
+const defaultAnswer = answerSchema.getDefaultFromShape()
+
 export const baseSchema = object({
   name: string().ensure().required(),
   courseName: string().ensure().required(),
@@ -35,10 +38,11 @@ export const baseSchema = object({
   questionType: string().ensure().required(),
   questionCategory: string().ensure().required(),
   matchingStrategy: string().ensure().required(),
-  answers: array().of(string().ensure().required().min(1).max(200)).default(['', '']),
+  answers: array().of(answerSchema).default([defaultAnswer, defaultAnswer]),
   publishDate: date(),
   dueDate: date(),
   groupSize: number().default(3).min(2).max(7).required(),
-  students: array().of(string().ensure().email('Not a valid email address')).default(['']),
+  students: array().default([]).of(string().ensure().email(context =>
+      <span key={context.path}>Line {Number(context.path?.match(/\d+/g))+1} is not a valid email address<br/></span>)),
   collaborators: array().default([]).of(collaboratorSchema)
 })

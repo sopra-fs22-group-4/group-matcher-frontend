@@ -4256,6 +4256,10 @@
 .p-fileupload .p-fileupload-row > div {
     padding: 1rem;
 }
+.p-fileupload.p-fileupload-advanced {
+    display: flex;
+    flex-direction: column-reverse;
+}
 .p-fileupload.p-fileupload-advanced .p-message {
     margin-top: 0;
 }

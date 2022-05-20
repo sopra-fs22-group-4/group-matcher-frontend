@@ -1,4 +1,4 @@
-import { Box, Button, Center, Heading, HStack, IconButton, Spinner, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Heading, HStack, IconButton, Spinner, Stack } from '@chakra-ui/react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
@@ -6,7 +6,7 @@ import { AiOutlineEdit } from 'react-icons/ai'
 import { FaRegArrowAltCircleLeft } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
-import { FileUploader, StudentsField } from '../../forms/MatcherFields'
+import { FileUploader } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 
 export default function Students() {
@@ -27,8 +27,6 @@ export default function Students() {
           </Box>
           <ModalForm fields={['students']} name='Students' url={`/matchers/${matcherId}`} variant='add'>
             <FileUploader />
-            <Text>or</Text>
-            <StudentsField />
           </ModalForm>
         </HStack>
         <DataTable stripedRows value={matcher.students} emptyMessage='No students found.'>

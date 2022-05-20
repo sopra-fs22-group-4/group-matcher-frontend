@@ -46,6 +46,8 @@ const theme = extendTheme({
   components: {
     Button: {
       variants: {
+        solid: { boxShadow: 'lg' },
+        outline: { boxShadow: 'lg' },
         round: {
           rounded: 'full', py: 7, px: 10, boxShadow: 'md', fontWeight: 700,
           bg: 'blue.500', color: 'white', _hover: { bg: 'blue.600', _disabled: { bg: 'blue.500' } }

@@ -3,7 +3,7 @@ import { Box, Button, ButtonGroup, Divider, Flex, Heading, Stack } from '@chakra
 import { parseISO } from 'date-fns'
 import React from 'react'
 import { AiOutlineUser } from 'react-icons/ai'
-import { BiBriefcase, BiUser } from 'react-icons/bi'
+import { BiUser } from 'react-icons/bi'
 import { FaRegClipboard } from 'react-icons/fa'
 import { FiGrid, FiLogOut } from 'react-icons/fi'
 import { Navigate, Outlet } from 'react-router-dom'
@@ -36,7 +36,6 @@ export default function Dashboard() {
           </Box>
           <Stack as={ButtonGroup} spacing={6} variant='ghost' minW='12vw' colorScheme='gray' flexGrow={1}>
             <SidebarButton to='' icon={FiGrid} />
-            <SidebarButton to='workspaces' icon={BiBriefcase} />
             <SidebarButton to='matchers' isEnd={false} icon={FaRegClipboard} />
             <SidebarButton to='profile' icon={BiUser} />
           </Stack>

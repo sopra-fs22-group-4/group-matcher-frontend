@@ -13,10 +13,11 @@ import { HiAdjustments, HiCalendar, HiPuzzle, HiQuestionMarkCircle, HiUser } fro
 import { Link, useOutletContext, useParams } from 'react-router-dom'
 import { useSubscription } from 'react-stomp-hooks'
 import { useFetch } from 'use-http'
-import { QuestionCard, StatIcon, StatItem } from '../../components/Buttons'
+import { StatIcon, StatItem } from '../../components/Buttons'
 import { NameField } from '../../forms/AuthFields'
 import { CollaboratorsField, DateField } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
+import { ChoiceAnswersField, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
 
 const colorSchemes: Record<string, string> = { 'Draft': 'gray', 'Active': 'green', 'Completed': 'purple' }
 
@@ -58,8 +59,8 @@ export default function Matcher() {
           <StatItem label='Due Date' value={format(matcher.dueDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
           <ButtonGroup>
             {matcher.status === 'Draft' &&
-              <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'collaborators']}
-                         currentValues={matcher} url={`/matchers/${matcherId}`} name='Matcher'>
+              <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'collaborators']} name='Matcher'
+                         currentValues={matcher} url={`/matchers/${matcherId}`} variant='edit' allowDelete>
                   <Stack spacing={6}>
                     <NameField fieldName='courseName' icon={AiOutlineAudit}/>
                     <NameField fieldName='university' icon={AiOutlineBank}/>
@@ -87,8 +88,31 @@ export default function Matcher() {
               <Center minW='lg' p={6} border='2px dashed' borderColor='gray.300' color='gray.400'>
                 No questions found.
               </Center>}
-            {matcher.questions?.map(question =>
-                <QuestionCard key={question.id} question={question} isDraft={matcher.status === 'Draft'} />)}
+            {matcher.questions?.map((question, index) =>
+                <HStack borderWidth={2} borderColor='purple.150' p={6} pl={0} minW='lg'>
+                  <Center as={Heading} color='purple.300' px={8}>
+                    {index+1}
+                  </Center>
+                  <Stack flexGrow={1}>
+                    <Text fontWeight={600}>{question.content}</Text>
+                    <HStack>
+                      <Tag colorScheme='gray' color='gray.500' textTransform='capitalize'>{question.questionType}</Tag>
+                      <ModalForm fields={['answers']} currentValues={question} url={`/questions/${question.id}`}
+                                 name='Answers' variant='link'>
+                        <ChoiceAnswersField />
+                      </ModalForm>
+                    </HStack>
+                  </Stack>
+                  {matcher.status === 'Draft' &&
+                    <ModalForm currentValues={question} fields={['content', 'questionType', 'questionCategory']}
+                               url={`/questions/${question.id}`} name='Question' variant='icon' allowDelete>
+                      <Stack spacing={6}>
+                        <QuestionContentField />
+                        <SelectionField name='questionType' />
+                        <SelectionField name='questionCategory' />
+                      </Stack>
+                    </ModalForm>}
+                </HStack>)}
           </Stack>
           <Stack spacing={8}>
             <Heading fontSize='2xl' color='purple.500'>Matching Logic</Heading>

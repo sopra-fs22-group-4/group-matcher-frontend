@@ -4,7 +4,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import { LineBackground } from '../../components/Backgrounds'
 import { ConfirmForm } from '../../forms/FormProgress'
-import { ChoiceBasedQuestion, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
+import { ChoiceAnswersField, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
 
 export default function QuestionCreator() {
   const { matcherId } = useParams()
@@ -32,7 +32,7 @@ export default function QuestionCreator() {
           <TabPanel as={Stack} px={0} spacing={3}>
             <Heading fontSize='3xl'>Question Details</Heading>
             <QuestionContentField />
-            <ChoiceBasedQuestion />
+            <ChoiceAnswersField />
           </TabPanel>
           <TabPanel>
             <ConfirmForm />

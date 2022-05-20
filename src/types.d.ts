@@ -22,13 +22,12 @@ declare interface NotificationProps {
   content: string;
   creatorName: string;
   createdAt: string;
+  courseName: string;
 }
 
 declare interface QuestionProps {
   id: number;
-  ordinalNum: number;
   content: string;
-  weight: number;
   questionType: string;
   questionCategory: string;
   answers: Array<AnswerProps>;
@@ -36,7 +35,6 @@ declare interface QuestionProps {
 
 declare interface AnswerProps {
   id: number;
-  ordinalNum: number;
   content: string;
 }
 
