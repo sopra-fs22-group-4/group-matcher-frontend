@@ -2,7 +2,7 @@ import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, Heading, HStack, IconButton, Input, InputGroup,
   InputRightElement, RadioProps, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useBoolean, useRadio,
-  useRadioGroup, useStyleConfig, VStack
+  useRadioGroup, useStyleConfig, VStack, Center
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
 import { Calendar } from 'primereact/calendar'
@@ -100,30 +100,46 @@ function ItemTemplate(file: { name: string }) {
 }
 
 export function FileUploader() {
-  const header = (options: FileUploadHeaderTemplateOptions) => <ButtonGroup m={2}>{options.chooseButton}</ButtonGroup>
+  const allowedTypes = ['text/plain', 'text/csv', 'application/json']
 
-  const empty = () =>
-      <VStack flexGrow={1}>
+  const header = (options: FileUploadHeaderTemplateOptions) =>
+      <ButtonGroup w='full' justifyContent='center'>
+        {options.chooseButton}
+      </ButtonGroup>
+
+  const empty =
+      <VStack h='full'>
         <Icon boxSize='30%' as={AiOutlineCloudUpload} color='gray.200' />
         <Text color='gray.600'>drag & drop a file here</Text>
       </VStack>
 
-     /*<VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse'
-                   justify='center' m={8} url='./upload' chooseLabel='Select file' rounded='3xl'
-itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />*/
-      return <FileUpload name="upload" url='./upload' 
-      onSelect={(event)=>{ 
-                  const fileType = event.files[0].type
-                    if(fileType === 'text/plain' || fileType === 'text/csv' || fileType === 'application/json'){ 
-                      const fileContent = event.files[0].text();
-                      fileContent.then(result => {
-                        const emailList = result.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
-                        const emailJson = JSON.stringify(emailList); 
-                        console.log(emailJson);
-                    })
-                  }
-                }
-              }/>
+  const itemTemplate = (file: any) =>
+      <VStack h='full' fontSize='sm' spacing={4}>
+        <Icon boxSize='4rem' opacity={0.1} as={ImFileText2}/>
+        <Text textAlign='start' fontWeight={600}>{file.name}</Text>
+      </VStack>
+
+  const parseEmails = (content: string, fileType: string) => {
+    return fileType === 'application/json' ? JSON.stringify(content).match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi) : content.match(/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9._-]+)/gi)
+  }
+
+  return (
+      <Field name='students' children={(fieldProps: FieldProps) =>
+          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+            <ChakraFileUpload p={4} minH='2xs' headerTemplate={header} emptyTemplate={empty} itemTemplate={itemTemplate}
+                              chooseLabel='Select File' rounded='3xl' border='2px dashed' borderColor='gray.200'
+                              onSelect={event => {
+                                const fileType = event.files[0]?.type
+                                if (allowedTypes.includes(fileType))
+                                    event.files[0].text().then(content =>
+                                        fieldProps.form.setFieldValue('students', parseEmails(content, fileType)))
+                                else fieldProps.form.setFieldError('students', 'File type is not supported.') }}
+                              progressBarTemplate={
+              <Center textAlign='center' fontWeight={600} color='purple.500'>
+                <Text maxW='xs'>{fieldProps.meta.error || `Detected ${fieldProps.field.value.length} emails.`}</Text>
+              </Center>} />
+          </FormControl>} />
+  )
 }
 
 export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<AdminProps> }) {

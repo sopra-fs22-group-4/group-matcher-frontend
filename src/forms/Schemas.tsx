@@ -39,6 +39,7 @@ export const baseSchema = object({
   publishDate: date(),
   dueDate: date(),
   groupSize: number().default(3).min(2).max(7).required(),
-  students: array().of(string().ensure().email('Not a valid email address')).default(['']),
+  students: array().default([]).of(string().ensure().email(context =>
+    <span key={context.path}>Line {Number(context.path?.match(/\d+/g))+1} is not a valid email address<br/></span>)),
   collaborators: array().default([]).of(collaboratorSchema)
 })
