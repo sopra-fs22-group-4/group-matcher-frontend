@@ -93,7 +93,13 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Illustrations
 
-_TODO: INSERT SCREENSHOTS ONCE DEPLOYMENT IS FINISHED_
+![Register Group Matcher](https://i.makeagif.com/media/5-18-2022/PNcUUW.gif)
+
+![Creation Group Matcher](https://i.makeagif.com/media/5-18-2022/7JQ-_K.gif)
+
+![Question Group Matcher](https://i.makeagif.com/media/5-18-2022/UY6P3i.gif)
+
+![Student Group Matcher](https://i.makeagif.com/media/5-18-2022/xy82Vy.gif)
 
 ## Roadmap
 Potential improvements or extensions may include:

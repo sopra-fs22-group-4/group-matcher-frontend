@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/icons'
 import { Center, Container, Heading, Spinner, Text, useToast, VStack } from '@chakra-ui/react'
-import React, { useEffect } from 'react'
+import React, {useEffect} from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import useLocalStorage from 'use-local-storage'
@@ -9,7 +9,7 @@ import { LineBackground } from '../components/Backgrounds'
 
 export default function Verify() {
   const { adminId } = useParams()
-  const { put } = useFetch(`/api/admins/${adminId}/verify`)
+  const { put, response } = useFetch(`/api/admins/${adminId}/verify`)
   const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
   const navigate = useNavigate()
   const toast = useToast()
@@ -17,8 +17,11 @@ export default function Verify() {
   useEffect(() => {
     put().then(
         fetchedData => {
+          if (response.ok) {
           setAdminData(fetchedData)
-          setTimeout(() => navigate('/dashboard'), 3000)
+          let redirectURL = "dashboard"
+          if (!adminData?.fullyRegistered) {redirectURL = "/verify/" + adminData?.id + "/verifyCollab"}
+          setTimeout(() => navigate(redirectURL), 3000)}
         },
         fetchedData => toast({ title: fetchedData.message, status: 'error' }))
   }, [])

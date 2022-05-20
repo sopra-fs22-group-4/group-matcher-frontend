@@ -58,4 +58,5 @@ declare interface AdminProps {
   name: string;
   email: string;
   verified: boolean;
+  fullyRegistered: boolean;
 }
