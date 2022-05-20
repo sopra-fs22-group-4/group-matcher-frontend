@@ -2,14 +2,14 @@ import { Icon } from '@chakra-ui/icons'
 import {
   Button, ButtonGroup, chakra, FormControl, FormErrorMessage, FormLabel, Heading, HStack, IconButton, Input, InputGroup,
   InputRightElement, RadioProps, Slider, SliderFilledTrack, SliderThumb, SliderTrack, Stack, Text, useBoolean, useRadio,
-  useRadioGroup, useStyleConfig, VStack
+  useRadioGroup, useStyleConfig, VStack, Center
 } from '@chakra-ui/react'
 import { Field, FieldArray, FieldArrayRenderProps, FieldProps } from 'formik'
+import getEmails from 'get-emails'
 import { Calendar } from 'primereact/calendar'
 import { FileUpload, FileUploadHeaderTemplateOptions } from 'primereact/fileupload'
-import { ProgressBar } from 'primereact/progressbar'
 import React, { ComponentProps } from 'react'
-import { AiOutlineCloudUpload, AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineCloudUpload } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
 import { MdOutlineClose } from 'react-icons/md'
@@ -17,7 +17,6 @@ import { collaboratorSchema } from './Schemas'
 
 const ChakraCalendar = chakra(Calendar)
 const ChakraFileUpload = chakra(FileUpload)
-const ChakraProgressBar = chakra(ProgressBar)
 
 export function DateTimePicker(props: ComponentProps<any>) {
   const fieldStyle: any = useStyleConfig('Input', { variant: 'outline' })
@@ -82,33 +81,42 @@ export function GroupSizeField() {
   )
 }
 
-function ItemTemplate(file: { name: string }) {
-  return (
-      <HStack fontSize='sm' spacing={4}>
-        <Icon boxSize='4rem' opacity={0.1} as={ImFileText2} />
-        <Stack w='xs' flexGrow={1}>
-          <Text textAlign='start' fontWeight={600}>{file.name}</Text>
-          <ChakraProgressBar value={0} />
-          <HStack justify='space-between'>
-            <Text>Detected 0 emails.</Text>
-            <Text fontWeight={600} color='purple.500'>Uploading... 70%</Text>
-          </HStack>
-        </Stack>
-        <IconButton aria-label='remove file' variant='ghost' px={0} icon={<AiOutlineDelete />} />
-      </HStack>
-  )
-}
-
 export function FileUploader() {
-  const header = (options: FileUploadHeaderTemplateOptions) => <ButtonGroup m={2}>{options.chooseButton}</ButtonGroup>
-  const empty = () =>
-      <VStack flexGrow={1}>
+  const allowedTypes = ['text/plain', 'text/csv', 'application/json']
+
+  const header = (options: FileUploadHeaderTemplateOptions) =>
+      <ButtonGroup w='full' justifyContent='center'>
+        {options.chooseButton}
+      </ButtonGroup>
+
+  const empty =
+      <VStack h='full'>
         <Icon boxSize='30%' as={AiOutlineCloudUpload} color='gray.200' />
         <Text color='gray.600'>drag & drop a file here</Text>
       </VStack>
-  return <VStack as={ChakraFileUpload} border='2px dashed' borderColor='gray.200' flexDir='column-reverse'
-                 justify='center' m={8} url='./upload' chooseLabel='Select file' rounded='3xl'
-                 itemTemplate={ItemTemplate} headerTemplate={header} emptyTemplate={empty} />
+
+  const itemTemplate = (file: any) =>
+      <VStack h='full' fontSize='sm' spacing={4}>
+        <Icon boxSize='4rem' opacity={0.1} as={ImFileText2}/>
+        <Text textAlign='start' fontWeight={600}>{file.name}</Text>
+      </VStack>
+
+  return (
+      <Field name='students' children={(fieldProps: FieldProps) =>
+          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+            <ChakraFileUpload p={4} minH='2xs' headerTemplate={header} emptyTemplate={empty} itemTemplate={itemTemplate}
+                              chooseLabel='Select File' rounded='3xl' border='2px dashed' borderColor='gray.200'
+                              onSelect={event => {
+                                if (allowedTypes.includes(event.files[0]?.type))
+                                    event.files[0].text().then(content =>
+                                        fieldProps.form.setFieldValue('students', Array.from(getEmails(content))))
+                                else fieldProps.form.setFieldError('students', 'File type is not supported.') }}
+                              progressBarTemplate={
+              <Center textAlign='center' fontWeight={600} color='purple.500'>
+                <Text maxW='xs'>{fieldProps.meta.error || `Detected ${fieldProps.field.value.length} emails.`}</Text>
+              </Center>} />
+          </FormControl>} />
+  )
 }
 
 export function CollaboratorsField({ existingAdmins }: { existingAdmins?: Array<AdminProps> }) {
