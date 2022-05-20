@@ -37,7 +37,7 @@ export default function App() {
               <Route path='/login' element={<Login />}/>
               <Route path='/register' element={<Register />}/>
               <Route path='/verify/:adminId' element={<Verify />}/>
-              <Route path='/verify/:adminId/verifyCollab' element={<VerifyCollab />} />
+              <Route path='/reset/:adminId' element={<VerifyCollab />} />
               <Route path='/dashboard' element={<Dashboard />}>
                 <Route index element={<Overview />} />
                 <Route path='profile' element={<Profile />} />

@@ -19,8 +19,7 @@ export default function Verify() {
         fetchedData => {
           if (response.ok) {
           setAdminData(fetchedData)
-          let redirectURL = "dashboard"
-          if (!adminData?.fullyRegistered) {redirectURL = "/verify/" + adminData?.id + "/verifyCollab"}
+          const redirectURL = adminData?.fullyRegistered ? '/dashboard' : `/reset/${adminId}`
           setTimeout(() => navigate(redirectURL), 3000)}
         },
         fetchedData => toast({ title: fetchedData.message, status: 'error' }))

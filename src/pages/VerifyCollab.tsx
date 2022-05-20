@@ -19,14 +19,16 @@ export default function VerifyCollab() {
     const toast = useToast()
 
     const verifyCollab = async (values: FormikValues) => {
+        setAdminData(undefined)
         const fetchedData = await put(values)
-        response.ok ? navigate('/dashboard') : toast({ title: fetchedData.message, status: 'error' })
+        setAdminData(fetchedData)
+        response.ok ? navigate(`/verify/${adminId}`) : toast({ title: fetchedData.message, status: 'error' })
     }
 
     return (
         <VStack minH='100vh' minW='fit-content' p={10} spacing={8}>
             <VStack>
-                <Heading>Hi {adminData?.name}! You are almost able to access group matcher!</Heading>
+                <Heading>Hi! You are almost able to access group matcher!</Heading>
                 <Text color='gray.600' textAlign='center' lineHeight={1.5} w='lg'>
                     In order to gain full access to your account, we need you to complete your registration by providing a password.
                 </Text>
