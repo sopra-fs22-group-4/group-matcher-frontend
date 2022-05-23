@@ -7,14 +7,15 @@ import { MdAddCircleOutline } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 import { useFetch } from 'use-http'
 import { MatcherCard } from '../../components/Buttons'
-import { GradientLineChart } from '../../components/Charts'
+import { DailySubmissionsChart } from '../../components/Charts'
 
 export default function Overview() {
   const { data: matchers } = useFetch<Array<MatcherProps>>('/matchers', [])
   const { data: notifications } = useFetch<Array<NotificationProps>>('/notifications/latest', [])
+  const { data: submissions } = useFetch<Record<string, number>>('/submissions/daily', [])
   const [page, setPage] = useState({ first: 0, rows: 6 })
 
-  if (!matchers || !notifications)
+  if (!matchers || !notifications || !submissions)
     return <Center flexGrow={1}><Spinner /></Center>
 
   return (
@@ -45,11 +46,11 @@ export default function Overview() {
                   </Stack>)}
             </Stack>
             {!notifications.length && <Text color='gray.400' fontSize='sm'>No notifications found.</Text>}
-            <Paginator first={page.first} rows={page.rows} onPageChange={event => setPage(event)} totalRecords={notifications.length} />
+            <Paginator first={page.first} rows={page.rows} onPageChange={setPage} totalRecords={notifications.length} />
           </Stack>
           <Stack minW='40%' spacing={4}>
             <Heading fontSize='xl'>Activity</Heading>
-            <GradientLineChart labels={['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']} data={[25, 29, 26, 15, 14, 11, 20]} />
+            <DailySubmissionsChart submissions={submissions} />
           </Stack>
         </Flex>
       </Stack>

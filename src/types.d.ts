@@ -36,6 +36,7 @@ declare interface QuestionProps {
 declare interface AnswerProps {
   id: number;
   content: string;
+  selectedCount: number;
 }
 
 declare interface StudentProps {
@@ -54,4 +55,21 @@ declare interface AdminProps {
   email: string;
   verified: boolean;
   hasPassword: boolean;
+}
+
+declare interface ModalFormProps {
+  fields: any;
+  currentValues?: any;
+  url: string;
+  name: string;
+  children: ReactNode;
+  variant: string;
+  allowDelete?: boolean;
+}
+
+declare interface StepsFormProps {
+  fields: any;
+  url: string;
+  children: ReactNode;
+  noRedirect?: boolean;
 }

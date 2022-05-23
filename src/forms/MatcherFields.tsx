@@ -25,12 +25,12 @@ export function DateTimePicker(props: ComponentProps<any>) {
                           __css={fieldStyle.field} visible={isVisible} onVisibleChange={toggle} onBlur={toggle} />
 }
 
-export function DateField({ prefix }: { prefix: string }) {
+export function DateField({ prefix, isDisabled }: { prefix: string, isDisabled?: boolean }) {
   return (
       <Field name={prefix+'Date'} children={(fieldProps: FieldProps) =>
-          <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
+          <FormControl isDisabled={isDisabled} isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <FormLabel>{prefix} Date</FormLabel>
-            <DateTimePicker {...fieldProps.field} />
+            <DateTimePicker {...fieldProps.field} disabled={isDisabled} />
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>
   )

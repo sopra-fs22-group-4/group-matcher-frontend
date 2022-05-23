@@ -3,7 +3,7 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { lowerCase } from 'lodash'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BsTrash } from 'react-icons/bs'
 import { useNavigate } from 'react-router-dom'
 import { useFetch } from 'use-http'
@@ -12,8 +12,6 @@ export default function DeleteForm({ name, url }: { name: string, url: string })
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { del } = useFetch(url)
   const navigate = useNavigate()
-
-  useEffect(() => () => window.location.reload(), [])
 
   return (
       <>
@@ -30,7 +28,7 @@ export default function DeleteForm({ name, url }: { name: string, url: string })
               <Text fontWeight={600}>This action is not reversible!</Text>
             </ModalBody>
             <ModalFooter as={ButtonGroup} justifyContent='center' spacing={4}>
-              <Button variant='round' onClick={() => del().then(() => navigate('/dashboard'))}>
+              <Button variant='round' onClick={() => del().then(() => navigate(0))}>
                 Confirm
               </Button>
               <Button variant='round-outline' onClick={onClose}>

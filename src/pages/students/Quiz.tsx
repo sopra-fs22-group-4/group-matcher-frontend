@@ -36,7 +36,7 @@ export default function Quiz() {
             </HStack>
           </Box>
         </VStack>
-        <StepsForm fields={[]} url={`/api/matchers/${matcherId}/students/${student?.email}`} flatten>
+        <StepsForm fields={[]} url={`/api/matchers/${matcherId}/students/${student?.email}`} noRedirect>
           {student.questions.map(question =>
             <TabPanel key={question.id} px={0}>
               <Heading fontSize='xl' mb={3}>{question.content}</Heading>

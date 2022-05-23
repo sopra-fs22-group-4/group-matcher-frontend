@@ -1,11 +1,12 @@
-import { Box, Button, Center, Heading, HStack, IconButton, Spinner, Stack } from '@chakra-ui/react'
+import { Box, Button, Center, Heading, HStack, Spinner, Stack } from '@chakra-ui/react'
 import { Column } from 'primereact/column'
 import { DataTable } from 'primereact/datatable'
 import React from 'react'
-import { AiOutlineEdit } from 'react-icons/ai'
+import { AiOutlineUser } from 'react-icons/ai'
 import { FaRegArrowAltCircleLeft } from 'react-icons/fa'
 import { Link, useParams } from 'react-router-dom'
 import { useFetch } from 'use-http'
+import { EmailField, NameField } from '../../forms/AuthFields'
 import { FileUploader } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 
@@ -30,11 +31,17 @@ export default function Students() {
           </ModalForm>
         </HStack>
         <DataTable stripedRows value={matcher.students} emptyMessage='No students found.'>
-          <Column header='Name' field='name' />
-          <Column header='Email' field='email' />
-          <Column field='submissionTimestamp' header='Submission Date' />
-          <Column style={{ paddingInline: 0 }} body={(_student) =>
-              <IconButton icon={<AiOutlineEdit fontSize='1.5rem' />} variant='ghost' aria-label='edit student' />} />
+          <Column field='name' header='Name' />
+          <Column field='email' header='Email' />
+          <Column field='submissionTimestamp' header='Submitted At' />
+          <Column style={{ paddingInline: 0 }} body={(student) =>
+              <ModalForm fields={['name', 'email']} currentValues={student} url={`/students/${student.id}`}
+                         name='Student' variant='icon' allowDelete>
+                <Stack spacing={6}>
+                  <NameField icon={AiOutlineUser} />
+                  <EmailField />
+                </Stack>
+              </ModalForm>} />
         </DataTable>
       </Stack>
   )

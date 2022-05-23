@@ -32,6 +32,7 @@ const theme = extendTheme({
     purple: {
       70: '#ecd5f7',
       150: '#E1E1FB',
+      250: '#DEDBFF',
       500: '#9D31D0',
       600: '#861cb8'
     },
@@ -68,7 +69,8 @@ const theme = extendTheme({
         card: {
           rounded: 'xl', h: 'fit-content', borderWidth: 2, p: 3, boxShadow: 'lg', w: 'full', flexDir: 'column',
           alignItems: 'start', textAlign: 'start', whiteSpace: 'wrap', bg: 'white', borderColor: 'gray.200',
-          cursor: 'pointer', _hover: { bg: 'gray.50' }, _checked: { bg: 'gray.50', borderColor: 'blue.500' }
+          cursor: 'pointer', _hover: { bg: 'gray.50' }, _checked: { bg: 'gray.50', borderColor: 'blue.500' },
+          _active: { bg: 'gray.50', borderColor: 'blue.500', color: 'blue.500' }
         }
       }
     },
