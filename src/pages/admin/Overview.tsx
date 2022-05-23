@@ -49,7 +49,7 @@ export default function Overview() {
             <Paginator first={page.first} rows={page.rows} onPageChange={setPage} totalRecords={notifications.length} />
           </Stack>
           <Stack minW='40%' spacing={4}>
-            <Heading fontSize='xl'>Activity</Heading>
+            <Heading fontSize='xl'>Daily Submissions</Heading>
             <DailySubmissionsChart submissions={submissions} />
           </Stack>
         </Flex>

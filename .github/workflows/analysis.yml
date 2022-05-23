@@ -1,21 +1,22 @@
 name: Frontend Quality Analysis
 
-on:
-  push:
-    branches:
-      - main
+on: [push]
 
 jobs:
   analysis:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: sonarsource/sonarcloud-github-action@master
+      - name: Checkout Frontend Repository
+        uses: actions/checkout@v3
+      - name: Run Sonarcloud Analysis
+        uses: sonarsource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - uses: akhileshns/heroku-deploy@v3.12.12
+      - name: Deploy to Heroku
+        uses: akhileshns/heroku-deploy@v3.12.12
+        if: github.ref_name == 'main'
         with:
           heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email: ${{ secrets.HEROKU_EMAIL }}
           heroku_app_name: "group-matcher"
-          heroku_email: "valentine.herzl@uzh.ch"
