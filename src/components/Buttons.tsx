@@ -1,10 +1,13 @@
 import { Icon } from '@chakra-ui/icons'
-import { Button, Heading, HStack, Stack, Stat, StatLabel, StatNumber, Text } from '@chakra-ui/react'
+import {
+  Box,
+  Button, Heading, HStack, Stack, Stat, StatHelpText, StatLabel, StatNumber, Tag, TagLabel, Text
+} from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns'
 import { capitalize } from 'lodash'
 import React from 'react'
 import { IconType } from 'react-icons'
-import { BsFillCircleFill } from 'react-icons/bs'
+import { BsCircleFill, BsFillCircleFill } from 'react-icons/bs'
 import { Link, useMatch, useResolvedPath } from 'react-router-dom'
 
 export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconType }) {
@@ -15,33 +18,44 @@ export function SidebarButton(props: { to: string, isEnd?: boolean, icon: IconTy
                  isActive={!!currentPath}>{capitalize(props.to) || 'Dashboard'}</Button>
 }
 
-export function MatcherCard({ matcher, colorScheme }: { matcher: MatcherProps, colorScheme: string }) {
+export function StatusTag({ status }: { status: string }) {
+  const colorSchemes: Record<string, string> = { 'Draft': 'gray', 'Active': 'green', 'Completed': 'purple' }
   return (
-      <Button as={Link} to={`/dashboard/matchers/${matcher.id}`} variant='hover' colorScheme={colorScheme}>
+      <Tag color={`${colorSchemes[status]}.400`} bg='whiteAlpha.900' size='sm' gap={2}>
+        <Icon as={BsCircleFill} boxSize={2} />
+        <TagLabel fontWeight={600} textTransform='uppercase'>{status}</TagLabel>
+      </Tag>
+  )
+}
+
+export function MatcherCard({ matcher }: { matcher: MatcherProps }) {
+  const colorSchemes: Record<string, string> = { 'Draft': 'orange', 'Active': 'blue', 'Completed': 'purple' }
+  return (
+      <Button as={Link} to={`/dashboard/matchers/${matcher.id}`} variant='hover' colorScheme={colorSchemes[matcher.status]}>
         <Stack boxSize='full' spacing={8} justify='space-between'>
-          <Heading whiteSpace='normal' fontSize='3xl'>{matcher.courseName}</Heading>
+          <Box>
+            <StatusTag status={matcher.status} />
+            <Heading whiteSpace='normal' fontSize='3xl'>{matcher.courseName}</Heading>
+          </Box>
           <Stack fontWeight={600} spacing={0} justify='end' zIndex={1}>
             <Text>Deadline: {format(parseISO(matcher.dueDate.toString()), 'dd.MM.yyyy')}</Text>
             <Text>Submissions: {matcher.submissionsCount}</Text>
           </Stack>
         </Stack>
-        <Icon as={BsFillCircleFill} color='#0000000a' position='absolute' boxSize='xs' left='35%' top='-5%'/>
+        <Icon as={BsFillCircleFill} color={colorSchemes[matcher.status]+'.520'} mixBlendMode='soft-light'
+              position='absolute' boxSize='xs' left='35%' top='-5%'/>
       </Button>
   )
-}
-
-export function StatIcon(props: { icon: IconType }) {
-  return <Icon as={props.icon} color='purple.500' p={0.5} bg='purple.70' rounded='full'/>
 }
 
 export function StatItem(props: { label: string, value: any, icon: IconType }) {
   return (
       <Stat maxW='fit-content'>
         <HStack>
-          <StatIcon icon={props.icon}/>
+          <Icon as={props.icon} color='purple.500' p={0.5} bg='purple.70' rounded='full'/>
           <StatLabel whiteSpace='nowrap'>{props.label}</StatLabel>
         </HStack>
-        <StatNumber textTransform='capitalize' fontSize='lg' pl={6} pt={2}>
+        <StatNumber textTransform='capitalize' fontSize='lg' pl={7} pt={2}>
           {props.value}
         </StatNumber>
       </Stat>

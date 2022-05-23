@@ -23,8 +23,8 @@ export default function Overview() {
         <Stack flexGrow={1} spacing={4}>
           <Heading fontSize='xl'>Your Active Matchers</Heading>
           <HStack spacing={5}>
-            {matchers[0] && <MatcherCard matcher={matchers[0]} colorScheme='orange' />}
-            {matchers[1] && <MatcherCard matcher={matchers[1]} colorScheme='blue' />}
+            {matchers[0] && <MatcherCard matcher={matchers[0]} />}
+            {matchers[1] && <MatcherCard matcher={matchers[1]} />}
             <Button variant='dashed' as={Link} to='matchers/create'>
               <MdAddCircleOutline fontSize='1.5rem' />
               Add Matcher

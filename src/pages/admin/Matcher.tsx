@@ -1,27 +1,26 @@
 import { Icon } from '@chakra-ui/icons'
 import {
-  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, ButtonGroup, Center, Flex,
+  Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, ButtonGroup, Center,
+  CircularProgress, CircularProgressLabel, Flex,
   Heading, HStack, Spinner, Stack, Tag, TagLabel, Text, useToast, Wrap
 } from '@chakra-ui/react'
-import { format } from 'date-fns'
+import { format, formatDistanceToNowStrict } from 'date-fns'
 import { Paginator } from 'primereact/paginator'
 import React, { useState } from 'react'
 import { AiOutlineAudit, AiOutlineBank, AiOutlineExport, AiOutlineThunderbolt } from 'react-icons/ai'
 import { BiGroup } from 'react-icons/bi'
 import { BsCircleFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
-import { HiCalendar, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
+import { HiCalendar, HiChartSquareBar, HiQuestionMarkCircle, HiUser } from 'react-icons/hi'
 import { Link, useNavigate, useOutletContext, useParams } from 'react-router-dom'
 import { useSubscription } from 'react-stomp-hooks'
 import { useFetch } from 'use-http'
-import { StatItem } from '../../components/Buttons'
+import { StatItem, StatusTag } from '../../components/Buttons'
 import { AnswersBarChart } from '../../components/Charts'
 import { NameField } from '../../forms/AuthFields'
 import { CollaboratorsField, DateField } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 import { ChoiceAnswersField, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
-
-const colorSchemes: Record<string, string> = { 'Draft': 'gray', 'Active': 'green', 'Completed': 'purple' }
 
 export default function Matcher() {
   const { matcherId } = useParams()
@@ -48,10 +47,7 @@ export default function Matcher() {
         <HStack justify='space-between'>
           <HStack spacing={4}>
             <Heading fontSize='3xl'>{matcher.courseName}</Heading>
-            <Tag color={`${colorSchemes[matcher.status]}.400`} bg='none' size='sm' gap={2}>
-              <Icon as={BsCircleFill} boxSize={2} />
-              <TagLabel fontWeight={600} textTransform='uppercase'>{matcher.status}</TagLabel>
-            </Tag>
+            <StatusTag status={matcher.status} />
           </HStack>
           {matcher.questions.length &&
             <Button as={Link} to={`/matchers/${matcherId}/quiz`} state={matcher} variant='outline' colorScheme='purple'
@@ -60,10 +56,33 @@ export default function Matcher() {
             </Button>}
         </HStack>
         <Wrap justify='space-between' boxShadow='lg' spacing={4} p={3}>
-          <StatItem label='Students' value={matcher.students.length} icon={HiUser} />
-          <StatItem label='Questions' value={matcher.questions.length} icon={HiQuestionMarkCircle} />
-          <StatItem label='Publish Date' value={format(matcher.publishDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
-          <StatItem label='Due Date' value={format(matcher.dueDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
+          {matcher.status === 'Draft' ?
+              <>
+                <StatItem label='Students' value={matcher.students.length} icon={HiUser} />
+                <StatItem label='Questions' value={matcher.questions.length} icon={HiQuestionMarkCircle} />
+                <StatItem label='Publish Date' value={format(matcher.publishDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
+                <StatItem label='Due Date' value={format(matcher.dueDate, 'dd.MM.yyyy HH:mm')} icon={HiCalendar} />
+              </> :
+              <>
+                <HStack>
+                  <StatItem label='Total Submitted' value={matcher.submittedCount} icon={HiChartSquareBar} />
+                  <CircularProgress value={matcher.submittedCount} max={matcher.students.length} color='green.500'>
+                    <CircularProgressLabel>
+                      {Math.round(matcher.submittedCount/matcher.students.length * 100)}%
+                    </CircularProgressLabel>
+                  </CircularProgress>
+                </HStack>
+                <HStack>
+                  <StatItem label='Missing Submissions' value={matcher.students.length-matcher.submittedCount} icon={HiChartSquareBar} />
+                  <CircularProgress value={matcher.students.length-matcher.submittedCount} max={matcher.students.length} color='red.400'>
+                    <CircularProgressLabel>
+                      {Math.round((matcher.students.length-matcher.submittedCount)/matcher.students.length * 100)}%
+                    </CircularProgressLabel>
+                  </CircularProgress>
+                </HStack>
+                <StatItem label='Time Left' value={formatDistanceToNowStrict(matcher.dueDate, {unit: 'day'})} icon={HiCalendar} />
+              </>
+          }
           <ButtonGroup>
             <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'collaborators']} name='Matcher'
                        currentValues={matcher} url={`/matchers/${matcherId}`} variant='edit' allowDelete>

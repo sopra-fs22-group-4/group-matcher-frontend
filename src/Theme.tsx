@@ -6,6 +6,7 @@ const theme = extendTheme({
     orange: {
       400: '#ffc87c',
       500: '#FDBC64',
+      520: '#8c510063',
       600: '#efa846'
     },
     gray: {
@@ -21,6 +22,7 @@ const theme = extendTheme({
       50: '#f4f4ff',
       100: '#dcdcff',
       500: '#4A3AFF',
+      520: '#92bef9',
       600: '#0024b2',
       700: '#140897'
     },
@@ -33,7 +35,9 @@ const theme = extendTheme({
       70: '#ecd5f7',
       150: '#E1E1FB',
       250: '#DEDBFF',
+      400: '#a747ff',
       500: '#9D31D0',
+      520: '#a219e2',
       600: '#861cb8'
     },
   },
@@ -64,7 +68,7 @@ const theme = extendTheme({
         hover: (props: ThemingProps) => ({
           p: 5, minH: '20vh', h: 'fit-content', maxW: 'xs', rounded: '2xl', color: 'white', position: 'relative',
           overflow: 'hidden', bg: `${props.colorScheme}.500`, boxShadow: 'hover',
-          _hover: { transform: 'translateY(-0.5rem)' }, _focus: { bg: `${props.colorScheme}.600`, boxShadow: 'hover' }
+          _hover: { transform: 'translateY(-0.5rem)' }, _focus: { bg: `${props.colorScheme}.500`, boxShadow: 'hover' }
         }),
         card: {
           rounded: 'xl', h: 'fit-content', borderWidth: 2, p: 3, boxShadow: 'lg', w: 'full', flexDir: 'column',

@@ -11,6 +11,7 @@ declare interface MatcherProps {
   matchingStrategy: string;
   groupSize: number;
   status: string;
+  submittedCount: number;
   questions: Array<QuestionProps>;
   collaborators: Array<AdminProps>;
   students: Array<StudentProps>;
