@@ -19,7 +19,7 @@ export default function StepsForm({ fields, url, children, noRedirect }: StepsFo
   const onSubmit = (values: FormikValues) => post(noRedirect ? Object.values(values).flat() : values).then(data => {
     if (response.ok)
       noRedirect ? toast({ title: 'Your response has been saved!', description: 'You can close this window now.',
-        status: 'success', duration: null }) : navigate(url)
+        status: 'success', duration: null }) : navigate('..')
     else toast({ title: data.message, status: 'error' })
   })
 
