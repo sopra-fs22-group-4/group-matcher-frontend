@@ -18,7 +18,7 @@ export default function Verify() {
     put().then(data => {
       if (response.ok) {
         setAdminData(data)
-        const redirectURL = data?.fullyRegistered ? '/dashboard' : `/reset/${adminId}`
+        const redirectURL = data?.hasPassword ? '/dashboard' : `/reset/${adminId}`
         setTimeout(() => navigate(redirectURL), 3000)
       } else toast({ title: data.message, status: 'error' })
     })
