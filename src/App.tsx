@@ -24,6 +24,7 @@ import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
 import { theme } from './Theme'
+import VerifyConfirmation from "./pages/VerifyConfirmation";
 
 export default function App() {
 
@@ -36,6 +37,7 @@ export default function App() {
               <Route path='/' element={<Home />}/>
               <Route path='/login' element={<Login />}/>
               <Route path='/register' element={<Register />}/>
+              <Route path='/verify' element={<VerifyConfirmation />}/>
               <Route path='/verify/:adminId' element={<Verify />}/>
               <Route path='/reset/:adminId' element={<ResetPassword />} />
               <Route path='/dashboard' element={<Dashboard />}>

@@ -16,7 +16,7 @@ export default function Register() {
   const schema = baseSchema.pick(['name', 'email', 'password', 'repeatPassword'])
 
   const register = (values: FormikValues) => post(values).then(data =>
-      response.ok ? navigate(`/verify/${data.id}`) : toast({ title: data.message, status: 'error' }))
+      response.ok ? navigate(`/verify`) : toast({ title: data.message, status: 'error' }))
 
   return (
       <VStack minH='100vh' minW='fit-content' p={4} spacing={12} position='relative' justify='center'>
