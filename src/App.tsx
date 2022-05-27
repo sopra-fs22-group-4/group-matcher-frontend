@@ -23,8 +23,8 @@ import ResetPassword from './pages/ResetPassword'
 import Quiz from './pages/students/Quiz'
 import QuizAuth from './pages/students/QuizAuth'
 import Verify from './pages/Verify'
+import VerifyConfirmation from './pages/VerifyConfirmation'
 import { theme } from './Theme'
-import VerifyConfirmation from "./pages/VerifyConfirmation";
 
 export default function App() {
 

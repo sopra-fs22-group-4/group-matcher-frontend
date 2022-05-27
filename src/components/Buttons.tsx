@@ -1,8 +1,5 @@
 import { Icon } from '@chakra-ui/icons'
-import {
-  Box,
-  Button, Heading, HStack, Stack, Stat, StatHelpText, StatLabel, StatNumber, Tag, TagLabel, Text
-} from '@chakra-ui/react'
+import { Box, Button, Heading, HStack, Stack, Stat, StatLabel, StatNumber, Tag, TagLabel, Text } from '@chakra-ui/react'
 import { format, parseISO } from 'date-fns'
 import { capitalize } from 'lodash'
 import React from 'react'

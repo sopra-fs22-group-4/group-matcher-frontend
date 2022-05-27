@@ -66,7 +66,7 @@ const theme = extendTheme({
           flexDir: 'column', gap: 3, color: 'purple.600', _hover: { bg: 'purple.50' }
         },
         hover: (props: ThemingProps) => ({
-          p: 5, minH: '20vh', h: 'fit-content', maxW: 'xs', rounded: '2xl', color: 'white', position: 'relative',
+          p: 5, minH: '20vh', h: 'fit-content', w: 'xs', rounded: '2xl', color: 'white', position: 'relative',
           overflow: 'hidden', bg: `${props.colorScheme}.500`, boxShadow: 'hover',
           _hover: { transform: 'translateY(-0.5rem)' }, _focus: { bg: `${props.colorScheme}.500`, boxShadow: 'hover' }
         }),

@@ -12,6 +12,13 @@ setLocale({
   }
 })
 
+export const matchingStrategies = [
+  { name: 'Most Similar', description: 'This matching strategy is intended to find the most homogenous groups. ' +
+        'Students that are similar in their working style and skills will be matched together. ' },
+  { name: 'Balanced Skills', description: 'This matching strategy is intended to find the most diverse groups. Students ' +
+        'that are similar in their working style but have different skill-sets or level of experiences will be matched together.' }
+]
+
 export const selectOptions: Record<string, Array<{ value: string, icon: IconType }>> = {
   'questionType': [{ value: 'Single Choice', icon: BiCheckCircle }, { value: 'Multiple Choice', icon: BiSelectMultiple }],
   'questionCategory': [{ value: 'Preferences', icon: BiPalette }, { value: 'Skills', icon: BiWrench }]

@@ -1,7 +1,7 @@
+import { Icon } from '@chakra-ui/icons'
+import { Container, Heading, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
-import {Container, Heading, VStack, Text} from '@chakra-ui/react'
-import {Icon} from "@chakra-ui/icons";
-import {ReactComponent as CheckmarkIllustration} from "../assets/checkmark.svg";
+import { ReactComponent as CheckmarkIllustration } from '../assets/checkmark.svg'
 
 export default function VerifyConfirmation() {
     return (

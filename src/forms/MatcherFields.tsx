@@ -13,7 +13,7 @@ import { AiOutlineCloudUpload } from 'react-icons/ai'
 import { BiPlus } from 'react-icons/bi'
 import { ImFileText2 } from 'react-icons/im'
 import { MdOutlineClose } from 'react-icons/md'
-import { collaboratorSchema } from './Schemas'
+import { collaboratorSchema, matchingStrategies } from './Schemas'
 
 const ChakraCalendar = chakra(Calendar)
 const ChakraFileUpload = chakra(FileUpload)
@@ -43,7 +43,7 @@ export function StrategyOption(props: RadioProps) {
         <input {...getInputProps()} />
         <Heading fontSize='xl'>{props.value}</Heading>
         <Text fontSize='xs' fontWeight={400}>
-          Some explanation what does this strategy mean and breakdown of question category strategies
+          {props.children}
         </Text>
       </Button>
   )
@@ -55,8 +55,8 @@ export function MatchingLogicField() {
       <Field name='matchingStrategy' children={(fieldProps: FieldProps) =>
           <FormControl isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <Stack my={6} spacing={4} {...getRootProps(fieldProps.field)}>
-              <StrategyOption {...getRadioProps({ value: 'Most Similar' })} />
-              <StrategyOption {...getRadioProps({ value: 'Balanced Skills' })} />
+              {matchingStrategies.map(strategy => <StrategyOption {...getRadioProps(
+                  { value: strategy.name, children: strategy.description })} />)}
             </Stack>
             <FormErrorMessage>{fieldProps.meta.value && fieldProps.meta.error}</FormErrorMessage>
           </FormControl>}/>

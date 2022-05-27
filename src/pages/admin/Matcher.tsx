@@ -1,13 +1,12 @@
 import { Icon } from '@chakra-ui/icons'
 import {
   Accordion, AccordionButton, AccordionIcon, AccordionItem, AccordionPanel, Box, Button, ButtonGroup, Center,
-  CircularProgress, CircularProgressLabel, Flex,
-  Heading, HStack, Spinner, Stack, Tag, TagLabel, Text, useToast, Wrap
+  CircularProgress, CircularProgressLabel, Flex, Heading, HStack, Spinner, Stack, Tag, TagLabel, Text, useToast, Wrap
 } from '@chakra-ui/react'
 import { format, formatDistanceToNowStrict } from 'date-fns'
 import { Paginator } from 'primereact/paginator'
 import React, { useState } from 'react'
-import { AiOutlineAudit, AiOutlineBank, AiOutlineExport, AiOutlineThunderbolt } from 'react-icons/ai'
+import { AiOutlineAudit, AiOutlineBank, AiOutlineExport } from 'react-icons/ai'
 import { BiGroup } from 'react-icons/bi'
 import { BsCircleFill } from 'react-icons/bs'
 import { FaPlus } from 'react-icons/fa'
@@ -21,11 +20,12 @@ import { NameField } from '../../forms/AuthFields'
 import { CollaboratorsField, DateField } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 import { ChoiceAnswersField, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
+import { matchingStrategies } from '../../forms/Schemas'
 
 export default function Matcher() {
   const { matcherId } = useParams()
   const { name } = useOutletContext<AdminProps>()
-  const { data: matcher } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [])
+  const { data: matcher, put } = useFetch<MatcherProps>(`/matchers/${matcherId}`, [])
   const [page, setPage] = useState({ first: 0 })
   const toast = useToast()
   const navigate = useNavigate()
@@ -142,7 +142,7 @@ export default function Matcher() {
                           </Stack>
                         </ModalForm>}
                     </HStack>
-                    {matcher.status === 'Active' &&
+                    {matcher.status !== 'Draft' &&
                       <Box bg='purple.250' rounded='md' p={5} px='20%'>
                         <AnswersBarChart question={question} />
                       </Box>}
@@ -153,13 +153,13 @@ export default function Matcher() {
           <Stack spacing={8} w='30%'>
             <Heading fontSize='2xl' color='purple.500'>Matching Logic</Heading>
             <Accordion allowToggle defaultIndex={matcher.matchingStrategy === 'Most Similar' ? 0 : 1}>
-              {['Most Similar', 'Balanced Skills'].map(strategy =>
-                  <AccordionItem key={strategy} boxShadow='lg' borderWidth={1} rounded='xl' mb={3}>
+              {matchingStrategies.map(strategy =>
+                  <AccordionItem key={strategy.name} boxShadow='lg' borderWidth={1} rounded='xl' mb={3}>
                     <AccordionButton justifyContent='space-between' py={3} rounded='xl'>
-                      <Heading color={matcher.matchingStrategy === strategy ? 'blue.500' : 'initial'} fontSize='xl'>
-                        {strategy}
+                      <Heading color={matcher.matchingStrategy === strategy.name ? 'blue.500' : 'initial'} fontSize='xl'>
+                        {strategy.name}
                       </Heading>
-                      {matcher.matchingStrategy === strategy &&
+                      {matcher.matchingStrategy === strategy.name &&
                         <Tag color='blue.500' bg='none' size='sm' gap={2}>
                           <Icon as={BsCircleFill} boxSize={2} />
                           <TagLabel fontWeight={600} textTransform='uppercase'>Active</TagLabel>
@@ -168,11 +168,13 @@ export default function Matcher() {
                     </AccordionButton>
                     <AccordionPanel>
                       <Text>
-                        Some explanation what does this strategy mean and breakdown of question categories
+                        {strategy.description}
                       </Text>
-                      {matcher.matchingStrategy !== strategy &&
-                        <ButtonGroup pt={4} justifyContent='end' w='full'>
-                          <Button variant='outline' color='blue.500' boxShadow='lg' rounded='lg' p={3} leftIcon={<AiOutlineThunderbolt />}>
+                      {matcher?.status === 'Draft' &&
+                        <ButtonGroup pt={2} justifyContent='end' w='full'>
+                          <Button variant='ghost' color='blue.500' onClick={() => put({ matchingStrategy: strategy.name })
+                              .then(() => toast({ title: 'Successfully activated strategy', status: 'success' }))}
+                                  isDisabled={matcher.matchingStrategy === strategy.name}>
                             Activate Strategy
                           </Button>
                         </ButtonGroup>}
