@@ -10,7 +10,9 @@ import { EmailField, NameField, PasswordField } from '../../forms/AuthFields'
 export default function Profile() {
   const [adminData, setAdminData] = useLocalStorage<AdminProps | undefined>('adminData', undefined)
   const initialValues = { name: adminData?.name, email: adminData?.email, password: '', repeatPassword: '' }
-  const { put, response } = useFetch('/profile')
+  const adminId = adminData?.id.toString()
+  const url = '/api/admins/' + adminId + '/profile'
+  const { put, response } = useFetch(url)
   const toast = useToast()
 
   const editProfile = (values: FormikValues) => put(values).then(data => {
