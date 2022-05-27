@@ -14,7 +14,8 @@ export default function Profile() {
   const toast = useToast()
 
   const editProfile = (values: FormikValues) => put(values).then(data => {
-    if (response.ok) { setAdminData(data); toast({ title: 'Profile updated successfully!', status: 'success' }) }
+    if (response.ok) { setAdminData(data); toast({ title: 'Profile updated successfully!',
+      status: 'success', duration: 3000, onCloseComplete: () => window.location.reload() }) }
     else toast({ title: data.message, status: 'error' })
   })
 

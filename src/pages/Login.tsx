@@ -34,12 +34,7 @@ export default function Login() {
               <VStack as={Form} spacing={8}>
                 <Flex gap={5} bg='white' boxShadow='lg' rounded='3xl' borderWidth={1} px={10} py={6}>
                   <EmailField />
-                  <Box w='full'>
-                    <PasswordField />
-                    <Button as={Link} to='reset' variant='link' size='xs' w='full' justifyContent='end'>
-                      Forgot Password?
-                    </Button>
-                  </Box>
+                  <PasswordField />
                 </Flex>
                 <HStack spacing={6} justifyContent='end' w='full'>
                   <Flex gap={1}>

@@ -27,6 +27,11 @@ export default function Dashboard() {
   if (!adminData?.id)
     return <Navigate to='/login' />
 
+  const onLogout = () => {
+    setAdminData(undefined)
+    window.location.reload()
+  }
+
   return (
       <Flex minH='100vh'>
         <Stack flexGrow={1} maxW='max-content' p={4} spacing={8} position='relative' borderRightWidth={1}>
@@ -40,7 +45,7 @@ export default function Dashboard() {
             <SidebarButton to='profile' icon={BiUser} />
           </Stack>
           <Divider borderColor='gray.300' />
-          <Button onClick={() => setAdminData(undefined)} variant='ghost' colorScheme='gray' leftIcon={<FiLogOut />}>Logout</Button>
+          <Button onClick={onLogout} variant='ghost' colorScheme='gray' leftIcon={<FiLogOut />}>Logout</Button>
           <LineBackground boxSize='sm' viewBox='-200 900 1100 1000' />
         </Stack>
         <StompSessionProvider url='/api/live'>
