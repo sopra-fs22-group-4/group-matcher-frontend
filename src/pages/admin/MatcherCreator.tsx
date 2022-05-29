@@ -1,6 +1,6 @@
 import { Heading, SimpleGrid, TabPanel, Text, VStack } from '@chakra-ui/react'
 import { NameField } from 'forms/AuthFields'
-import { CollaboratorsField, DateField, GroupSizeField, MatchingLogicField } from 'forms/MatcherFields'
+import { CollaboratorsField, DateField, GroupSizeField, MatchingStrategyField } from 'forms/MatcherFields'
 import React from 'react'
 import { AiOutlineAudit, AiOutlineBank } from 'react-icons/ai'
 import { LineBackground } from '../../components/Backgrounds'
@@ -39,7 +39,7 @@ export default function MatcherCreator() {
           <TabPanel px={0}>
             <Heading fontSize='3xl'>How should groups be matched?</Heading>
             We will optimize the matching process based on your preferences.
-            <MatchingLogicField />
+            <MatchingStrategyField />
             <GroupSizeField />
           </TabPanel>
           <TabPanel>

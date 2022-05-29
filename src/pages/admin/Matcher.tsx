@@ -17,7 +17,7 @@ import { useFetch } from 'use-http'
 import { StatItem, StatusTag } from '../../components/Buttons'
 import { AnswersBarChart } from '../../components/Charts'
 import { NameField } from '../../forms/AuthFields'
-import { CollaboratorsField, DateField } from '../../forms/MatcherFields'
+import { CollaboratorsField, DateField, GroupSizeField } from '../../forms/MatcherFields'
 import ModalForm from '../../forms/ModalForm'
 import { ChoiceAnswersField, QuestionContentField, SelectionField } from '../../forms/QuestionFields'
 import { matchingStrategies } from '../../forms/Schemas'
@@ -84,13 +84,14 @@ export default function Matcher() {
               </>
           }
           <ButtonGroup>
-            <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'collaborators']} name='Matcher'
-                       currentValues={matcher} url={`/matchers/${matcherId}`} variant='edit' allowDelete>
+            <ModalForm fields={['courseName', 'university', 'publishDate', 'dueDate', 'groupSize', 'collaborators']}
+                       name='Matcher' currentValues={matcher} url={`/matchers/${matcherId}`} variant='edit' allowDelete>
                 <Stack spacing={6}>
                   <NameField fieldName='courseName' icon={AiOutlineAudit}/>
                   <NameField fieldName='university' icon={AiOutlineBank}/>
                   <DateField prefix='publish' isDisabled={matcher.status !== 'Draft'} />
                   <DateField prefix='due' />
+                  <GroupSizeField />
                   <Heading fontSize='xl'>Collaborators</Heading>
                   <CollaboratorsField />
                 </Stack>

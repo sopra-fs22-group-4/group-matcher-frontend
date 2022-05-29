@@ -49,7 +49,7 @@ export function StrategyOption(props: RadioProps) {
   )
 }
 
-export function MatchingLogicField() {
+export function MatchingStrategyField() {
   const { getRootProps, getRadioProps } = useRadioGroup({ name: 'matchingStrategy' })
   return (
       <Field name='matchingStrategy' children={(fieldProps: FieldProps) =>
@@ -69,7 +69,7 @@ export function GroupSizeField() {
           <FormControl as={HStack} pr={4} isInvalid={fieldProps.meta.value && fieldProps.meta.error}>
             <FormLabel whiteSpace='nowrap'>Group size</FormLabel>
             <Slider onChange={(newValue) => fieldProps.form.setFieldValue(fieldProps.field.name, newValue)}
-                    size='lg' defaultValue={3} min={2} max={7} step={1}>
+                    size='lg' defaultValue={fieldProps.field.value} min={2} max={7} step={1}>
               <SliderTrack>
                 <SliderFilledTrack />
               </SliderTrack>

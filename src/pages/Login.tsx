@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, HStack, Text, useToast, VStack } from '@chakra-ui/react'
+import { Button, Flex, Heading, HStack, Text, useToast, VStack } from '@chakra-ui/react'
 import { Form, Formik, FormikProps, FormikValues } from 'formik'
 import React from 'react'
 import { GrUndo } from 'react-icons/gr'
