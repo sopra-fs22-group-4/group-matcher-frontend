@@ -32,7 +32,6 @@ Most important components:
 
 ### Dashboard
 After successful login an admin will land on the dashboard page. The dashboard contains a narrow menu sidebar on the left including:
- - Workspaces _TODO:CREATE PAGE_
  - [Matchers](src/pages/admin/Matchers.tsx)
  - [Profile](src/pages/admin/Profile.tsx)
 
