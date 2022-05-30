@@ -92,13 +92,41 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 
 ## Illustrations
 
+Register your account
+
 ![Register Group Matcher](https://i.makeagif.com/media/5-18-2022/PNcUUW.gif)
+
+Create your matcher
 
 ![Creation Group Matcher](https://i.makeagif.com/media/5-18-2022/7JQ-_K.gif)
 
+Add a question to a matcher
+
 ![Question Group Matcher](https://i.makeagif.com/media/5-18-2022/UY6P3i.gif)
 
-![Student Group Matcher](https://i.makeagif.com/media/5-18-2022/xy82Vy.gif)
+Edit questions and change strategy
+
+![Strategy Group Matcher](https://i.makeagif.com/media/5-30-2022/f9NOs9.gif)
+
+Add students to a matcher
+
+![Students Group Matcher](https://i.makeagif.com/media/5-30-2022/yraCOh.gif)
+
+Edit your matcher and see activity
+
+![Edit Group Matcher](https://i.makeagif.com/media/5-30-2022/qNUcQG.gif)
+
+Preview your matcher
+
+![Preview Group Matcher](https://i.makeagif.com/media/5-30-2022/PrZo_O.gif)
+
+Fill out the quiz
+
+![Quiz Group Matcher](https://i.makeagif.com/media/5-30-2022/4yOHVF.gif)
+
+See the active matcher and view submissions
+
+![Active Group Matcher](https://i.makeagif.com/media/5-30-2022/jXQxoi.gif)
 
 ## Roadmap
 Potential improvements or extensions may include:
